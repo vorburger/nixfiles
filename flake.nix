@@ -1,5 +1,5 @@
 {
-  description = "Description for the project";
+  description = "Nix files of https://www.vorburger.ch";
 
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
