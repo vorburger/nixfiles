@@ -19,6 +19,8 @@
 1. Consolidate [`LearningLinux` 🐧 repo](https://github.com/vorburger/LearningLinux/tree/develop/nix)
    and [`dotfiles/NixOS`](https://github.com/vorburger/vorburger-dotfiles-bin-etc/tree/main/NixOS) here.
 
+1. Suppress (quiet) devshell menu
+
 ## Low Priority / Nice to Have
 
 1. Use https://github.com/j178/prek instead of https://pre-commit.com with https://github.com/cachix/git-hooks.nix in fmt.nix

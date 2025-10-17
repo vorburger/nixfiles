@@ -16,12 +16,8 @@
     inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
-        # To import a flake module
-        # 1. Add foo to inputs
-        # 2. Add foo as a parameter to the outputs function
-        # 3. Add here: foo.flakeModule
-
         inputs.devshell.flakeModule
+
         ./tools/fmt.nix
         ./tools/pre-commit.nix
         ./tools/auto-follow.nix
@@ -33,13 +29,5 @@
         "aarch64-darwin"
         "x86_64-darwin"
       ];
-      perSystem =
-        _:
-        {
-        };
-      flake =
-        _:
-        {
-        };
     };
 }
