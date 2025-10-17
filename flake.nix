@@ -18,6 +18,7 @@
         # 3. Add here: foo.flakeModule
 
         ./tools/fmt.nix
+        ./tools/pre-commit.nix
       ];
       systems = [
         "x86_64-linux"
