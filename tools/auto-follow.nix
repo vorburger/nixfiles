@@ -1,3 +1,5 @@
+# https://github.com/fzakaria/nix-auto-follow
+# Alternative: https://github.com/spikespaz/allfollow
 {
   perSystem =
     { inputs', ... }:

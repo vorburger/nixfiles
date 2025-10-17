@@ -4,6 +4,7 @@
   inputs = {
     # ALWAYS run "auto-follow -i" AFTER adding inputs and running `nix flake check`
     # TODO Automate this...
+    systems.url = "github:nix-systems/default";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
     git-hooks.url = "github:cachix/git-hooks.nix";
@@ -13,21 +14,15 @@
   };
 
   outputs =
-    inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
-        inputs.devshell.flakeModule
-
+        ./tools/systems.nix
+        ./tools/devshell.nix
         ./tools/fmt.nix
         ./tools/pre-commit.nix
         ./tools/auto-follow.nix
         ./demo/hello.nix
-      ];
-      systems = [
-        "x86_64-linux"
-        "aarch64-linux"
-        "aarch64-darwin"
-        "x86_64-darwin"
       ];
     };
 }
