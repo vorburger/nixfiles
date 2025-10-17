@@ -1,13 +1,12 @@
 # Thank You https://github.com/drupol/infra/blob/096748d4e4badffcc86f63b18d3ebe0618ee6a17/modules/flake-parts/fmt.nix
-{ inputs, lib, ... }:
+{ inputs, ... }:
 {
   imports = [
     inputs.treefmt-nix.flakeModule
-    inputs.git-hooks.flakeModule
   ];
 
   perSystem =
-    { self', ... }:
+    _:
     {
       treefmt = {
         projectRootFile = "flake.nix";
@@ -29,11 +28,6 @@
             "LICENSE"
           ];
         };
-      };
-
-      pre-commit.settings.hooks.nix-fmt = {
-        enable = true;
-        entry = lib.getExe self'.formatter;
       };
     };
 }
