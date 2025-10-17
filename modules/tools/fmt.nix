@@ -1,6 +1,8 @@
 # Thank You https://github.com/drupol/infra/blob/096748d4e4badffcc86f63b18d3ebe0618ee6a17/modules/flake-parts/fmt.nix
 { inputs, ... }:
 {
+  flake-file.inputs.treefmt-nix.url = "github:numtide/treefmt-nix";
+
   imports = [
     inputs.treefmt-nix.flakeModule
   ];

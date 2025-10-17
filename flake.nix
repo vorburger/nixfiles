@@ -1,18 +1,38 @@
+# DO-NOT-EDIT. This file was auto-generated using github:vic/flake-file.
+# Use `nix run .#write-flake` to regenerate it.
 {
   description = "Nix files of https://www.vorburger.ch";
 
+  outputs = inputs: import ./outputs.nix inputs;
+
   inputs = {
-    # ALWAYS run "auto-follow -i" AFTER adding inputs and running `nix flake check`
-    # TODO Automate this...
-    systems.url = "github:nix-systems/default";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    flake-parts.url = "github:hercules-ci/flake-parts";
-    import-tree.url = "github:vic/import-tree";
-    git-hooks.url = "github:cachix/git-hooks.nix";
-    treefmt-nix.url = "github:numtide/treefmt-nix";
-    auto-follow.url = "github:fzakaria/nix-auto-follow";
-    devshell.url = "github:numtide/devshell";
+    auto-follow = {
+      url = "github:fzakaria/nix-auto-follow";
+    };
+    devshell = {
+      url = "github:numtide/devshell";
+    };
+    flake-file = {
+      url = "github:vic/flake-file";
+    };
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+    };
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+    };
+    import-tree = {
+      url = "github:vic/import-tree";
+    };
+    nixpkgs = {
+      url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    };
+    systems = {
+      url = "github:nix-systems/default";
+    };
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+    };
   };
 
-  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 }
