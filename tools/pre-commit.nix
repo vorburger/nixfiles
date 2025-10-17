@@ -14,10 +14,13 @@
         enable = true;
         entry = lib.getExe self'.formatter;
       };
-      # TODO Why is 'pre-commit' still not on PATH inside "nix devshell" ?!
-      #devShells.default = pkgs.mkShell {
-      #  shellHook = "${config.pre-commit.shellHook}";
-      #  packages = config.pre-commit.settings.enabledPackages;
+      # TODO Make 'pre-commit' available on PATH inside "nix devshell"...
+      # devshells.default = {
+      #   devshell.packages = [ config.pre-commit.settings.enabledPackages ];
+      # };
+      ## devShells.default = pkgs.mkShell {
+      ##  shellHook = "${config.pre-commit.shellHook}";
+      ##  packages = config.pre-commit.settings.enabledPackages;
       #};
     };
 }

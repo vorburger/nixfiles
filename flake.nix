@@ -9,6 +9,7 @@
     git-hooks.url = "github:cachix/git-hooks.nix";
     treefmt-nix.url = "github:numtide/treefmt-nix";
     auto-follow.url = "github:fzakaria/nix-auto-follow";
+    devshell.url = "github:numtide/devshell";
   };
 
   outputs =
@@ -20,8 +21,11 @@
         # 2. Add foo as a parameter to the outputs function
         # 3. Add here: foo.flakeModule
 
+        inputs.devshell.flakeModule
         ./tools/fmt.nix
         ./tools/pre-commit.nix
+        ./tools/auto-follow.nix
+        ./demo/hello.nix
       ];
       systems = [
         "x86_64-linux"
@@ -30,29 +34,12 @@
         "x86_64-darwin"
       ];
       perSystem =
+        _:
         {
-          pkgs,
-          inputs',
-          ...
-        }:
-        {
-          # Per-system attributes can be defined here. The self' and inputs'
-          # module parameters provide easy access to attributes of the same
-          # system.
-
-          packages.default = pkgs.hello;
-
-          devShells.default = pkgs.mkShell {
-            packages = [
-              pkgs.hello
-              inputs'.auto-follow.packages.default
-            ];
-          };
         };
-      flake = {
-        # The usual flake attributes can be defined here, including system-
-        # agnostic ones like nixosModule and system-enumerating ones, although
-        # those are more easily expressed in perSystem.
-      };
+      flake =
+        _:
+        {
+        };
     };
 }
