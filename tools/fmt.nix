@@ -5,29 +5,27 @@
     inputs.treefmt-nix.flakeModule
   ];
 
-  perSystem =
-    _:
-    {
-      treefmt = {
-        projectRootFile = "flake.nix";
-        programs = {
-          deadnix.enable = true;
-          nixfmt.enable = true;
-          prettier.enable = true;
-          shfmt.enable = true;
-          statix.enable = true;
-          yamlfmt.enable = true;
-        };
-        settings = {
-          on-unmatched = "fatal";
-          global.excludes = [
-            "*.envrc"
-            ".editorconfig"
-            "*.fish"
-            "*/.gitignore"
-            "LICENSE"
-          ];
-        };
+  perSystem = _: {
+    treefmt = {
+      projectRootFile = "flake.nix";
+      programs = {
+        deadnix.enable = true;
+        nixfmt.enable = true;
+        prettier.enable = true;
+        shfmt.enable = true;
+        statix.enable = true;
+        yamlfmt.enable = true;
+      };
+      settings = {
+        on-unmatched = "fatal";
+        global.excludes = [
+          "*.envrc"
+          ".editorconfig"
+          "*.fish"
+          "*/.gitignore"
+          "LICENSE"
+        ];
       };
     };
+  };
 }
