@@ -10,8 +10,6 @@
 
 ## Tools
 
-1. Replace manual `imports` with https://github.com/vic/import-tree
-
 1. Run `nix flake check` in pre-commit hook
 
 ## Clean Up
