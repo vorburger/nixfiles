@@ -2,8 +2,10 @@
   description = "Nix files of https://www.vorburger.ch";
 
   inputs = {
-    flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    git-hooks.url = "github:cachix/git-hooks.nix";
+    treefmt-nix.url = "github:numtide/treefmt-nix";
   };
 
   outputs =
@@ -15,6 +17,7 @@
         # 2. Add foo as a parameter to the outputs function
         # 3. Add here: foo.flakeModule
 
+        ./tools/fmt.nix
       ];
       systems = [
         "x86_64-linux"
