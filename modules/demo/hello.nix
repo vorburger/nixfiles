@@ -1,9 +1,14 @@
+# TODO Expand this to at least pass some parameters to hello
 {
   perSystem =
-    { pkgs, ... }:
+    { self', pkgs, ... }:
     {
+      # nix run .#hello
+      packages.hello = pkgs.hello;
+
+      # nix develop -c hello
       devshells.default = {
-        devshell.packages = [ pkgs.hello ];
+        devshell.packages = [ self'.packages.hello ];
       };
     };
 }

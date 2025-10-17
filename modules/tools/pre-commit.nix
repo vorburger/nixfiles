@@ -10,6 +10,7 @@
       ...
     }:
     {
+      # Alternative: https://github.com/j178/prek instead of https://pre-commit.com
       pre-commit.settings.hooks.nix-fmt = {
         enable = true;
         entry = lib.getExe self'.formatter;
