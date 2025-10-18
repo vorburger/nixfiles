@@ -3,7 +3,7 @@
 {
   description = "Nix files of https://www.vorburger.ch";
 
-  outputs = inputs: import ./outputs.nix inputs;
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
   inputs = {
     auto-follow = {
@@ -11,6 +11,9 @@
     };
     devshell = {
       url = "github:numtide/devshell";
+    };
+    flake-aspects = {
+      url = "github:vic/flake-aspects";
     };
     flake-file = {
       url = "github:vic/flake-file";
@@ -24,8 +27,14 @@
     import-tree = {
       url = "github:vic/import-tree";
     };
+    nix-auto-follow = {
+      url = "github:fzakaria/nix-auto-follow";
+    };
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    };
+    nixpkgs-lib = {
+      follows = "nixpkgs";
     };
     systems = {
       url = "github:nix-systems/default";
