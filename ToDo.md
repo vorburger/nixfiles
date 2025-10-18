@@ -2,9 +2,11 @@
 
 ## Machines
 
-1. VM with `vorburger` user, with SSH
+1. Make `bin/vm.ssh` wait for port 2222 to be open
 
 1. Modularize `modules/hosts/test1.nix`
+
+1. Review and merge `modules/hosts/default.nix` vs `bin/vm.sh`
 
 1. VM installation!
 
@@ -18,6 +20,10 @@
    - https://docs.clan.lol/guides/nixpkgs-flake-input/
    - https://docs.clan.lol/guides/flake-parts/
    - https://docs.clan.lol/guides/nixos-rebuild/
+
+1. Replace `hostfwd=tcp::2222-:22` with proper bridged networking to get real IP address?
+
+1. Replace StrictHostKeyChecking=no with fixed hostkey from secret vault
 
 ## Gemini CLI
 

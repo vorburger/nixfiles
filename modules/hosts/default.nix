@@ -1,6 +1,6 @@
 _:
 let
-  vm = import ./test1-vm.nix;
+  vm = import ./test1.nix;
 in
 {
   perSystem =

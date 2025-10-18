@@ -5,10 +5,8 @@ MACH=${1:-test1}
 
 nixos-rebuild build-vm --flake .#"$MACH"
 
-result/bin/run-"$MACH"-vm &
+QEMU_NET_OPTS="hostfwd=tcp::2222-:22" result/bin/run-"$MACH"-vm &
 
-ssh vorburger@localhost -p 2222
-
-# TODO How to make `nixos-rebuild` forward local port 2222 into the VM automatically?
+ssh -o StrictHostKeyChecking=no -o "UserKnownHostsFile /dev/null" vorburger@localhost -p 2222
 
 # TODO How to get the VM's IP address?
