@@ -1,0 +1,5 @@
+{
+  "tools": {
+    "allowed": ["cat", "git status", "nix fmt"]
+  }
+}

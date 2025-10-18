@@ -4,6 +4,8 @@
 
 1. VM with `vorburger` user, with SSH
 
+1. Modularize `modules/hosts/test1.nix`
+
 1. VM installation!
 
 1. VM testing
@@ -18,6 +20,10 @@
    - https://docs.clan.lol/guides/nixos-rebuild/
 
 ## Tools
+
+1. Make `bin/vm` a `modules/tools/vm.nix` command available in devshell
+
+1. Formatters are a mess; `tools/git-hooks.nix` _pre-commit_ and `fmt.nix` for `nix fmt` don't share .treefmt.toml config?
 
 1. Run `nix flake check` in pre-commit hook
 
@@ -37,6 +43,8 @@
 1. Move https://github.com/vorburger/LearningLinux/tree/develop/nix/docs here
 
 1. Move https://github.com/vorburger/LearningLinux/blob/develop/nix/bookmarks.md here
+
+1. Pre-process MD to automagically insert links on anything that looks like a local file path
 
 1. Have an attribute/option in the `modules/**/*.nix` to link to the relevant `docs/*.md`
 

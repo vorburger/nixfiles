@@ -12,4 +12,4 @@ and the [`dotfiles/NixOS`](https://github.com/vorburger/vorburger-dotfiles-bin-e
 Install [Nix](https://nixos.org/download) and [direnv](https://direnv.net/docs/installation.html),
 and clone this repo, then cd (which will automagically put `nixos-rebuild` on your PATH) and run:
 
-    nixos-rebuild build-vm --flake .#test1
+    bin/vm test1
