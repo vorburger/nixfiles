@@ -21,6 +21,15 @@
 
           services.openssh.enable = true;
           services.openssh.settings.PermitRootLogin = "prohibit-password";
+          # virtualisation.forwardPorts = [
+          #   {
+          #     from = "host";
+          #     host.port = 2222;
+          #     guest.port = 22;
+          #     # You can optionally specify the protocol (default is "tcp")
+          #     # protocol = "tcp";
+          #   }
+          # ];
 
           users.users.test = {
             isNormalUser = true;
