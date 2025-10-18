@@ -3,9 +3,11 @@
   flake.nixosConfigurations.test1 = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     modules = [
-      # TODO Modularize this...
+      # TODO Modularize all this properly...
+
       inputs.disko.nixosModules.disko
       ./disko/_boot-and-ext4.nix
+
       {
         boot.loader.grub.enable = true;
         boot.loader.grub.devices = [ "/dev/sda" ]; # TODO use disko to get device

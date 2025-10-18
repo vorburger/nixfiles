@@ -2,17 +2,28 @@
 
 ## Machines
 
-1. VM with `vorburger` user
+1. VM with `vorburger` user, with SSH
+
+1. VM installation!
 
 1. VM testing
 
 1. https://flake.parts/options/disko.html ?
 
+1. Cloud VMs? `imports = [ "${modulesPath}/virtualisation/amazon-image.nix" ]` ? See e.g. [here](https://www.haskellforall.com/2023/01/announcing-nixos-rebuild-new-deployment.html).
+
+1. Clan!
+   - https://docs.clan.lol/guides/nixpkgs-flake-input/
+   - https://docs.clan.lol/guides/flake-parts/
+   - https://docs.clan.lol/guides/nixos-rebuild/
+
 ## Tools
 
-1. https://github.com/vic/flake-aspects ?
-
 1. Run `nix flake check` in pre-commit hook
+
+1. Replace [`devshells`](https://github.com/numtide/devshell) with `devShells` (Nix), after all?
+
+1. https://github.com/vic/flake-aspects ?
 
 ## Clean Up
 
@@ -23,6 +34,12 @@
 
 1. `docs/` with https://flake.parts/options/mkdocs-flake.html
 
+1. Move https://github.com/vorburger/LearningLinux/tree/develop/nix/docs here
+
+1. Move https://github.com/vorburger/LearningLinux/blob/develop/nix/bookmarks.md here
+
+1. Have an attribute/option in the `modules/**/*.nix` to link to the relevant `docs/*.md`
+
 1. Extract commands from `modules/demo/hello.nix` into `docs/hello.md` etc.
 
 1. Run https://docs.enola.dev/use/execmd
@@ -32,5 +49,7 @@
 1. Automagically extract TODO list
 
 ## Low Priority / Nice to Have
+
+1. [`nixos-rebuild` alternatives?](docs/nixos-rebuild.md)
 
 1. Suppress (quiet) devshell menu
