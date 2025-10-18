@@ -19,9 +19,13 @@
    - https://docs.clan.lol/guides/flake-parts/
    - https://docs.clan.lol/guides/nixos-rebuild/
 
+## Gemini CLI
+
+1. Despite `.gemini/settings.json` it still asks for confirmation to run `nix fmt` - why?
+
 ## Tools
 
-1. Make `bin/vm` a `modules/tools/vm.nix` command available in devshell
+1. Make `bin/vm.sh` a `modules/tools/vm.nix` command available in devshell as `vm`
 
 1. Formatters are a mess; `tools/git-hooks.nix` _pre-commit_ and `fmt.nix` for `nix fmt` don't share .treefmt.toml config?
 
