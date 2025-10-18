@@ -10,8 +10,6 @@
 
 ## Tools
 
-1. Use https://github.com/vic/flake-file to generate inputs in flake.nix from an attribute in `**/*.nix` files
-
 1. https://github.com/vic/flake-aspects ?
 
 1. Run `nix flake check` in pre-commit hook

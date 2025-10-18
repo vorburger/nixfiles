@@ -9,4 +9,6 @@ and the [`dotfiles/NixOS`](https://github.com/vorburger/vorburger-dotfiles-bin-e
 
 ## Usage
 
-TBD
+Install [Nix](https://nixos.org/download) and [devenv](https://devenv.sh), then:
+
+    nixos-rebuild build-vm --flake .#test-vm1

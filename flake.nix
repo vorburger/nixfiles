@@ -12,6 +12,9 @@
     devshell = {
       url = "github:numtide/devshell";
     };
+    disko = {
+      url = "github:nix-community/disko";
+    };
     flake-aspects = {
       url = "github:vic/flake-aspects";
     };
