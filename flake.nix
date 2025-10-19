@@ -30,6 +30,9 @@
     import-tree = {
       url = "github:vic/import-tree";
     };
+    mkdocs-flake = {
+      url = "github:applicative-systems/mkdocs-flake";
+    };
     nix-auto-follow = {
       url = "github:fzakaria/nix-auto-follow";
     };

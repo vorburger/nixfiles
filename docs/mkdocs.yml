@@ -1,0 +1,28 @@
+site_name: Learning ❄️ Nix Crash Course 🏃🏽‍➡️
+site_url: http://nix.vorburger.ch
+repo_url: https://github.com/vorburger/nixfiles
+edit_uri: blob/main/docs/
+copyright: Copyright &copy; 2025 The Learning Nix Crash Course <https://github.com/vorburger/nixfiles> Authors
+nav:
+  - Tutorials:
+      - index.md
+      - tutorial/nixpkgs-hello.md
+      - tutorial/first-flake/index.md
+      - tutorial/systems/index.md
+      # TODO - tutorial/devShells/index.md
+      # TODO - tutorial/direnv.md
+      - tutorial/home-manager.md
+      # TODO - tutorial/flake-parts.md
+      - NixOS:
+          # TODO - tutorial/first-nixos-graphical-install
+          - tutorial/first-nixos-graphical-install/index.md
+          # TODO - tutorial/nixos-desktop-workstation/index.md
+    # TODO - Nix Lang:
+  - References:
+      - reference/nix-cli.md
+      - reference/determinate.md
+      - reference/nixos-rebuild.md
+      - reference/flake-file.md
+      - reference/wiki.md
+      - reference/we.md
+      - ToDo.md

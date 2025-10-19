@@ -13,3 +13,9 @@ Install [Nix](https://nixos.org/download) and [direnv](https://direnv.net/docs/i
 and clone this repo, then cd (which will automagically put `nixos-rebuild` on your PATH) and run:
 
     bin/vm.sh test1
+
+## Docs
+
+`nix build .#documentation` produces the static HTML documentation site in `result/`.
+
+`nix run .#watch-documentation` serves the documentation locally with live-rebuilds
