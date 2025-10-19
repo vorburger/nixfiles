@@ -14,6 +14,14 @@
 
 1. https://flake.parts/options/disko.html ?
 
+1. nix GC automatically
+
+1. Impermanence
+
+1. `/nix` on separate partition (or LV)
+
+1. Workstation 🖥️ with `pam_u2f.so` for `sudo` with SK
+
 1. Cloud VMs? `imports = [ "${modulesPath}/virtualisation/amazon-image.nix" ]` ? See e.g. [here](https://www.haskellforall.com/2023/01/announcing-nixos-rebuild-new-deployment.html).
 
 1. Clan!
@@ -25,6 +33,8 @@
 
 1. Replace StrictHostKeyChecking=no with fixed hostkey from secret vault
 
+1. Have both unstable and fixed nix pkgs - for different hosts
+
 ## Gemini CLI
 
 1. Reads all `docs/**.md` in GEMINI.md ?!
@@ -35,11 +45,19 @@
 
 1. Make `bin/vm.sh` a `modules/tools/vm.nix` command available in devshell as `vm`
 
+1. https://github.com/maralorn/nix-output-monitor
+
+1. https://github.com/ners/nix-monitored
+
 1. Formatters are a mess; `tools/git-hooks.nix` _pre-commit_ and `fmt.nix` for `nix fmt` don't share .treefmt.toml config?
 
 1. Run `nix flake check` in pre-commit hook
 
 1. Replace [`devshells`](https://github.com/numtide/devshell) with `devShells` (Nix), after all?
+
+1. https://github.com/nix-community/nh ?
+
+1. https://github.com/evanlhatch/ng ?
 
 1. https://github.com/vic/flake-aspects ?
 
@@ -71,3 +89,7 @@
 1. [`nixos-rebuild` alternatives?](reference/nixos-rebuild.md)
 
 1. Suppress (quiet) devshell menu
+
+## Future
+
+1. [Enola.dev](https://docs.enola.dev) AI for https://github.com/NixOS/nixpkgs/pulls ?
