@@ -2,6 +2,8 @@
 
 ## Machines
 
+1. Workstation 🖥️ with `pam_u2f.so` for `sudo` with SK
+
 1. Make `bin/vm.ssh` wait for port 2222 to be open
 
 1. Modularize `modules/hosts/test1.nix`
@@ -19,8 +21,6 @@
 1. Impermanence
 
 1. `/nix` on separate partition (or LV)
-
-1. Workstation 🖥️ with `pam_u2f.so` for `sudo` with SK
 
 1. Cloud VMs? `imports = [ "${modulesPath}/virtualisation/amazon-image.nix" ]` ? See e.g. [here](https://www.haskellforall.com/2023/01/announcing-nixos-rebuild-new-deployment.html).
 
