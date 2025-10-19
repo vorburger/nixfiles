@@ -9,5 +9,6 @@
 
   perSystem = {
     documentation.mkdocs-root = ../../docs;
+    documentation.strict = true;
   };
 }
