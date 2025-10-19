@@ -31,7 +31,7 @@
           #   }
           # ];
 
-          users.users.test = {
+          users.users.tester = {
             isNormalUser = true;
             extraGroups = [ "wheel" ];
             initialPassword = "x";
