@@ -24,6 +24,7 @@
         settings = {
           on-unmatched = "fatal";
           global.excludes = [
+            "*/*.bad"
             "*.envrc"
             ".editorconfig"
             "*.fish"
