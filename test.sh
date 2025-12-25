@@ -2,8 +2,7 @@
 
 set -euo pipefail
 
-# TODO Fix flake.lock problem on check...
-#   nix flake check
+nix flake check
 
 nix build .#documentation
 
