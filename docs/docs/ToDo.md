@@ -2,6 +2,8 @@
 
 ## Machines
 
+1. Fix broken `nix flake check`
+
 1. Workstation 🖥️ with `pam_u2f.so` for `sudo` with SK
 
 1. Make `bin/vm.ssh` wait for port 2222 to be open

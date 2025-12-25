@@ -72,3 +72,7 @@ It's a good idea to keep your NixOS configuration files in a Git repository. Cre
 mkdir modules/hosts/vm1
 scp "192.168.122.72:/etc/nixos/*" modules/hosts/vm1/
 ```
+
+TODO Beware that if you use a layout like this repo,
+then you cannot directly put the `configuration.nix`
+and `hardware-configuration.nix` files into it...

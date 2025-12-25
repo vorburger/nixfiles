@@ -14,6 +14,8 @@ and clone this repo, then cd (which will automagically put `nixos-rebuild` on yo
 
     bin/vm.sh test1
 
+Login as `tester` with password `x` on the Console.
+
 ## Docs
 
 `nix build .#documentation` produces the static HTML documentation site in `result/`.
