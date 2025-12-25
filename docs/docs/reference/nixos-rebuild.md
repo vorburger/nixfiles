@@ -10,7 +10,7 @@
 
 ## Local
 
-    nixos-rebuild switch --flake .#myhostname`
+    nixos-rebuild switch --flake .#myhostname
 
 Or, historically: Edit `/etc/nixos/configuration.nix` and `sudo nixos-rebuild switch`.
 

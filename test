@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# TODO nix flake check
+
+nix build .#documentation
+
+nixos-rebuild build-vm --flake .#test1
+
+# TODO Fix testing the first-flake tutorial...
+# cd docs/docs/tutorial/first-flake
+# nix run .#cow
+# cd ../../../..
