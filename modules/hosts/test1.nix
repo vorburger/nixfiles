@@ -3,13 +3,10 @@
   flake.nixosConfigurations.test1 = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     modules = [
-      # TODO Modularize all this properly...
-
       inputs.disko.nixosModules.disko
       ../disko/_boot-and-ext4.nix
-
+      ../users/_tester.nix
       # TODO users/vorburger.nix
-
       (
         { pkgs, ... }:
         {
@@ -30,12 +27,6 @@
           #     # protocol = "tcp";
           #   }
           # ];
-
-          users.users.tester = {
-            isNormalUser = true;
-            extraGroups = [ "wheel" ];
-            initialPassword = "x";
-          };
 
           users.users.vorburger = {
             openssh.authorizedKeys.keys = [

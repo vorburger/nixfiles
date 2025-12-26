@@ -2,8 +2,6 @@
 
 ## Machines
 
-1. Modularize `modules/hosts/test1.nix`
-
 1. VM installation!
 
 1. VM testing
