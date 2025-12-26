@@ -3,6 +3,7 @@
   flake.nixosConfigurations.installer = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     modules = [
+      ../services/_openssh.nix
       "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
       (
         { pkgs, ... }:
