@@ -17,4 +17,20 @@
     shell = pkgs.fish;
   };
   programs.fish.enable = true;
+
+  # Required to avoid: "Existing file '/home/vorburger/.config/fish/config.fish' would be clobbered"
+  home-manager.backupFileExtension = "home-manager_backup";
+
+  systemd.services.home-manager-vorburger = {
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+  };
+
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+
+  # See https://github.com/vorburger/vorburger-dotfiles-bin-etc/blob/main/dotfiles/home-manager/flake.nix
+  home-manager.extraSpecialArgs = {
+    envHOME = "";
+  };
 }
