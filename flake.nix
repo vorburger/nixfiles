@@ -15,6 +15,7 @@
       url = "github:hercules-ci/flake-parts";
     };
     git-hooks.url = "github:cachix/git-hooks.nix";
+    home-manager.url = "github:nix-community/home-manager";
     import-tree.url = "github:vic/import-tree";
     mkdocs-flake.url = "github:applicative-systems/mkdocs-flake";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
