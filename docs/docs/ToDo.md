@@ -2,11 +2,15 @@
 
 ## Machines
 
-1. VM installation!
+1. VM vorburger sudo password?!
+
+1. Remove Disko & GRUB from test1, if possible
+
+1. VM with UEFI instead of BIOS, and systemd-boot instead of GRUB
+
+1. Rename test1 to vm-without-bootloader, and vm1 to vm-bios-with-grub-bootloader ?
 
 1. VM testing
-
-1. https://flake.parts/options/disko.html ?
 
 1. nix GC automatically
 

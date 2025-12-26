@@ -20,6 +20,8 @@ Or, historically: Edit `/etc/nixos/configuration.nix` and `sudo nixos-rebuild sw
 
 - https://www.haskellforall.com/2023/01/announcing-nixos-rebuild-new-deployment.html
 
+See also [`nixos-anywhere`](nixos-anywhere.md).
+
 ## Images
 
     nixos-rebuild build-image --flake .#myhostname

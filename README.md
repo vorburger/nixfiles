@@ -18,6 +18,8 @@ and clone this repo, then `cd` (which will automagically put `nixos-rebuild` on 
 
 It should `ssh` into the VM (alternatively, you can login as `tester` with password `x` on the Console).
 
+This does not (need to install) use any bootloader, as `qemu` directly boots the kernel. (TODO Remove the Disko and GRUB bits from `test1.nix`.)
+
 ### Installer ISO
 
     nix build .#nixosConfigurations.installer.config.system.build.isoImage
@@ -32,7 +34,15 @@ You'll be auto logged on the console as `nixos` (without password);
 type `ip addr` to find out the IP address assigned via DHCP; then SSH into
 it with the baked-in SSH public key as user `nixos`:
 
-    ssh nixos@192.168.122.3
+    ssh -o StrictHostKeyChecking=no -o "UserKnownHostsFile /dev/null" nixos@192.168.122.3
+
+And now we can use [NixOS Anywhere](docs/docs/reference/nixos-anywhere.md) to install NixOS:
+
+    nix run github:nix-community/nixos-anywhere -- --flake .#vm1 --target-host nixos@192.168.122.3
+
+If it works and completes successfully, you can then `ssh` into the installed VM as user `vorburger`:
+
+    ssh -A vorburger@192.168.122.3
 
 ## Docs
 
