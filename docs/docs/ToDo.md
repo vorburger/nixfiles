@@ -2,7 +2,12 @@
 
 ## Machines
 
-1. VM vorburger sudo password?!
+1. VM vorburger sudo password?! None - but enable this:
+
+       security.pam.sshAgentAuth.enable = true;
+       security.sudo.extraConfig = ''
+         Defaults env_keep += SSH_AUTH_SOCK
+       '';
 
 1. Remove Disko & GRUB from test1, if possible
 
@@ -10,7 +15,7 @@
 
 1. Rename test1 to vm-without-bootloader, and vm1 to vm-bios-with-grub-bootloader ?
 
-1. VM testing
+1. VM testing; https://github.com/anatol/vmtest for `systemctl status` (porcelaim?)
 
 1. nix GC automatically
 
