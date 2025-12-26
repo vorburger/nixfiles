@@ -20,15 +20,15 @@
         networking.networkmanager.enable = true;
         systemd.services.NetworkManager-wait-online.enable = true;
 
-        # virtualisation.forwardPorts = [
-        #   {
-        #     from = "host";
-        #     host.port = 2222;
-        #     guest.port = 22;
-        #     # You can optionally specify the protocol (default is "tcp")
-        #     # protocol = "tcp";
-        #   }
-        # ];
+        virtualisation.vmVariant = {
+          virtualisation.forwardPorts = [
+            {
+              from = "host";
+              host.port = 2222;
+              guest.port = 22;
+            }
+          ];
+        };
 
         system.stateVersion = "25.05";
       }
