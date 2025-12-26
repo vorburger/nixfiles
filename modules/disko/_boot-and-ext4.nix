@@ -2,8 +2,7 @@
   disko.devices = {
     disk = {
       my-disk = {
-        # TODO Make device configurable
-        device = "/dev/sda";
+        device = "/dev/vda";
         type = "disk";
         content = {
           type = "gpt";

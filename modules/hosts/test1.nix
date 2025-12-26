@@ -11,8 +11,9 @@
       ../users/_tester.nix
       ../users/_vorburger.nix
       {
+        # This isn't really used... (but required to make `nix flake check` happy)
         boot.loader.grub.enable = true;
-        boot.loader.grub.devices = [ "/dev/sda" ]; # TODO use disko to get device
+        boot.loader.grub.devices = [ "/dev/vda" ];
 
         networking.hostName = "test1";
         system.stateVersion = "25.05";

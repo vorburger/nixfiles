@@ -9,12 +9,15 @@
     ];
   };
 
+  # NOT services.getty.autologinUser = "vorburger";
+
   users.users.vorburger = {
+    description = "Michael Vorburger";
     openssh.authorizedKeys.keys = import ./_vorburger-authorizedKeys.nix;
     isNormalUser = true;
     extraGroups = [
       "wheel"
-      # ? "networkmanager"
+      "networkmanager"
     ];
     packages = with pkgs; [
       # Anything not on https://github.com/vorburger/vorburger-dotfiles-bin-etc/tree/main/dotfiles/home-manager ...

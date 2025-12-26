@@ -1,5 +1,7 @@
 # `nixos-rebuild` NixOS Rebuild
 
+    man nixos-rebuild
+
 - Manual: https://www.mankier.com/8/nixos-rebuild
 - Wiki: https://wiki.nixos.org/wiki/Nixos-rebuild
 - Source: https://github.com/NixOS/nixpkgs/blob/master/pkgs/os-specific/linux/nixos-rebuild/nixos-rebuild.sh
@@ -17,6 +19,10 @@ Or, historically: Edit `/etc/nixos/configuration.nix` and `sudo nixos-rebuild sw
 ## Remote
 
 - https://www.haskellforall.com/2023/01/announcing-nixos-rebuild-new-deployment.html
+
+## Images
+
+    nixos-rebuild build-image --flake .#myhostname
 
 ## Alternatives
 

@@ -10,6 +10,10 @@
 
 1. nix GC automatically
 
+1. `nixos-rebuild ... --specialisation XYZ` for different use cases?
+
+1. How to do LUKS encryption?
+
 1. Impermanence
 
 1. `/nix` on separate partition (or LV)
