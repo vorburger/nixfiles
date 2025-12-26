@@ -4,6 +4,15 @@
     system = "x86_64-linux";
     modules = [
       inputs.disko.nixosModules.disko
+      inputs.home-manager.nixosModules.home-manager
+      {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.extraSpecialArgs = {
+          envHOME = "";
+        };
+        home-manager.users.vorburger = import "${inputs.vorburger-dotfiles}/home.nix";
+      }
       ../disko/_boot-and-ext4.nix
       ../users/_tester.nix
       ../users/_vorburger.nix
