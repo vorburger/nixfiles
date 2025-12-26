@@ -11,9 +11,10 @@
       # ? "networkmanager"
     ];
     packages = with pkgs; [
-      # TODO Replace with https://github.com/vorburger/vorburger-dotfiles-bin-etc/tree/main/dotfiles/home-manager ...
-      git
+      # Anything not on https://github.com/vorburger/vorburger-dotfiles-bin-etc/tree/main/dotfiles/home-manager ...
       nano
     ];
+    shell = pkgs.fish;
   };
+  programs.fish.enable = true;
 }
