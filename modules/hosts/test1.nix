@@ -6,7 +6,7 @@
       # TODO Modularize all this properly...
 
       inputs.disko.nixosModules.disko
-      ./disko/_boot-and-ext4.nix
+      ../disko/_boot-and-ext4.nix
 
       # TODO users/vorburger.nix
 
