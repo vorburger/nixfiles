@@ -27,7 +27,7 @@
       ../users/_tester.nix
       ../users/_vorburger.nix
       ../services/_openssh.nix
-      (_: {
+      {
         boot.loader.grub.enable = true;
         boot.loader.grub.devices = [ "/dev/sda" ]; # TODO use disko to get device
 
@@ -46,7 +46,7 @@
         # ];
 
         system.stateVersion = "25.05";
-      })
+      }
     ];
   };
 }
