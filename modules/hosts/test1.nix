@@ -7,15 +7,13 @@
       ../disko/_boot-and-ext4.nix
       ../users/_tester.nix
       ../users/_vorburger.nix
+      ../services/_openssh.nix
       (_: {
         boot.loader.grub.enable = true;
         boot.loader.grub.devices = [ "/dev/sda" ]; # TODO use disko to get device
 
-        # TODO Verify if hostname is automatically set from flake name / attribute name or not?
         networking.hostName = "test1";
 
-        services.openssh.enable = true;
-        services.openssh.settings.PermitRootLogin = "prohibit-password";
         # virtualisation.forwardPorts = [
         #   {
         #     from = "host";
