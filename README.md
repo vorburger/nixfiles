@@ -21,9 +21,13 @@ It should `ssh` into the VM (alternatively, you can login as `tester` with passw
 ### Installer ISO
 
     nix build .#nixosConfigurations.installer.config.system.build.isoImage
+    sudo chown vorburger:vorburger result/iso/nixos-minimal-*-linux.iso
 
-Run `result/iso/nixos-minimal-*-x86_64-linux.iso` in e.g. GNOME Boxes,
-or write to USB stick and boot a physical machine from it, and login as `nixos` (no password).
+Run `result/iso/nixos-minimal-*-x86_64-linux.iso` in e.g. GNOME Boxes; login on the console as `nixos` (without password), or SSH into it as `nixos` user with the baked-in SSH public key.
+
+To write it to USB stick and boot a physical machine from it:
+
+    sudo dd if=result/iso/nixos-*.iso of=/dev/... status=progress
 
 ## Docs
 
