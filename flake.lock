@@ -203,6 +203,27 @@
         "type": "github"
       }
     },
+    "home-manager_2": {
+      "inputs": {
+        "nixpkgs": [
+          "vorburger-dotfiles",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1766553851,
+        "narHash": "sha256-hHKQhHkXxuPJwLkI8wdu826GLV5AcuW9/HVdc9eBnTU=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "7eca7f7081036a7b740090994c9ec543927f89a7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
     "import-tree": {
       "locked": {
         "lastModified": 1763762820,
@@ -260,6 +281,27 @@
       "original": {
         "owner": "nix-community",
         "repo": "nix-github-actions",
+        "type": "github"
+      }
+    },
+    "nix-index-database": {
+      "inputs": {
+        "nixpkgs": [
+          "vorburger-dotfiles",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1765267181,
+        "narHash": "sha256-d3NBA9zEtBu2JFMnTBqWj7Tmi7R5OikoU2ycrdhQEws=",
+        "owner": "nix-community",
+        "repo": "nix-index-database",
+        "rev": "82befcf7dc77c909b0f2a09f5da910ec95c5b78f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nix-index-database",
         "type": "github"
       }
     },
@@ -391,6 +433,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_9": {
+      "locked": {
+        "lastModified": 1766309749,
+        "narHash": "sha256-3xY8CZ4rSnQ0NqGhMKAy5vgC+2IVK0NoVEzDoOh4DA4=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "a6531044f6d0bef691ea18d4d4ce44d0daa6e816",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "poetry2nix": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -482,7 +540,8 @@
           "nixpkgs"
         ],
         "systems": "systems_3",
-        "treefmt-nix": "treefmt-nix_2"
+        "treefmt-nix": "treefmt-nix_2",
+        "vorburger-dotfiles": "vorburger-dotfiles"
       }
     },
     "systems": {
@@ -592,6 +651,28 @@
       "original": {
         "owner": "pyproject-nix",
         "repo": "uv2nix",
+        "type": "github"
+      }
+    },
+    "vorburger-dotfiles": {
+      "inputs": {
+        "home-manager": "home-manager_2",
+        "nix-index-database": "nix-index-database",
+        "nixpkgs": "nixpkgs_9"
+      },
+      "locked": {
+        "dir": "dotfiles/home-manager",
+        "lastModified": 1766755158,
+        "narHash": "sha256-Pi0o4k0VRspvDKSzblQxNMJR3KwYL9jziQ4fgWJ+gek=",
+        "owner": "vorburger",
+        "repo": "vorburger-dotfiles-bin-etc",
+        "rev": "2f684d95040e9123dbdc5fb5cd9e5a5529de9a52",
+        "type": "github"
+      },
+      "original": {
+        "dir": "dotfiles/home-manager",
+        "owner": "vorburger",
+        "repo": "vorburger-dotfiles-bin-etc",
         "type": "github"
       }
     }

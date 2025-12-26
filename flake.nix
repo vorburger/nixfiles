@@ -22,6 +22,7 @@
     nixpkgs-lib.follows = "nixpkgs";
     systems.url = "github:nix-systems/default";
     treefmt-nix.url = "github:numtide/treefmt-nix";
+    vorburger-dotfiles.url = "github:vorburger/vorburger-dotfiles-bin-etc?dir=dotfiles/home-manager";
   };
 
 }
