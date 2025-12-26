@@ -9,12 +9,21 @@ and the [`dotfiles/NixOS`](https://github.com/vorburger/vorburger-dotfiles-bin-e
 
 ## Usage
 
+### Test VM
+
 Install [Nix](https://nixos.org/download) and [direnv](https://direnv.net/docs/installation.html),
-and clone this repo, then cd (which will automagically put `nixos-rebuild` on your PATH) and run:
+and clone this repo, then `cd` (which will automagically put `nixos-rebuild` on your PATH) and run:
 
     bin/vm.sh test1
 
-Login as `tester` with password `x` on the Console.
+It should `ssh` into the VM (alternatively, you can login as `tester` with password `x` on the Console).
+
+### Installer ISO
+
+    nix build .#nixosConfigurations.installer.config.system.build.isoImage
+
+Run `result/iso/nixos-minimal-*-x86_64-linux.iso` in e.g. GNOME Boxes,
+or write to USB stick and boot a physical machine from it, and login as `nixos` (no password).
 
 ## Docs
 
