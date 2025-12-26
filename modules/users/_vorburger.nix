@@ -2,7 +2,12 @@
 {
   imports = [ inputs.home-manager.nixosModules.home-manager ];
 
-  home-manager.users.vorburger = import "${inputs.vorburger-dotfiles}/home.nix";
+  home-manager.users.vorburger = {
+    imports = [
+      "${inputs.vorburger-dotfiles}/home.nix"
+      inputs.nix-index-database.homeModules.nix-index
+    ];
+  };
 
   users.users.vorburger = {
     openssh.authorizedKeys.keys = [
