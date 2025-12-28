@@ -42,6 +42,8 @@
 
 1. Have both unstable and fixed nix pkgs - for different hosts
 
+1. Try https://nixcademy.com/posts/auto-growing-nixos-appliance-images-with-systemd-repart/
+
 ## Gemini CLI
 
 1. Reads all `docs/**.md` in GEMINI.md ?!
