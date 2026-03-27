@@ -1,5 +1,9 @@
 # ToDo
 
+## Nix
+
+1. Move `nix-update` skill to `nixfiles` repo - but reference it as input to make it available here... how?
+
 ## Machines
 
 1. VM vorburger sudo password?! None - but enable this:
