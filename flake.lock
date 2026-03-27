@@ -574,7 +574,6 @@
         "nixpkgs-lib": [
           "nixpkgs"
         ],
-        "systems": "systems_3",
         "treefmt-nix": "treefmt-nix_2",
         "vorburger-dotfiles": "vorburger-dotfiles"
       }
@@ -608,18 +607,6 @@
         "repo": "default",
         "type": "github"
       }
-    },
-    "systems_3": {
-      "flake": false,
-      "locked": {
-        "path": "./nix-systems.nix",
-        "type": "path"
-      },
-      "original": {
-        "path": "./nix-systems.nix",
-        "type": "path"
-      },
-      "parent": []
     },
     "treefmt-nix": {
       "inputs": {

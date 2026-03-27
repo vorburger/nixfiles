@@ -1,7 +1,9 @@
 { inputs, ... }:
 {
   imports = [
-    inputs.flake-file.flakeModules.dendritic
+    (inputs.flake-file + "/modules/dendritic/dendritic.nix")
+    (inputs.flake-file + "/modules/dendritic/basic.nix")
+    (inputs.flake-file + "/modules/dendritic/nixpkgs.nix")
   ];
   flake-file = {
     inputs = {
