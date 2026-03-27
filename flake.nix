@@ -21,7 +21,7 @@
     nix-index-database.url = "github:nix-community/nix-index-database";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-lib.follows = "nixpkgs";
-    systems.url = "github:nix-systems/default";
+    systems.url = "path:./nix-systems.nix";
     treefmt-nix.url = "github:numtide/treefmt-nix";
     vorburger-dotfiles.url = "github:vorburger/vorburger-dotfiles-bin-etc?dir=dotfiles/home-manager";
   };
