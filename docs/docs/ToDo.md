@@ -4,6 +4,8 @@
 
 1. Move `nix-update` skill to `nixfiles` repo - but reference it as input to make it available here... how?
 
+1. `/nix-update` [failures](https://github.com/vorburger/nixfiles/commit/713ec2946a67ce3e57acd57d955c2c8ccb3c16dc) closer look, one by one
+
 ## Machines
 
 1. VM vorburger sudo password?! None - but enable this:
