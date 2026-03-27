@@ -1,4 +1,9 @@
-{ inputs, pkgs, ... }:
+{
+  inputs,
+  pkgs,
+  config,
+  ...
+}:
 {
   imports = [ inputs.home-manager.nixosModules.home-manager ];
 
@@ -40,6 +45,7 @@
 
   # See https://github.com/vorburger/vorburger-dotfiles-bin-etc/blob/main/dotfiles/home-manager/flake.nix
   home-manager.extraSpecialArgs = {
-    envHOME = "";
+    envHOME = config.users.users.vorburger.home;
+    envUSER = config.users.users.vorburger.name;
   };
 }
