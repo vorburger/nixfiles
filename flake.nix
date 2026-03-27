@@ -11,8 +11,8 @@
     disko.url = "github:nix-community/disko";
     flake-file.url = "github:vic/flake-file";
     flake-parts = {
-      inputs.nixpkgs-lib.follows = "nixpkgs-lib";
       url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs-lib";
     };
     git-hooks.url = "github:cachix/git-hooks.nix";
     home-manager.url = "github:nix-community/home-manager";
@@ -24,5 +24,4 @@
     treefmt-nix.url = "github:numtide/treefmt-nix";
     vorburger-dotfiles.url = "github:vorburger/vorburger-dotfiles-bin-etc?dir=dotfiles/home-manager";
   };
-
 }
