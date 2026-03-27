@@ -4,10 +4,12 @@
 
 1. VM vorburger sudo password?! None - but enable this:
 
-       security.pam.sshAgentAuth.enable = true;
-       security.sudo.extraConfig = ''
-         Defaults env_keep += SSH_AUTH_SOCK
-       '';
+   ```nix
+   security.pam.sshAgentAuth.enable = true;
+   security.sudo.extraConfig = ''
+   Defaults env_keep += SSH_AUTH_SOCK
+   '';
+   ```
 
 1. Remove Disko & GRUB from test1, if possible
 
