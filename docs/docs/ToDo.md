@@ -35,7 +35,7 @@
 
 1. `/nix` on separate partition (or LV)
 
-1. Cloud VMs? `imports = [ "${modulesPath}/virtualisation/amazon-image.nix" ]` ? See e.g. [here](https://www.haskellforall.com/2023/01/announcing-nixos-rebuild-new-deployment.html).
+1. Cloud VMs? `imports = [ "${modulesPath}/virtualisation/amazon-image.nix" ]` ? See e.g. [this announcement](https://www.haskellforall.com/2023/01/announcing-nixos-rebuild-new-deployment.html).
 
 1. Workstation 🖥️ with `pam_u2f.so` for `sudo` with SK
 
