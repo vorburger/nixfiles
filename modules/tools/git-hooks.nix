@@ -8,7 +8,9 @@
 
   perSystem =
     {
+      pkgs,
       self',
+      config,
       ...
     }:
     {
@@ -17,13 +19,10 @@
         enable = true;
         entry = lib.getExe self'.formatter;
       };
-      # TODO Make 'pre-commit' available on PATH inside "nix devshell"...
-      # devshells.default = {
-      #   devshell.packages = [ config.pre-commit.settings.enabledPackages ];
-      # };
-      ## devShells.default = pkgs.mkShell {
-      ##  shellHook = "${config.pre-commit.shellHook}";
-      ##  packages = config.pre-commit.settings.enabledPackages;
-      #};
+
+      devshells.default = {
+        devshell.packages = [ pkgs.pre-commit ] ++ config.pre-commit.settings.enabledPackages;
+        devshell.startup.pre-commit.text = config.pre-commit.installationScript;
+      };
     };
 }
