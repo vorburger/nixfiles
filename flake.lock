@@ -72,11 +72,11 @@
     },
     "flake-file": {
       "locked": {
-        "lastModified": 1773637821,
-        "narHash": "sha256-Cp1x/5/97iNjXOI5hLCA51BwR6hc1dWJiZp4VPogkTw=",
+        "lastModified": 1774666175,
+        "narHash": "sha256-WaZxvtOvVNikiNTen2Emhds2RvzFCWIb7KU9C0eWrNA=",
         "owner": "vic",
         "repo": "flake-file",
-        "rev": "bb9fbe00ba6a1945fbdd6973c2585ab770f404b0",
+        "rev": "953d01f3ae5ba50869c5e1248062198f73e971bf",
         "type": "github"
       },
       "original": {
@@ -190,11 +190,11 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1774626137,
-        "narHash": "sha256-1WelwA45Xm4glTG8R9IX9jYeFKDG2HbR79jAauLezUE=",
+        "lastModified": 1774647770,
+        "narHash": "sha256-UNNi14XiqRWWjO8ykbFwA5wRwx7EscsC+GItOVpuGjc=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "9df3a639007cfe0d074433f7fc225ea94f877d08",
+        "rev": "02371c05a04a2876cf92e2d67a259e8f87399068",
         "type": "github"
       },
       "original": {
@@ -681,11 +681,11 @@
       },
       "locked": {
         "dir": "dotfiles/home-manager",
-        "lastModified": 1774640819,
-        "narHash": "sha256-9J8Nwdqrx6pIOne+XMfNriv5QTlJXuoDZ4nAnpuHzqU=",
+        "lastModified": 1774699601,
+        "narHash": "sha256-FQG93aY310XG+HdUVpFA0O6Mvq0zUOn7NCxCmZu/D3c=",
         "owner": "vorburger",
         "repo": "vorburger-dotfiles-bin-etc",
-        "rev": "c046364d440321be0c339d74a0a35b2b96951bd4",
+        "rev": "dee4d937514a7f6bf4fd09f015e2a59f2419b561",
         "type": "github"
       },
       "original": {
