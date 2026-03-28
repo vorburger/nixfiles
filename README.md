@@ -28,7 +28,13 @@ This does not (need to install) use any bootloader, as `qemu` directly boots the
 Run `result/iso/nixos-minimal-*-x86_64-linux.iso` in e.g. GNOME Boxes.
 To write it to USB stick and boot a physical machine from it:
 
-    sudo dd if=result/iso/nixos-*.iso of=/dev/... status=progress
+In Bash/Zsh:
+
+    sudo dd if=$(realpath result/iso/nixos-*.iso) of=/dev/... status=progress
+
+In Fish shell:
+
+    sudo dd if=(realpath result/iso/nixos-*.iso) of=/dev/... status=progress
 
 You'll be auto logged on the console as `nixos` (without password);
 type `ip addr` to find out the IP address assigned via DHCP; then SSH into
