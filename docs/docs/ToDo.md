@@ -8,6 +8,8 @@
 
 ## Machines
 
+1. WiFi setup baked in (using a secret passed as CLI argument)
+
 1. VM vorburger sudo password?! None - but enable this:
 
    ```nix

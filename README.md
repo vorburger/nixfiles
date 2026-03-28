@@ -37,8 +37,17 @@ In Fish shell:
     sudo dd if=(realpath result/iso/nixos-*.iso) of=/dev/... status=progress
 
 You'll be auto logged on the console as `nixos` (without password);
-type `ip addr` to find out the IP address assigned via DHCP; then SSH into
-it with the baked-in SSH public key as user `nixos`:
+type `ip addr` to find out the IP address assigned via DHCP.
+
+If it's a laptop without Ethernet that needs to get on a WiFi, then use:
+
+    nmctl radio wifi on
+    nmcli device wifi list
+    nmcli device wifi connect "YourSSID" password "YourPassword"
+    ping 8.8.8.8
+    ip addr
+
+Then SSH into it with the baked-in SSH public key as user `nixos`:
 
     ssh -o StrictHostKeyChecking=no -o "UserKnownHostsFile /dev/null" nixos@192.168.122.3
 
