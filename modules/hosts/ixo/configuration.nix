@@ -13,34 +13,42 @@
       ../../services/_nix.nix
       ../../services/_initial-secrets.nix
       ../../users/_vorburger.nix
-      {
-        # Help is available on https://nixos.org/nixos/options.html and in the configuration.nix(5) man page.
-        networking.hostName = "ixo";
+      (
+        { pkgs, ... }:
+        {
+          # Help is available on https://nixos.org/nixos/options.html and in the configuration.nix(5) man page.
+          networking.hostName = "ixo";
 
-        services.initial-secrets.enable = true;
+          services.initial-secrets.enable = true;
 
-        boot.loader.systemd-boot.enable = true;
-        boot.loader.efi.canTouchEfiVariables = true;
+          boot.loader.systemd-boot.enable = true;
+          boot.loader.efi.canTouchEfiVariables = true;
 
-        # TODO Factor all of this out into an _local.nix, and re-use it...
-        time.timeZone = "Europe/Zurich";
-        i18n.defaultLocale = "en_GB.UTF-8";
-        services.xserver.xkb = {
-          layout = "ch";
-          variant = "";
-        };
-        console.keyMap = "sg";
+          # TODO Factor all of this out into an _local.nix, and re-use it...
+          time.timeZone = "Europe/Zurich";
+          i18n.defaultLocale = "en_GB.UTF-8";
+          services.xserver.xkb = {
+            layout = "ch";
+            variant = "";
+          };
 
-        # Some programs need SUID wrappers, can be configured further or are
-        # started in user sessions.
-        # programs.mtr.enable = true;
-        # programs.gnupg.agent = {
-        #   enable = true;
-        #   enableSSHSupport = true;
-        # };
+          console = {
+            font = "ter-v32n";
+            packages = [ pkgs.terminus_font ];
+            keyMap = "sg";
+          };
 
-        system.stateVersion = "26.05";
-      }
+          # Some programs need SUID wrappers, can be configured further or are
+          # started in user sessions.
+          # programs.mtr.enable = true;
+          # programs.gnupg.agent = {
+          #   enable = true;
+          #   enableSSHSupport = true;
+          # };
+
+          system.stateVersion = "26.05";
+        }
+      )
     ];
   };
 }

@@ -2,8 +2,6 @@
 
 ## Nix
 
-1. Bigger Console Font Size
-
 1. Fix Gemini CLI policy
 
 1. WiFi setup baked in into installer, as it now is for ixo
