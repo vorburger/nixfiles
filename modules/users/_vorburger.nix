@@ -48,4 +48,6 @@
     envHOME = config.users.users.vorburger.home;
     envUSER = config.users.users.vorburger.name;
   };
+
+  nix.settings.trusted-users = [ "vorburger" ];
 }

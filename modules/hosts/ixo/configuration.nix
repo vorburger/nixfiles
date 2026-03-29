@@ -10,6 +10,7 @@
       (import ../../disko/_boot-and-ext4.nix { device = "/dev/nvme0n1"; })
       ../../services/_networking.nix
       ../../services/_openssh.nix
+      ../../services/_nix.nix
       ../../services/_initial-secrets.nix
       ../../users/_vorburger.nix
       {

@@ -85,6 +85,16 @@ Let's store the IP and name of that new machine, and then do the following, in t
 
     nix run github:nix-community/nixos-anywhere -- --extra-files ~/VAULT/$HOSTNEW/extra-files --flake .#$HOSTNEW --target-host nixos@$IP
 
+### Maintenance
+
+#### Remote
+
+Change `*.nix` files for any host on any host, and then just:
+
+    nixos-rebuild switch --flake .#$HOSTNEW --target-host $HOSTNEW --use-remote-sudo --ask-sudo-password
+
+#### Local
+
 ## Docs
 
 `nix build .#documentation` produces the static HTML documentation site in `result/`.

@@ -2,11 +2,11 @@
 
 ## Nix
 
+1. Bigger Console Font Size
+
 1. Fix Gemini CLI policy
 
-1. password for interactive login?
-
-1. WiFi setup baked in into installer (using a secret passed as CLI argument)
+1. WiFi setup baked in into installer, as it now is for ixo
 
 1. Make a much more minimal initial host config
 
