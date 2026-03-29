@@ -28,13 +28,15 @@
           time.timeZone = "Europe/Zurich";
           i18n.defaultLocale = "en_GB.UTF-8";
           services.xserver.xkb = {
+            # TODO Avoid repetition with similar in kmscon
             layout = "ch";
-            variant = "";
+            variant = "de";
           };
 
           console = {
             font = "sun12x22";
             packages = [ pkgs.kbd ];
+            # TODO Centralize this in the same place as the xserver.xkb and kmscon
             keyMap = "sg";
           };
 
@@ -47,7 +49,8 @@
                 package = pkgs.jetbrains-mono;
               }
             ];
-            extraOptions = "--font-size=24";
+            # TODO Avoid repetition with similar in services.xserver.xkb
+            extraOptions = "--font-size=24 --xkb-layout=ch --xkb-variant=de";
           };
 
           # Some programs need SUID wrappers, can be configured further or are

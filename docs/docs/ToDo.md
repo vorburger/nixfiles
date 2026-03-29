@@ -4,8 +4,6 @@
 
 1. Gemini CLI
 
-1. Keyboard layout
-
 1. Ctrl key mapping
 
 1. How to solve <> problem
@@ -25,7 +23,13 @@
 
 1. https://github.com/NixOS/nixos-hardware/blob/master/lenovo/thinkpad/x1/12th-gen/default.nix
 
+1. TMUX in Console
+
 1. nix GC automatically
+
+1. `pass`, via ext. YK
+
+1. Graphical
 
 1. Make a much more minimal initial host config
 
