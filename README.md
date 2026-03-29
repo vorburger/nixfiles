@@ -60,16 +60,15 @@ If it works and completes successfully, you can then `ssh` into the installed VM
 
 If it's a machine without Ethernet that needs to get on a WiFi, then use:
 
-    nmctl radio wifi on
-    nmcli device wifi list
-    nmcli device wifi connect "YourSSID" password "YourPassword"
+    nmtui
     ping 8.8.8.8
     ip addr
 
-Let's store the IP and name of that new machine, and then do the following:
+Let's store the IP and name of that new machine, and then do the following, in this repo, not the new machine:
 
     export IP=192.168.1.121
     export HOSTNEW=xyz
+
     mkdir modules/hosts/$HOSTNEW
     cp modules/hosts/vm1/configuration.nix modules/hosts/$HOSTNEW/
     # TODO Automate this?

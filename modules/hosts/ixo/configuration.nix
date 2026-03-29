@@ -15,9 +15,8 @@
         # Help is available on https://nixos.org/nixos/options.html and in the configuration.nix(5) man page.
         networking.hostName = "ixo";
 
-        boot.loader.grub.enable = true;
-        # NOT boot.loader.grub.device = "/dev/vda"; # NOT vda1, which is the ESP!
-        # boot.loader.grub.useOSProber = true;
+        boot.loader.systemd-boot.enable = true;
+        boot.loader.efi.canTouchEfiVariables = true;
 
         # TODO Factor all of this out into an _local.nix, and re-use it...
         time.timeZone = "Europe/Zurich";
