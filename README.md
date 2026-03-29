@@ -71,10 +71,19 @@ Let's store the IP and name of that new machine, and then do the following, in t
 
     mkdir modules/hosts/$HOSTNEW
     cp modules/hosts/vm1/configuration.nix modules/hosts/$HOSTNEW/
+
     # TODO Automate this?
     # edit modules/hosts/$HOSTNEW/configuration.nix: Change the hostname (twice) & device
+
     ssh nixos@$IP "nixos-generate-config --no-filesystems --dir /tmp && cat /tmp/hardware-configuration.nix" >modules/hosts/$HOSTNEW/_hardware-configuration.nix
-    nix run github:nix-community/nixos-anywhere -- --flake .#$HOSTNEW --target-host nixos@$IP
+
+    mkdir -p ~/VAULT/$HOSTNEW/extra-files/etc/secrets
+    mkdir -p ~/VAULT/$HOSTNEW/extra-files/etc/NetworkManager/system-connections
+    echo "$(mkpasswd -m sha-512)" > ~/VAULT/$HOSTNEW/extra-files/etc/secrets/vorburger-password
+    # ... create your .nmconnection file in ~/VAULT/$HOSTNEW/extra-files/etc/NetworkManager/system-connections/ ...
+    chmod 600 ~/VAULT/$HOSTNEW/extra-files/etc/NetworkManager/system-connections/*.nmconnection
+
+    nix run github:nix-community/nixos-anywhere -- --extra-files ~/VAULT/$HOSTNEW/extra-files --flake .#$HOSTNEW --target-host nixos@$IP
 
 ## Docs
 

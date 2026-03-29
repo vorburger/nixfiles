@@ -4,19 +4,23 @@
 
 1. Fix Gemini CLI policy
 
-1. #AI "The new ixo host introduced in the previous commit doesn't boot... NixOS doesn't even show up on its Firmware UEFI menu options. What could be the problem?"
-
 1. password for interactive login?
+
+1. WiFi setup baked in into installer (using a secret passed as CLI argument)
+
+1. Make a much more minimal initial host config
+
+1. nix GC automatically
 
 1. #AI extract an `_local.nix` from vm1/configuration.nix, re-use it in ixo/configuration.nix
 
-1. Make nixos-anywhere avabile in the dev shell of this project
+1. #AI Make nixos-anywhere available in the dev shell of this project
+
+1. Use `sopsnix` or `agenix` for secrets management (instead of `nixos-anywhere --extra-files`)
 
 1. Move `nix-update` skill to `nixfiles` repo - but reference it as input to make it available here... how?
 
 ## Machines
-
-1. WiFi setup baked in (using a secret passed as CLI argument)
 
 1. VM vorburger sudo password?! None - but enable this:
 
@@ -34,8 +38,6 @@
 1. Rename test1 to vm-without-bootloader, and vm1 to vm-bios-with-grub-bootloader ?
 
 1. VM testing; https://github.com/anatol/vmtest for `systemctl status` (porcelaim?)
-
-1. nix GC automatically
 
 1. `nixos-rebuild ... --specialisation XYZ` for different use cases?
 

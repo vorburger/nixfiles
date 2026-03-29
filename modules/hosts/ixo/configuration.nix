@@ -10,10 +10,13 @@
       (import ../../disko/_boot-and-ext4.nix { device = "/dev/nvme0n1"; })
       ../../services/_networking.nix
       ../../services/_openssh.nix
+      ../../services/_initial-secrets.nix
       ../../users/_vorburger.nix
       {
         # Help is available on https://nixos.org/nixos/options.html and in the configuration.nix(5) man page.
         networking.hostName = "ixo";
+
+        services.initial-secrets.enable = true;
 
         boot.loader.systemd-boot.enable = true;
         boot.loader.efi.canTouchEfiVariables = true;
