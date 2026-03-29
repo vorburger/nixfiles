@@ -10,15 +10,26 @@
 
 1. How to solve <> problem
 
-1. Smarter `sudo`
+1. Smarter `sudo` - pick up _Allow user to run nixos-rebuild without password (current)_ chat re. `sudo`, try:
+   - `services.fprintd.enable = true; security.pam.services.sudo.fprintAuth = true;`
+     Then you enroll with `fprintd-enroll`.
+   - Try `services.howdy.enable = true; security.pam.services.sudo.howdyAuth = true;`
+   - YK, after all? But battery... vs TPM?
+   Revert https://github.com/vorburger/nixfiles/commit/68714121b6aa42efd2d428a2070cbebe459f564e
 
 1. SSH with TPM but also still touch or other confirmation
 
-1. WiFi setup baked in into installer, as it now is for ixo
+1. home-manager
+
+1. alias j - needs autojump?
+
+1. https://github.com/NixOS/nixos-hardware/blob/master/lenovo/thinkpad/x1/12th-gen/default.nix
+
+1. nix GC automatically
 
 1. Make a much more minimal initial host config
 
-1. nix GC automatically
+1. WiFi setup baked in into installer, as it now is for ixo
 
 1. #AI extract an `_local.nix` from vm1/configuration.nix, re-use it in ixo/configuration.nix
 
@@ -27,6 +38,8 @@
 1. Use `sopsnix` or `agenix` for secrets management (instead of `nixos-anywhere --extra-files`)
 
 1. Move `nix-update` skill to `nixfiles` repo - but reference it as input to make it available here... how?
+
+1. Blog about my NixOS experience ([similar to this](https://michael.stapelberg.ch/posts/2025-06-01-nixos-installation-declarative/))
 
 ## Machines
 
