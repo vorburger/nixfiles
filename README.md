@@ -9,6 +9,8 @@ and the [`dotfiles/NixOS`](https://github.com/vorburger/vorburger-dotfiles-bin-e
 
 ## Usage
 
+<!-- TODO Move everything that follows into docs/ ... -->
+
 ### Test VM
 
 Install [Nix](https://nixos.org/download) and [direnv](https://direnv.net/docs/installation.html),
@@ -36,18 +38,13 @@ In Fish shell:
 
     sudo dd if=(realpath result/iso/nixos-*.iso) of=/dev/... status=progress
 
-You'll be auto logged on the console as `nixos` (without password);
-type `ip addr` to find out the IP address assigned via DHCP.
+Boot this ISO; you'll be auto logged on the console as `nixos` (without password).
 
-If it's a laptop without Ethernet that needs to get on a WiFi, then use:
+#### VM
 
-    nmctl radio wifi on
-    nmcli device wifi list
-    nmcli device wifi connect "YourSSID" password "YourPassword"
-    ping 8.8.8.8
-    ip addr
+Type `ip addr` to find out the IP address assigned via DHCP.
 
-Then SSH into it with the baked-in SSH public key as user `nixos`:
+Then SSH into it with the baked-in SSH public key as user `nixos`, for a VM probably use:
 
     ssh -o StrictHostKeyChecking=no -o "UserKnownHostsFile /dev/null" nixos@192.168.122.3
 
@@ -58,6 +55,27 @@ And now we can use [NixOS Anywhere](docs/docs/reference/nixos-anywhere.md) to in
 If it works and completes successfully, you can then `ssh` into the installed VM as user `vorburger`:
 
     ssh -A vorburger@192.168.122.3
+
+#### BM
+
+If it's a machine without Ethernet that needs to get on a WiFi, then use:
+
+    nmctl radio wifi on
+    nmcli device wifi list
+    nmcli device wifi connect "YourSSID" password "YourPassword"
+    ping 8.8.8.8
+    ip addr
+
+Let's store the IP and name of that new machine, and then do the following:
+
+    export IP=192.168.1.121
+    export HOSTNEW=xyz
+    mkdir modules/hosts/$HOSTNEW
+    cp modules/hosts/vm1/configuration.nix modules/hosts/$HOSTNEW/
+    # TODO Automate this?
+    # edit modules/hosts/$HOSTNEW/configuration.nix: Change the hostname (twice) & device
+    ssh nixos@$IP "nixos-generate-config --no-filesystems --dir /tmp && cat /tmp/hardware-configuration.nix" >modules/hosts/$HOSTNEW/_hardware-configuration.nix
+    nix run github:nix-community/nixos-anywhere -- --flake .#$HOSTNEW --target-host nixos@$IP
 
 ## Docs
 

@@ -6,7 +6,7 @@
     modules = [
       # Disko isn't really used... TODO Figure out how to remove this...
       inputs.disko.nixosModules.disko
-      ../disko/_boot-and-ext4.nix
+      (import ../disko/_boot-and-ext4.nix { device = "/dev/vda"; })
 
       ../services/_networking.nix
       ../services/_openssh.nix

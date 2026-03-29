@@ -1,8 +1,12 @@
 {
+  device,
+  ...
+}:
+{
   disko.devices = {
     disk = {
       my-disk = {
-        device = "/dev/vda";
+        inherit device;
         type = "disk";
         content = {
           type = "gpt";

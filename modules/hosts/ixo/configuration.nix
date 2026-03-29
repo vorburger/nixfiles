@@ -1,19 +1,19 @@
 { inputs, ... }:
 {
-  flake.nixosConfigurations.vm1 = inputs.nixpkgs.lib.nixosSystem {
+  flake.nixosConfigurations.ixo = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = { inherit inputs; };
 
     modules = [
       ./_hardware-configuration.nix
       inputs.disko.nixosModules.disko
-      (import ../../disko/_boot-and-ext4.nix { device = "/dev/vda"; })
+      (import ../../disko/_boot-and-ext4.nix { device = "/dev/nvme0n1"; })
       ../../services/_networking.nix
       ../../services/_openssh.nix
       ../../users/_vorburger.nix
       {
         # Help is available on https://nixos.org/nixos/options.html and in the configuration.nix(5) man page.
-        networking.hostName = "vm1";
+        networking.hostName = "ixo";
 
         boot.loader.grub.enable = true;
         # NOT boot.loader.grub.device = "/dev/vda"; # NOT vda1, which is the ESP!

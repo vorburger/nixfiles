@@ -2,9 +2,17 @@
 
 ## Nix
 
-1. Move `nix-update` skill to `nixfiles` repo - but reference it as input to make it available here... how?
+1. Fix Gemini CLI policy
 
-1. `/nix-update` [failures](https://github.com/vorburger/nixfiles/commit/713ec2946a67ce3e57acd57d955c2c8ccb3c16dc) closer look, one by one
+1. #AI "The new ixo host introduced in the previous commit doesn't boot... NixOS doesn't even show up on its Firmware UEFI menu options. What could be the problem?"
+
+1. password for interactive login?
+
+1. #AI extract an `_local.nix` from vm1/configuration.nix, re-use it in ixo/configuration.nix
+
+1. Make nixos-anywhere avabile in the dev shell of this project
+
+1. Move `nix-update` skill to `nixfiles` repo - but reference it as input to make it available here... how?
 
 ## Machines
 
