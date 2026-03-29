@@ -2,8 +2,6 @@
 
 ## Nix
 
-1. Fix Gemini CLI policy
-
 1. Gemini CLI
 
 1. Keyboard layout
@@ -13,6 +11,8 @@
 1. How to solve <> problem
 
 1. Smarter `sudo`
+
+1. SSH with TPM but also still touch or other confirmation
 
 1. WiFi setup baked in into installer, as it now is for ixo
 
