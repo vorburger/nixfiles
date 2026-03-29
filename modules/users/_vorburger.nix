@@ -26,6 +26,8 @@
     ];
     packages = with pkgs; [
       # Anything not on https://github.com/vorburger/vorburger-dotfiles-bin-etc/tree/main/dotfiles/home-manager ...
+      home-manager
+      # TODO Why is nano here instead of in dotfiles?
       nano
     ];
     shell = pkgs.fish;

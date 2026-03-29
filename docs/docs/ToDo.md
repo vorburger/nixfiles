@@ -6,6 +6,8 @@
 
 1. Ctrl key mapping
 
+1. Make Shift-Up/Dn in nano under kmscon mark text instead of scroll screen buffer
+
 1. How to solve <> problem
 
 1. Smarter `sudo` - pick up _Allow user to run nixos-rebuild without password (current)_ chat re. `sudo`, try:
@@ -16,8 +18,6 @@
    Revert https://github.com/vorburger/nixfiles/commit/68714121b6aa42efd2d428a2070cbebe459f564e
 
 1. SSH with TPM but also still touch or other confirmation
-
-1. home-manager
 
 1. alias j - needs autojump?
 
