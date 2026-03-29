@@ -4,6 +4,16 @@
 
 1. Fix Gemini CLI policy
 
+1. Gemini CLI
+
+1. Keyboard layout
+
+1. Ctrl key mapping
+
+1. How to solve <> problem
+
+1. Smarter `sudo`
+
 1. WiFi setup baked in into installer, as it now is for ixo
 
 1. Make a much more minimal initial host config

@@ -33,9 +33,21 @@
           };
 
           console = {
-            font = "ter-v32n";
-            packages = [ pkgs.terminus_font ];
+            font = "sun12x22";
+            packages = [ pkgs.kbd ];
             keyMap = "sg";
+          };
+
+          services.kmscon = {
+            enable = true;
+            hwRender = true;
+            fonts = [
+              {
+                name = "JetBrains Mono";
+                package = pkgs.jetbrains-mono;
+              }
+            ];
+            extraOptions = "--font-size=24";
           };
 
           # Some programs need SUID wrappers, can be configured further or are

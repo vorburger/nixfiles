@@ -95,6 +95,10 @@ Change `*.nix` files for any host on any host, and then just:
 
 #### Local
 
+Change `*.nix` files locally, and then just:
+
+    sudo nixos-rebuild switch --flake .
+
 ## Docs
 
 `nix build .#documentation` produces the static HTML documentation site in `result/`.
