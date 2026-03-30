@@ -2,8 +2,6 @@
 
 ## Nix
 
-1. Ctrl key mapping
-
 1. Make Shift-Up/Dn in nano under kmscon mark text instead of scroll screen buffer
 
 1. How to solve <> problem
