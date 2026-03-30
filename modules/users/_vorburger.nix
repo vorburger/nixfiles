@@ -25,7 +25,7 @@
       "networkmanager"
     ];
     packages = with pkgs; [
-      # Anything not on https://github.com/vorburger/vorburger-dotfiles-bin-etc/tree/main/dotfiles/home-manager ...
+      # Anything not on https://github.com/vorburger/dotfiles/tree/main/dotfiles/home-manager ...
       home-manager
       # TODO Why is nano here instead of in dotfiles?
       nano
@@ -45,7 +45,7 @@
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
 
-  # See https://github.com/vorburger/vorburger-dotfiles-bin-etc/blob/main/dotfiles/home-manager/flake.nix
+  # See https://github.com/vorburger/dotfiles/blob/main/dotfiles/home-manager/flake.nix
   home-manager.extraSpecialArgs = {
     envHOME = config.users.users.vorburger.home;
     envUSER = config.users.users.vorburger.name;

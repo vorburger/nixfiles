@@ -15,4 +15,4 @@ You might want to have `hello` available all the time on the `PATH` of your user
 
 You can achieve this with [Home Manager](https://github.com/nix-community/home-manager), which allows you to declaratively manage your user environment.
 
-_**TODO** Crash-course for non-NixOS Flake-based Home Manager setup, see https://github.com/vorburger/vorburger-dotfiles-bin-etc/tree/main/dotfiles/home-manager ..._
+_**TODO** Crash-course for non-NixOS Flake-based Home Manager setup, see https://github.com/vorburger/dotfiles/tree/main/dotfiles/home-manager ..._
