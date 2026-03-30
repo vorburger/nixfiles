@@ -2,8 +2,6 @@
 
 ## Nix
 
-1. Gemini CLI
-
 1. Ctrl key mapping
 
 1. Make Shift-Up/Dn in nano under kmscon mark text instead of scroll screen buffer
@@ -15,11 +13,11 @@
      Then you enroll with `fprintd-enroll`.
    - Try `services.howdy.enable = true; security.pam.services.sudo.howdyAuth = true;`
    - YK, after all? But battery... vs TPM?
-   Revert https://github.com/vorburger/nixfiles/commit/68714121b6aa42efd2d428a2070cbebe459f564e
+     Revert https://github.com/vorburger/nixfiles/commit/68714121b6aa42efd2d428a2070cbebe459f564e
+
+1. Console Login with .. Fingerprint? Camera?
 
 1. SSH with TPM but also still touch or other confirmation
-
-1. alias j - needs autojump?
 
 1. https://github.com/NixOS/nixos-hardware/blob/master/lenovo/thinkpad/x1/12th-gen/default.nix
 

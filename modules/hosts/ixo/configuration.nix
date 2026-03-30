@@ -45,8 +45,8 @@
             hwRender = true;
             fonts = [
               {
-                name = "JetBrains Mono";
-                package = pkgs.jetbrains-mono;
+                name = "FiraCode Nerd Font Mono";
+                package = pkgs.nerd-fonts.fira-code;
               }
             ];
             # TODO Avoid repetition with similar in services.xserver.xkb
