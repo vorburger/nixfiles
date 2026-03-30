@@ -2,8 +2,6 @@
 
 ## Nix
 
-1. Make Shift-Up/Dn in nano under kmscon mark text instead of scroll screen buffer
-
 1. How to solve <> problem
 
 1. Smarter `sudo` - pick up _Allow user to run nixos-rebuild without password (current)_ chat re. `sudo`, try:

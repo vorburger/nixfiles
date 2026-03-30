@@ -50,7 +50,7 @@
               }
             ];
             # TODO Avoid repetition with similar in services.xserver.xkb
-            extraOptions = "--font-size=24 --xkb-layout=ch --xkb-variant=de";
+            extraOptions = "--font-size=24 --xkb-layout=ch --xkb-variant=de --grab-scroll-up=<Alt>Up --grab-scroll-down=<Alt>Down --grab-page-up=<Alt>PageUp --grab-page-down=<Alt>PageDown";
           };
 
           # Some programs need SUID wrappers, can be configured further or are
