@@ -3,8 +3,9 @@
 ## Nix
 
 1. Shift Up/Down, Alt Up/Down, Ctrl PgUp/PgDown
+   https://gemini.google.com/app/394387d4e13b598c
 
-1. Ctrl-Backspace in Fish
+1. Ctrl-Backspace in Fish on Console (only; works over SSH)
 
 1. How to solve <> problem
 
@@ -22,8 +23,6 @@
 1. https://github.com/NixOS/nixos-hardware/blob/master/lenovo/thinkpad/x1/12th-gen/default.ni
 
 1. nix GC automatically
-
-1. Why does the prompt not have color inside TMUX
 
 1. Login and go straight into TMUX
 
