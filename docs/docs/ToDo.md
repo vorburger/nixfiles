@@ -39,6 +39,9 @@
 
 1. Blog about my NixOS experience ([similar to this](https://michael.stapelberg.ch/posts/2025-06-01-nixos-installation-declarative/))
 
+1. Try https://github.com/microvm-nix/microvm.nix?
+   See https://michael.stapelberg.ch/posts/2026-02-01-coding-agent-microvm-nix/.
+
 ## Machines
 
 1. VM vorburger sudo password?! None - but enable this:
