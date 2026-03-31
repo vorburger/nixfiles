@@ -2,6 +2,10 @@
 
 ## Nix
 
+1. Shift Up/Down, Alt Up/Down, Ctrl PgUp/PgDown
+
+1. Ctrl-Backspace in Fish
+
 1. How to solve <> problem
 
 1. Smarter `sudo` - pick up _Allow user to run nixos-rebuild without password (current)_ chat re. `sudo`, try:
@@ -15,15 +19,22 @@
 
 1. SSH with TPM but also still touch or other confirmation
 
-1. https://github.com/NixOS/nixos-hardware/blob/master/lenovo/thinkpad/x1/12th-gen/default.nix
-
-1. TMUX in Console
+1. https://github.com/NixOS/nixos-hardware/blob/master/lenovo/thinkpad/x1/12th-gen/default.ni
 
 1. nix GC automatically
 
+1. Why does the prompt not have color inside TMUX
+
+1. Login and go straight into TMUX
+
 1. `pass`, via ext. YK
 
+1. Compare `pstree` on Nix Console and Fedora in GNOME
+
 1. Graphical
+
+1. Antigravity, but NOT via home-manager, see
+   https://github.com/vorburger/dotfiles/commit/21aff996ef847ddeefbde2061f984446682ba1e3
 
 1. Make a much more minimal initial host config
 
