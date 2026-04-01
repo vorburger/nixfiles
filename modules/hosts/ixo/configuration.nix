@@ -31,18 +31,7 @@
           services.fprintd.enable = true;
           # Remember to enroll fingerprints with `fprintd-enroll` (for each user).
           security.pam.services.login.fprintAuth = true;
-          security.pam.services.greetd.fprintAuth = true;
           security.pam.services.sudo.fprintAuth = true;
-
-          services.greetd = {
-            enable = true;
-            settings = {
-              default_session = {
-                command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd ${pkgs.fish}/bin/fish";
-                user = "greeter";
-              };
-            };
-          };
 
           boot.loader.systemd-boot.enable = true;
           boot.loader.efi.canTouchEfiVariables = true;
@@ -57,7 +46,8 @@
           };
 
           console = {
-            font = "ter-v32n";
+            # This is a fallback for very early boot before kmscon starts.
+            font = "ter-v24n";
             packages = [
               pkgs.kbd
               pkgs.terminus_font
@@ -76,7 +66,7 @@
               }
             ];
             # TODO Avoid repetition with similar in services.xserver.xkb
-            extraOptions = "--font-size=24 --xkb-layout=ch --xkb-variant=de --grab-scroll-up=<Alt>Up --grab-scroll-down=<Alt>Down --grab-page-up=<Alt>PageUp --grab-page-down=<Alt>PageDown";
+            extraOptions = "--login /run/current-system/sw/bin/login --font-size=24 --xkb-layout=ch --xkb-variant=de --grab-scroll-up=<Alt>Up --grab-scroll-down=<Alt>Down --grab-page-up=<Alt>PageUp --grab-page-down=<Alt>PageDown";
           };
 
           # Some programs need SUID wrappers, can be configured further or are
