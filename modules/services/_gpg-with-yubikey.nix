@@ -1,6 +1,10 @@
 { pkgs, ... }:
 
 {
+  imports = [
+    ./_ssh-agent-mux.nix
+  ];
+
   # Enable the PC/SC Smart Card Daemon, required for GnuPG to communicate with YubiKeys
   services.pcscd.enable = true;
 
@@ -20,18 +24,12 @@
   # Disable the default NixOS ssh-agent to ensure it doesn't conflict with GnuPG
   programs.ssh.startAgent = false;
 
-  # Some setups need GPG_TTY and SSH_AUTH_SOCK to be set for pinentry and SSH to work correctly
+  # Some setups need GPG_TTY for pinentry to work correctly
   environment.interactiveShellInit = ''
     export GPG_TTY=$(tty)
-    if [ -z "$SSH_AUTH_SOCK" ]; then
-      export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-    fi
   '';
   programs.fish.interactiveShellInit = ''
     set -gx GPG_TTY (tty)
-    if not set -q SSH_AUTH_SOCK
-      set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
-    end
   '';
 
   # Ensure gnupg and useful tools are installed
