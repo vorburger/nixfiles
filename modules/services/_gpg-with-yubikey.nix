@@ -7,16 +7,34 @@
   # Enable Udev rules for YubiKeys
   services.udev.packages = with pkgs; [
     yubikey-personalization
+    libu2f-host
   ];
 
   # Enable the GnuPG agent
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
+    pinentryPackage = pkgs.pinentry-curses;
   };
 
-  # Ensure gnupg is installed
+  # Disable the default NixOS ssh-agent to ensure it doesn't conflict with GnuPG
+  programs.ssh.startAgent = false;
+
+  # Some setups need GPG_TTY and SSH_AUTH_SOCK to be set for pinentry and SSH to work correctly
+  environment.interactiveShellInit = ''
+    export GPG_TTY=$(tty)
+    export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+  '';
+  programs.fish.interactiveShellInit = ''
+    set -gx GPG_TTY (tty)
+    set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+  '';
+
+  # Ensure gnupg and useful tools are installed
   environment.systemPackages = with pkgs; [
     gnupg
+    yubikey-manager
+    # pinentry-curses is usually handled by pinentryFlavor, but having it explicitly can help
+    pinentry-curses
   ];
 }
