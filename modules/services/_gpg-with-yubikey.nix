@@ -23,11 +23,15 @@
   # Some setups need GPG_TTY and SSH_AUTH_SOCK to be set for pinentry and SSH to work correctly
   environment.interactiveShellInit = ''
     export GPG_TTY=$(tty)
-    export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+    if [ -z "$SSH_AUTH_SOCK" ]; then
+      export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+    fi
   '';
   programs.fish.interactiveShellInit = ''
     set -gx GPG_TTY (tty)
-    set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+    if not set -q SSH_AUTH_SOCK
+      set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+    end
   '';
 
   # Ensure gnupg and useful tools are installed
