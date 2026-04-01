@@ -19,6 +19,8 @@
           # Help is available on https://nixos.org/nixos/options.html and in the configuration.nix(5) man page.
           networking.hostName = "ixo";
 
+          environment.systemPackages = [ pkgs.starship ];
+
           services.initial-secrets.enable = true;
 
           boot.loader.systemd-boot.enable = true;
