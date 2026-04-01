@@ -681,11 +681,11 @@
       },
       "locked": {
         "dir": "dotfiles/home-manager",
-        "lastModified": 1774902957,
-        "narHash": "sha256-fD1kSUv7Ns+lS5JGAc+FhBb3LD2m8OlrCsXYEoKej/c=",
+        "lastModified": 1775081199,
+        "narHash": "sha256-7LC1zyw29ww/kUf2ihELIapWQO66WTSsv4CyNpry/6Y=",
         "owner": "vorburger",
         "repo": "dotfiles",
-        "rev": "690d7c41b475c48179089c4ebc85258be6df69b0",
+        "rev": "88b7ef3d9f69e76da1fb4f7e44f0e254c542f267",
         "type": "github"
       },
       "original": {
