@@ -13,6 +13,18 @@
       "${inputs.vorburger-dotfiles}/home.nix"
       inputs.nix-index-database.homeModules.nix-index
     ];
+    programs.gpg = {
+      enable = true;
+      publicKeys = [
+        {
+          source = pkgs.fetchurl {
+            url = "https://www.vorburger.ch/gpg/vorburger.pgp.key.asc";
+            sha256 = "1fckmv2akjayqy2iha004fzl8ggn1r2ra51i5wxdj09f9fzxv1j8";
+          };
+          trust = 5;
+        }
+      ];
+    };
   };
 
   # NOT services.getty.autologinUser = "vorburger";
