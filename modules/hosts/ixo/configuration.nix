@@ -28,6 +28,20 @@
 
           services.initial-secrets.enable = true;
 
+          services.fprintd.enable = true;
+          security.pam.services.login.fprintAuth = true;
+          security.pam.services.sudo.fprintAuth = true;
+
+          services.greetd = {
+            enable = true;
+            settings = {
+              default_session = {
+                command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd ${pkgs.fish}/bin/fish";
+                user = "greeter";
+              };
+            };
+          };
+
           boot.loader.systemd-boot.enable = true;
           boot.loader.efi.canTouchEfiVariables = true;
 
