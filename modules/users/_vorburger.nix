@@ -66,16 +66,4 @@
   };
 
   nix.settings.trusted-users = [ "vorburger" ];
-
-  security.sudo.extraRules = [
-    {
-      users = [ "vorburger" ];
-      commands = [
-        {
-          command = "/run/current-system/sw/bin/nixos-rebuild";
-          options = [ "NOPASSWD" ];
-        }
-      ];
-    }
-  ];
 }
