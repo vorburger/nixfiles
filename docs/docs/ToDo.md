@@ -30,27 +30,40 @@
 1. Antigravity, but NOT via home-manager, see
    https://github.com/vorburger/dotfiles/commit/21aff996ef847ddeefbde2061f984446682ba1e3
 
-1. Make a much more minimal initial host config
-
-1. WiFi setup baked in into installer, as it now is for ixo
-
 1. How to do LUKS encryption?
+
+   ```nix
+   boot.initrd.systemd.enable = true; # Required for modern systemd-cryptsetup
+   security.tpm2.enable = true;
+
+   $ sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+7 /dev/nvme0n1p2
+   ```
 
 1. Impermanence
 
 1. `/nix` on separate partition (or LV)
 
+1. Secure Boot!!
+   - Not possible to still dual boot Fedora?
+   - Does `ssh-tpm-agent` still work?!
+
+1. Make a much more minimal initial host config
+
+1. WiFi setup baked in into installer, as it now is for ixo
+
 1. #AI extract an `_local.nix` from vm1/configuration.nix, re-use it in ixo/configuration.nix
 
 1. #AI Make nixos-anywhere available in the dev shell of this project
 
-1. Use `sopsnix` or `agenix` for secrets management (instead of `nixos-anywhere --extra-files`)
+1. Use `sopsnix` or `agenix` for secrets management (instead of `nixos-anywhere --extra-files`). Maybe together with https://github.com/Foxboron/age-plugin-tpm ?
 
 1. `nrs` script, which does `sudo nixos-rebuild switch --flake .` - AFTER checking that there are no dirty un-committed `nixfiles` AND that they have been pushed to the remote repo.
 
 1. Move `nix-update` skill to `nixfiles` repo - but reference it as input to make it available here... how?
 
 1. Blog about my NixOS experience ([similar to this](https://michael.stapelberg.ch/posts/2025-06-01-nixos-installation-declarative/))
+
+1. Upstream configurations of any services et al. which ideally shouldn't be here at all
 
 1. Try https://github.com/microvm-nix/microvm.nix?
    See https://michael.stapelberg.ch/posts/2026-02-01-coding-agent-microvm-nix/.

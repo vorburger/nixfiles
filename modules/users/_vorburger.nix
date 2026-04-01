@@ -13,6 +13,8 @@
       "${inputs.vorburger-dotfiles}/home.nix"
       inputs.nix-index-database.homeModules.nix-index
     ];
+    services.ssh-tpm-agent.enable = config.security.tpm2.enable;
+    home.file."${config.users.users.vorburger.home}/.gnupg/gpg.conf".force = true;
     programs.gpg = {
       enable = true;
       publicKeys = [
@@ -27,21 +29,21 @@
     };
   };
 
-  # NOT services.getty.autologinUser = "vorburger";
+  # TODO Enable autologin AFTER we have LUKS which will have another password, first..
+  # services.getty.autologinUser = "vorburger";
 
   users.users.vorburger = {
     description = "Michael Vorburger";
     openssh.authorizedKeys.keys = import ./_vorburger-authorizedKeys.nix;
     isNormalUser = true;
     extraGroups = [
-      "wheel"
+      "tss"
       "networkmanager"
+      "wheel"
     ];
     packages = with pkgs; [
       # Anything not on https://github.com/vorburger/dotfiles/tree/main/dotfiles/home-manager ...
       home-manager
-      # TODO Why is nano here instead of in dotfiles?
-      nano
     ];
     shell = pkgs.fish;
   };
