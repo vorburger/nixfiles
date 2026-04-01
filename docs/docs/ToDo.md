@@ -47,6 +47,8 @@
 
 1. Use `sopsnix` or `agenix` for secrets management (instead of `nixos-anywhere --extra-files`)
 
+1. `nrs` script, which does `sudo nixos-rebuild switch --flake .` - AFTER checking that there are no dirty un-committed `nixfiles` AND that they have been pushed to the remote repo.
+
 1. Move `nix-update` skill to `nixfiles` repo - but reference it as input to make it available here... how?
 
 1. Blog about my NixOS experience ([similar to this](https://michael.stapelberg.ch/posts/2025-06-01-nixos-installation-declarative/))

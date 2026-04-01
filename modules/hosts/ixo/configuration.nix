@@ -56,6 +56,15 @@
             keyMap = "sg";
           };
 
+          services.getty.loginProgram = "/run/current-system/sw/bin/login";
+          systemd.tmpfiles.rules = [
+            "d /bin 0755 root root -"
+            "L+ /bin/login - - - - /run/current-system/sw/bin/login"
+          ];
+
+          # Ensure the kmscon service can see the wrappers
+          systemd.services."kmscon@".path = [ "/run/wrappers" ];
+
           services.kmscon = {
             enable = true;
             hwRender = true;
@@ -65,8 +74,15 @@
                 package = pkgs.nerd-fonts.fira-code;
               }
             ];
-            # TODO Avoid repetition with similar in services.xserver.xkb
-            extraOptions = "--login /run/current-system/sw/bin/login --font-size=24 --xkb-layout=ch --xkb-variant=de --grab-scroll-up=<Alt>Up --grab-scroll-down=<Alt>Down --grab-page-up=<Alt>PageUp --grab-page-down=<Alt>PageDown";
+            extraConfig = ''
+              font-size=24
+              xkb-layout=ch
+              xkb-variant=de
+              grab-scroll-up=<Alt>Up
+              grab-scroll-down=<Alt>Down
+              grab-page-up=<Alt>PageUp
+              grab-page-down=<Alt>PageDown
+            '';
           };
 
           # Some programs need SUID wrappers, can be configured further or are
