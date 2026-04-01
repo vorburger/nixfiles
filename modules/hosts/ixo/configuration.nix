@@ -29,7 +29,9 @@
           services.initial-secrets.enable = true;
 
           services.fprintd.enable = true;
+          # Remember to enroll fingerprints with `fprintd-enroll` (for each user).
           security.pam.services.login.fprintAuth = true;
+          security.pam.services.greetd.fprintAuth = true;
           security.pam.services.sudo.fprintAuth = true;
 
           services.greetd = {
@@ -55,8 +57,11 @@
           };
 
           console = {
-            font = "sun12x22";
-            packages = [ pkgs.kbd ];
+            font = "ter-v32n";
+            packages = [
+              pkgs.kbd
+              pkgs.terminus_font
+            ];
             # TODO Centralize this in the same place as the xserver.xkb and kmscon
             keyMap = "sg";
           };
