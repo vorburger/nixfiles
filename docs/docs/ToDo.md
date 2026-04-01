@@ -2,25 +2,22 @@
 
 ## Nix
 
-1. True Colors!! Both on Console, and when logged in remotely over ssh in tmux
+1. SSH with TPM but also still touch or other confirmation
+
+1. Alt Left/Right in nano
 
 1. Shift Up/Down, Alt Up/Down, Ctrl PgUp/PgDown
    https://gemini.google.com/app/394387d4e13b598c
+
+1. `pass`, via ext. YK
+
+1. True Colors!! Both on Console, and when logged in remotely over ssh in tmux
 
 1. Ctrl-Backspace in Fish on Console (only; works over SSH)
 
 1. How to solve <> problem
 
-1. Smarter `sudo` - pick up _Allow user to run nixos-rebuild without password (current)_ chat re. `sudo`, try:
-   - `services.fprintd.enable = true; security.pam.services.sudo.fprintAuth = true;`
-     Then you enroll with `fprintd-enroll`.
-   - Try `services.howdy.enable = true; security.pam.services.sudo.howdyAuth = true;`
-   - YK, after all? But battery... vs TPM?
-     Revert https://github.com/vorburger/nixfiles/commit/68714121b6aa42efd2d428a2070cbebe459f564e
-
-1. Console Login with .. Fingerprint? Camera?
-
-1. SSH with TPM but also still touch or other confirmation
+1. Try `services.howdy.enable = true; security.pam.services.sudo.howdyAuth = true;`
 
 1. https://github.com/NixOS/nixos-hardware/blob/master/lenovo/thinkpad/x1/12th-gen/default.ni
 
@@ -28,11 +25,9 @@
 
 1. Login and go straight into TMUX
 
-1. `pass`, via ext. YK
+1. Graphical; initially most minimal - just Brave & Kitty, in Sway?
 
 1. Compare `pstree` on Nix Console and Fedora in GNOME
-
-1. Graphical
 
 1. Antigravity, but NOT via home-manager, see
    https://github.com/vorburger/dotfiles/commit/21aff996ef847ddeefbde2061f984446682ba1e3
@@ -40,6 +35,12 @@
 1. Make a much more minimal initial host config
 
 1. WiFi setup baked in into installer, as it now is for ixo
+
+1. How to do LUKS encryption?
+
+1. Impermanence
+
+1. `/nix` on separate partition (or LV)
 
 1. #AI extract an `_local.nix` from vm1/configuration.nix, re-use it in ixo/configuration.nix
 
@@ -71,17 +72,11 @@
 
 1. VM with UEFI instead of BIOS, and systemd-boot instead of GRUB
 
-1. Rename test1 to vm-without-bootloader, and vm1 to vm-bios-with-grub-bootloader ?
+1. Rename `test1` to vm-without-bootloader, and vm1 to vm-bios-with-grub-bootloader ?
 
 1. VM testing; https://github.com/anatol/vmtest for `systemctl status` (porcelaim?)
 
 1. `nixos-rebuild ... --specialisation XYZ` for different use cases?
-
-1. How to do LUKS encryption?
-
-1. Impermanence
-
-1. `/nix` on separate partition (or LV)
 
 1. Cloud VMs? `imports = [ "${modulesPath}/virtualisation/amazon-image.nix" ]` ? See e.g. [this announcement](https://www.haskellforall.com/2023/01/announcing-nixos-rebuild-new-deployment.html).
 
