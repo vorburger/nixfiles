@@ -13,6 +13,7 @@
       ../../services/_nix.nix
       ../../services/_initial-secrets.nix
       ../../services/_gpg-with-yubikey.nix
+      ../../services/_ssh-tpm-agent.nix
       ../../services/_pipewire.nix
       ../../users/_vorburger.nix
       (

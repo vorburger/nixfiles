@@ -2,8 +2,6 @@
 
 ## Nix
 
-1. SSH with TPM but also still touch or other confirmation
-
 1. Alt Left/Right in nano
 
 1. Shift Up/Down, Alt Up/Down, Ctrl PgUp/PgDown
