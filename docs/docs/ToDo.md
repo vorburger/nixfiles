@@ -2,6 +2,8 @@
 
 ## Nix
 
+1. True Colors!! Both on Console, and when logged in remotely over ssh in tmux
+
 1. Shift Up/Down, Alt Up/Down, Ctrl PgUp/PgDown
    https://gemini.google.com/app/394387d4e13b598c
 

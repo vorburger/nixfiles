@@ -13,6 +13,7 @@
       ../../services/_nix.nix
       ../../services/_initial-secrets.nix
       ../../services/_gpg-with-yubikey.nix
+      ../../services/_pipewire.nix
       ../../users/_vorburger.nix
       (
         { pkgs, ... }:
@@ -20,7 +21,10 @@
           # Help is available on https://nixos.org/nixos/options.html and in the configuration.nix(5) man page.
           networking.hostName = "ixo";
 
-          environment.systemPackages = [ pkgs.starship ];
+          environment.systemPackages = [
+            pkgs.starship
+            pkgs.pulseaudio # Provides `paplay` for audio alerts
+          ];
 
           services.initial-secrets.enable = true;
 
