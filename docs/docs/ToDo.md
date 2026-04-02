@@ -53,6 +53,10 @@
 
 1. `tmux` should remember open tabs over restart
 
+1. Cache on CI
+
+1. `mkdocs` a https://aifiles.vorburger.ch
+
 1. Make a much more minimal initial host config
 
 1. WiFi setup baked in into installer, as it now is for ixo
