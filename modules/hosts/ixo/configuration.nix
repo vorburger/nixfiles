@@ -15,6 +15,7 @@
       ../../services/_gpg-with-yubikey.nix
       ../../services/_ssh-tpm-agent.nix
       ../../services/_pipewire.nix
+      ../../profiles/_devel.nix
       ../../users/_vorburger.nix
       (
         { pkgs, ... }:

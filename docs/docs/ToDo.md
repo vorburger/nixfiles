@@ -70,6 +70,10 @@
 
 ## Upstream
 
+1. [ssh-tpm-agent: keyutils](https://github.com/NixOS/nixpkgs/pull/505874)
+
+1. How to isolate? Merely building `ssh-tpm-agent` locally from `nixpkgs` (but probably even standalone) breaks `ssh` on OS.
+
 1. [Add a system service for ssh-tpm-agent](https://github.com/NixOS/nixpkgs/issues/353096)
 
 ## Machines
