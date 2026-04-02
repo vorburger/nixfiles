@@ -1,9 +1,7 @@
 name: CI
-
 on:
   push:
   pull_request:
-
 jobs:
   nix-flake-check:
     runs-on: ubuntu-latest
