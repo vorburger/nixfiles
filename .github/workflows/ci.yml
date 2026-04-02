@@ -1,7 +1,14 @@
 name: CI
 on:
   push:
+    branches: [main]
   pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [main]
+# Cancel any in-progress job or run if there is a newer commit
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   nix-flake-check:
     runs-on: ubuntu-latest
