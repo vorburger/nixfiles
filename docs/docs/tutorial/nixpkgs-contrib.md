@@ -7,8 +7,11 @@
 
 1. It's now in `./result/bin/ssh-tpm-agent --help`
 
-1. Modify package source with your contributions
+1. Enter the package's _dev shell_ with `nix develop .#ssh-tpm-agent`
+   (see also [`third_party`](https://github.com/vorburger/third_party))
 
-1. Re-build, test, iterate.
+1. Modify package source with your contributions, temporarily build it "directly" using `go` or whatever
+
+1. Re-build full package as above, test output - iterate.
 
 1. Branch, Commit, Pull Request.
