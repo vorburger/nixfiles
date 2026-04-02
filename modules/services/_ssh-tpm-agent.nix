@@ -4,9 +4,9 @@
   security.tpm2.enable = true;
 
   # Install the ssh-tpm-agent package
-  # TODO Upstream bug for keyutils
   environment.systemPackages = [
     pkgs.ssh-tpm-agent
+    # See https://github.com/NixOS/nixpkgs/issues/505869
     pkgs.keyutils
   ];
 
