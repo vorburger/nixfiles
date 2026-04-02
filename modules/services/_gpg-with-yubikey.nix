@@ -1,10 +1,9 @@
 { pkgs, ... }:
 
+let
+  ssh = false; # No need anymore, as we use ssh-tpm-agent
+in
 {
-  imports = [
-    ./_ssh-agent-mux.nix
-  ];
-
   # Enable the PC/SC Smart Card Daemon, required for GnuPG to communicate with YubiKeys
   services.pcscd.enable = true;
 
@@ -17,12 +16,12 @@
   # Enable the GnuPG agent
   programs.gnupg.agent = {
     enable = true;
-    enableSSHSupport = true;
+    enableSSHSupport = ssh;
     pinentryPackage = pkgs.pinentry-curses;
   };
 
-  # Disable the default NixOS ssh-agent to ensure it doesn't conflict with GnuPG
-  programs.ssh.startAgent = false;
+  # If SSH, then disable the default NixOS ssh-agent to ensure it doesn't conflict with GnuPG
+  programs.ssh.startAgent = !ssh;
 
   # Some setups need GPG_TTY for pinentry to work correctly
   environment.interactiveShellInit = ''

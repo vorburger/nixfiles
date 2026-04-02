@@ -13,7 +13,15 @@
       "${inputs.vorburger-dotfiles}/home.nix"
       inputs.nix-index-database.homeModules.nix-index
     ];
-    services.ssh-tpm-agent.enable = config.security.tpm2.enable;
+
+    # NOT as long as there is a --user level other one in services/_ssh-tpm-agent.nix
+    #services.ssh-tpm-agent.enable = config.security.tpm2.enable;
+
+    home.sessionVariables = {
+      SSH_AUTH_SOCK = lib.mkOverride 10 "$XDG_RUNTIME_DIR/ssh-agent-mux.sock";
+    };
+
+    # Force, because dotfiles also sets this
     home.file."${config.users.users.vorburger.home}/.gnupg/gpg.conf".force = true;
     programs.gpg = {
       enable = true;

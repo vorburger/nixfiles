@@ -14,6 +14,7 @@
       ../../services/_initial-secrets.nix
       ../../services/_gpg-with-yubikey.nix
       ../../services/_ssh-tpm-agent.nix
+      ../../services/_ssh-agent-mux.nix
       ../../services/_pipewire.nix
       # Nah! ../../profiles/_devel.nix
       ../../users/_vorburger.nix
