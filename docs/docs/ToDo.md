@@ -68,6 +68,10 @@
 1. Try https://github.com/microvm-nix/microvm.nix?
    See https://michael.stapelberg.ch/posts/2026-02-01-coding-agent-microvm-nix/.
 
+## Upstream
+
+1. [Add a system service for ssh-tpm-agent](https://github.com/NixOS/nixpkgs/issues/353096)
+
 ## Machines
 
 1. VM vorburger sudo password?! None - but enable this:
