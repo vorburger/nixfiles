@@ -1,7 +1,11 @@
+# VMs
 *.qcow2
 
+# Nix
 .direnv
 .pre-commit-config.yaml
-
 result
 result-*
+
+# MkDocs / Zensical
+docs/site/
