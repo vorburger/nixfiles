@@ -52,6 +52,7 @@
     packages = with pkgs; [
       # Anything not on https://github.com/vorburger/dotfiles/tree/main/dotfiles/home-manager ...
       home-manager
+      openssh
     ];
     shell = pkgs.fish;
   };

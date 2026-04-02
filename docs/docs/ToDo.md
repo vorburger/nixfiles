@@ -2,6 +2,10 @@
 
 ## Nix
 
+1. Add install-nix skill from https://github.com/vorburger/aifiles
+
+1. VM, like ixo!!
+
 1. Alt Left/Right in nano
 
 1. Shift Up/Down, Alt Up/Down, Ctrl PgUp/PgDown
@@ -46,6 +50,8 @@
 1. Secure Boot!!
    - Not possible to still dual boot Fedora?
    - Does `ssh-tpm-agent` still work?!
+
+1. `tmux` should remember open tabs over restart
 
 1. Make a much more minimal initial host config
 
