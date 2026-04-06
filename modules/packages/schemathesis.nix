@@ -100,6 +100,11 @@
           python.tomli
           python.typing-extensions
           python.werkzeug
+
+          # allure integration
+          python.allure-python-commons
+          python.allure-pytest
+          pkgs.allure
         ];
 
         postPatch = ''
