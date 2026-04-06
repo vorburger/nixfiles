@@ -14,5 +14,15 @@ _: {
           cp -r site/* $out/
         '';
       };
+
+      devshells.default = {
+        commands = [
+          {
+            name = "zensical-serve";
+            help = "Run zensical in dev mode (live update)";
+            command = "${pkgs.zensical}/bin/zensical serve -f docs/mkdocs.yaml";
+          }
+        ];
+      };
     };
 }

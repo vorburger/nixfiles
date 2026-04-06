@@ -105,6 +105,8 @@ Change `*.nix` files locally, and then just:
 
 `nix build .#zensical-site` produces the static HTML documentation site in `result/`.
 
+`nix develop -c zensical-serve` serves the documentation locally with live-rebuilds.
+
 It's published to https://nixfiles.vorburger.ch (but that build technically doesn't run under Nix).
 
 ### `mkdocs`

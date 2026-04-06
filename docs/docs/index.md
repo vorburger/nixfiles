@@ -2,9 +2,9 @@
 
 [Nix](https://nixos.org) is several things:
 
+- a software package 📦 manager (like `apt` or `dnf`) using said language; this can be used on any Linux distro, as well as on 🍎 Macs (like Homebrew 🍺 `brew`)
+- a _declarative_ Linux distribution _("distro"),_ called NixOS (like Fedora, Ubuntu or Debian)
 - a _functional_ [configuration language](https://github.com/vorburger/LearningLinux/blob/develop/nix/bookmarks.md#configuration-language)
-- a package 📦 manager (like `apt` or `dnf`) using said language; this can be used on any Linux distro, as well as on 🍎 Macs (like Homebrew 🍺 `brew`)
-- a _declarative_ Linux distro called NixOS (like Fedora, Ubuntu or Debian)
 
 [When we](reference/we.md) got started with Nix, we found its learning curve to be quite steep.
 
