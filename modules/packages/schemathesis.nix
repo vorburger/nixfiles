@@ -46,6 +46,27 @@
         ];
       };
 
+      jsonschema-rs = python.buildPythonPackage rec {
+        pname = "jsonschema-rs";
+        version = "0.45.1";
+        pyproject = true;
+        src = python.fetchPypi {
+          pname = "jsonschema_rs";
+          inherit version;
+          hash = "sha256-lMcl38KH/Q0+PAPV2VVhGd8ic4W6kgmAV4GOXNyDbNM=";
+        };
+        cargoDeps = pkgs.rustPlatform.fetchCargoVendor {
+          inherit pname version src;
+          hash = "sha256-BKSEhGIEP4f8Snb0ZkWUwo1WQO4cKhySM9D0+jyTUrE=";
+        };
+        build-system = [
+          pkgs.cargo
+          pkgs.rustPlatform.cargoSetupHook
+          pkgs.rustPlatform.maturinBuildHook
+          pkgs.rustc
+        ];
+      };
+
       starlette-testclient = python.buildPythonPackage rec {
         pname = "starlette-testclient";
         version = "0.4.1";
@@ -66,14 +87,14 @@
     {
       packages.schemathesis = python.buildPythonApplication rec {
         pname = "schemathesis";
-        version = "4.9.5";
+        version = "4.15.0";
         pyproject = true;
 
         src = pkgs.fetchFromGitHub {
           owner = "schemathesis";
           repo = "schemathesis";
           tag = "v${version}";
-          hash = "sha256-swukol8tsNKxh8OStW63yRhkAixgsxuThbrM6qq/4m4=";
+          hash = "sha256-Puz7H/csee5ZJNJq6aTrCMeGSMxzQTZjnFmDPh1m+S8=";
         };
 
         build-system = [
@@ -82,13 +103,13 @@
 
         dependencies = [
           python.click
-          python.colorama
           harfile
           python.httpx
           python.hypothesis
           hypothesis-graphql
           hypothesis-jsonschema
           python.jsonschema
+          jsonschema-rs
           python.junit-xml
           python.pyrate-limiter
           python.pytest
@@ -106,11 +127,6 @@
           python.allure-pytest
           pkgs.allure
         ];
-
-        postPatch = ''
-          sed -i '/"pytest-subtests>=/d' pyproject.toml
-          sed -i 's/"pyrate-limiter>=3.0,<4.0"/"pyrate-limiter>=3.0"/g' pyproject.toml
-        '';
 
         pythonImportsCheck = [
           "schemathesis"
