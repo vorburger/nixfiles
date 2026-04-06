@@ -67,13 +67,13 @@ fi
 sudo mkdir -p /etc/nix
 if [ "$CAN_SANDBOX" = "true" ]; then
   echo "Info: Nix sandboxing will remain enabled (default)."
-  sudo tee /etc/nix/nix.custom.conf > /dev/null << 'CONF'
+  sudo tee /etc/nix/nix.custom.conf >/dev/null <<'CONF'
 # Nix sandboxing remains enabled because unprivileged user namespaces and seccomp are supported.
 extra-experimental-features = nix-command flakes
 CONF
 else
   echo "Warning: Disabling Nix sandboxing and syscall filtering in config."
-  cat << 'CONF' | sudo tee /etc/nix/nix.custom.conf > /dev/null
+  cat <<'CONF' | sudo tee /etc/nix/nix.custom.conf >/dev/null
 sandbox = false
 filter-syscalls = false
 extra-experimental-features = nix-command flakes
@@ -82,13 +82,13 @@ fi
 
 # Ensure our custom config is actually included in the main nix.conf
 if ! grep -q "nix.custom.conf" /etc/nix/nix.conf 2>/dev/null; then
-  echo "!include nix.custom.conf" | sudo tee -a /etc/nix/nix.conf > /dev/null
+  echo "!include nix.custom.conf" | sudo tee -a /etc/nix/nix.conf >/dev/null
 fi
 
 # 5. Start Daemon (if not already managed by systemd/installer)
 if [ ! -e /nix/var/nix/daemon-socket/socket ]; then
   sudo pkill nix-daemon || true
-  sudo "$NIX_BIN-daemon" 2>&1 | sudo tee /var/log/nix-daemon.log > /dev/null &
+  sudo "$NIX_BIN-daemon" 2>&1 | sudo tee /var/log/nix-daemon.log >/dev/null &
   sleep 2
 fi
 
@@ -98,5 +98,5 @@ export PATH
 
 # 7. Verify the installation
 nix --version
-nix flake --help > /dev/null
+nix flake --help >/dev/null
 echo "Nix installation and configuration complete."
