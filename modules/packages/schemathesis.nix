@@ -132,6 +132,10 @@
           "schemathesis"
         ];
 
+        postInstallCheck = ''
+          $out/bin/schemathesis run --help | grep -q -- "--report-allure-path"
+        '';
+
         meta = {
           description = "Catch API bugs before your users do";
           homepage = "https://github.com/schemathesis/schemathesis";
