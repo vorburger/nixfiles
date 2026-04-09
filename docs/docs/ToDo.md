@@ -175,6 +175,8 @@
 
 ## Low Priority / Nice to Have
 
+1. https://snowfall.org ?
+
 1. [`nixos-rebuild` alternatives?](reference/nixos-rebuild.md)
 
 1. Suppress (quiet) devshell menu
