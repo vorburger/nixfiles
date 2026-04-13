@@ -2,6 +2,8 @@
 
 ## Nix
 
+1. https://github.blog/changelog/2026-04-07-dependabot-version-updates-now-support-the-nix-ecosystem/
+
 1. Add install-nix skill from https://github.com/vorburger/aifiles
 
 1. VM, like ixo!!
@@ -70,6 +72,10 @@
 1. `nrs` script, which does `sudo nixos-rebuild switch --flake .` - AFTER checking that there are no dirty un-committed `nixfiles` AND that they have been pushed to the remote repo.
 
 1. Move `nix-update` skill to `nixfiles` repo - but reference it as input to make it available here... how?
+
+1. Try https://github.com/Foxboron/ssh-tpm-agent/issues/109
+
+1. Try https://yazi-rs.github.io
 
 1. Blog about my NixOS experience ([similar to this](https://michael.stapelberg.ch/posts/2025-06-01-nixos-installation-declarative/))
 
