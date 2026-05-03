@@ -1,7 +1,8 @@
 site_name: Learning ❄️ Nix Crash Course 🏃🏽‍➡️
 site_url: http://nix.vorburger.ch
 repo_url: https://github.com/vorburger/nixfiles
-edit_uri: blob/main/docs/
+repo_name: vorburger/nixfiles
+edit_uri: edit/main/docs/docs/
 copyright: Copyright &copy; 2025 The Learning Nix Crash Course <https://github.com/vorburger/nixfiles> Authors
 nav:
   - Tutorials:
@@ -31,3 +32,4 @@ nav:
 theme:
   features:
     - navigation.footer
+    - content.action.edit
