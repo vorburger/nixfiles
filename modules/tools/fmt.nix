@@ -20,9 +20,19 @@
           statix.enable = true;
           taplo.enable = true;
           yamlfmt.enable = true;
+          yamlfmt.settings = {
+            formatter = {
+              type = "basic";
+              retain_line_breaks_single = true;
+            };
+          };
         };
         settings = {
           on-unmatched = "fatal";
+          formatter.prettier.excludes = [
+            "*.yaml"
+            "*.yml"
+          ];
           global.excludes = [
             "*/*.bad"
             "*.envrc"
