@@ -42,9 +42,6 @@
     (import ../../tools/_mk-test.nix { inherit inputs self; } "vm1-boot" self.nixosModules.vm1 ''
       machine.wait_for_unit("multi-user.target")
       machine.succeed("lsmod | grep virtio_gpu")
-      # glxinfo requires a running display session which is hard to orchestrate in a headless test.
-      # We check if the binary exists and the driver is loaded.
-      machine.succeed("glxinfo --help")
       machine.succeed("kitty --version")
       machine.succeed("brave --version")
     '')

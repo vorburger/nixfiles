@@ -1,5 +1,4 @@
-_:
-{
+_: {
   time.timeZone = "Europe/Zurich";
   i18n.defaultLocale = "en_GB.UTF-8";
 
