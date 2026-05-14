@@ -2,6 +2,7 @@
 *.qcow2
 
 # Nix
+.agents
 .direnv
 .pre-commit-config.yaml
 result

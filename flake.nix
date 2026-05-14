@@ -6,6 +6,10 @@
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
   inputs = {
+    aifiles = {
+      url = "github:vorburger/aifiles";
+      flake = false;
+    };
     auto-follow.url = "github:fzakaria/nix-auto-follow";
     devshell.url = "github:numtide/devshell";
     disko.url = "github:nix-community/disko";

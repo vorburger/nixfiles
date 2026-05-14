@@ -2,8 +2,6 @@
 
 ## Nix
 
-1. Add install-nix skill from https://github.com/vorburger/aifiles
-
 1. VM, like ixo!!
 
 1. Ctrl-Backspace in Fish on Console (only; works over SSH)

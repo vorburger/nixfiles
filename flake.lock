@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "aifiles": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1778760377,
+        "narHash": "sha256-gKU5vDo4FxtcIZqByfSYUXUh8k/lGHw8acrUO6X4+uQ=",
+        "owner": "vorburger",
+        "repo": "aifiles",
+        "rev": "6a8c65e0b3f5409a97e9819f1358f87761bb98d5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vorburger",
+        "repo": "aifiles",
+        "type": "github"
+      }
+    },
     "auto-follow": {
       "inputs": {
         "nixpkgs": "nixpkgs"
@@ -385,6 +401,7 @@
     },
     "root": {
       "inputs": {
+        "aifiles": "aifiles",
         "auto-follow": "auto-follow",
         "devshell": "devshell",
         "disko": "disko",
