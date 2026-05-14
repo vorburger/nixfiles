@@ -19,9 +19,11 @@ and clone this repo, then `cd` (which will automagically put `nixos-rebuild` on 
     bin/vm.sh test1
     bin/vm.sh vm1
 
-It should `ssh` into the VM. Alternatively, for `test1` you can login as `tester` with password `x`.
+It should `ssh` into the VM. Alternatively, for `test1` you can login as `tester` with password `x`. (To set `x` for `vorburger`, add `initialPassword = "x"` to `modules/users/_vorburger.nix`... TODO: Improve this!)
 
 This does not (need to install) use any bootloader, as `qemu` directly boots the kernel. (TODO Remove the Disko and GRUB bits from `test1.nix`.)
+
+Note that `bin/vm.sh` deletes the `$MACH.qcow2` persistent disk image before each run, to ensure that the VM starts in a "pure" state (applying changes like `initialPassword` correctly). If you want to keep the persistent state, run the generated `result/bin/run-$MACH-vm` script directly instead.
 
 ### Installer ISO
 

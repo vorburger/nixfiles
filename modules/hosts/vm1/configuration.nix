@@ -3,6 +3,7 @@
   flake.nixosModules.vm1 = {
     imports = [
       ../_common.nix
+      ../../services/_gnome.nix
       ./_hardware-configuration.nix
       inputs.disko.nixosModules.disko
       (import ../../disko/_boot-and-ext4.nix { device = "/dev/vda"; })

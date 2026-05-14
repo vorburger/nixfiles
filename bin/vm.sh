@@ -3,6 +3,8 @@ set -euxo pipefail
 
 MACH=${1:-test1}
 
+rm -f "$MACH.qcow2"
+
 nixos-rebuild build-vm --flake .#"$MACH"
 
 result/bin/run-"$MACH"-vm &
