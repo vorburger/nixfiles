@@ -22,6 +22,7 @@ _: {
         program = pkgs.writeShellScriptBin "watch-documentation" ''
           ${pkgs.zensical}/bin/zensical serve -f docs/mkdocs.yaml
         '';
+        meta.description = "Watch documentation with live-rebuilds";
       };
 
       devshells.default = {

@@ -1,12 +1,10 @@
-{ inputs, ... }:
+{ inputs, self, ... }:
 {
-  flake.nixosConfigurations.test1 = inputs.nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
-    specialArgs = { inherit inputs; };
-    modules = [
-      # Disko isn't really used... TODO Figure out how to remove this...
-      inputs.disko.nixosModules.disko
-      (import ../disko/_boot-and-ext4.nix { device = "/dev/vda"; })
+  flake.nixosModules.test1 = {
+    imports = [
+      # Disko isn't really used...
+      # inputs.disko.nixosModules.disko
+      # (import ../disko/_boot-and-ext4.nix { device = "/dev/vda"; })
 
       ../services/_networking.nix
       ../services/_openssh.nix
@@ -16,12 +14,22 @@
         networking.hostName = "test1";
         system.stateVersion = "25.05";
 
-        # This isn't really used...
-        # but it's currently required to make `nix flake check` happy;
-        # TODO Figure out how to remove this...
+        boot.kernelParams = [ "console=ttyS0" ];
+
+        fileSystems."/" = {
+          device = "/dev/disk/by-label/nixos";
+        };
+
+        # This is currently required to make `nix flake check` happy
         boot.loader.grub.enable = true;
-        boot.loader.grub.devices = [ "/dev/vda1" ]; # vda1 or vda?
+        boot.loader.grub.devices = [ "/dev/vda" ];
       }
     ];
+  };
+
+  flake.nixosConfigurations.test1 = inputs.nixpkgs.lib.nixosSystem {
+    system = "x86_64-linux";
+    specialArgs = { inherit inputs; };
+    modules = [ self.nixosModules.test1 ];
   };
 }
