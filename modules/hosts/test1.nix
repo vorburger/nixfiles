@@ -32,4 +32,8 @@
     specialArgs = { inherit inputs self; };
     modules = [ self.nixosModules.test1 ];
   };
+
+  imports = [
+    (import ../tools/_mk-test.nix { inherit inputs self; } "test1-boot" self.nixosModules.test1)
+  ];
 }
