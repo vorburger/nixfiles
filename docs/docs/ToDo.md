@@ -2,11 +2,9 @@
 
 ## UI
 
-1. branch:[`fix-nix-flake-warnings`](https://github.com/vorburger/nixfiles/compare/fix-nix-flake-warnings)
+1. Create vm2 (graphical) vs. vm1 (console, as it was before) - without copy/paste
 
 1. branch:[`initial-secrets`](https://github.com/vorburger/nixfiles/compare/initial-secrets) vm1 Login, how-to? `../services/_initial-secrets.nix` ??
-
-1. Graphical; initially most minimal - just Brave & Kitty, in Sway?
 
 1. Home Manager `services.syshud` (new, 2026-04-12; update) A simple system status indicator for Wayland compositors.
 

@@ -100,6 +100,6 @@
   };
 
   imports = [
-    (import ../../tools/_mk-test.nix { inherit inputs self; } "ixo-boot" self.nixosModules.ixo)
+    (import ../../tools/_mk-test.nix { inherit inputs self; } "ixo-boot" self.nixosModules.ixo null)
   ];
 }

@@ -14,13 +14,4 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  virtualisation.vmVariant = {
-    virtualisation.forwardPorts = [
-      {
-        from = "host";
-        host.port = 2222;
-        guest.port = 22;
-      }
-    ];
-  };
 }

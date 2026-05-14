@@ -2,14 +2,12 @@
 {
   flake.nixosModules.test1 = {
     imports = [
-      # Disko isn't really used...
-      # inputs.disko.nixosModules.disko
-      # (import ../disko/_boot-and-ext4.nix { device = "/dev/vda"; })
-
       ./_common.nix
       ../users/_tester.nix
       ../users/_vorburger.nix
       {
+        # Help is available on https://nixos.org/nixos/options.html and in the configuration.nix(5) man page.
+
         networking.hostName = "test1";
         system.stateVersion = "25.05";
 
@@ -20,7 +18,8 @@
           fsType = "ext4";
         };
 
-        # This is currently required to make `nix flake check` happy
+        # This is currently required just to make `nix flake check` happy
+        # (even though this test1 VM doesn't actually use a bootloader)
         boot.loader.grub.enable = true;
         boot.loader.grub.devices = [ "/dev/vda" ];
       }
@@ -34,6 +33,6 @@
   };
 
   imports = [
-    (import ../tools/_mk-test.nix { inherit inputs self; } "test1-boot" self.nixosModules.test1)
+    (import ../tools/_mk-test.nix { inherit inputs self; } "test1-boot" self.nixosModules.test1 null)
   ];
 }

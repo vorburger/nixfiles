@@ -1,5 +1,5 @@
 { inputs, self }:
-name: module: {
+name: module: testScript: {
   perSystem =
     { pkgs, ... }:
     {
@@ -9,9 +9,13 @@ name: module: {
           imports = [ module ];
         };
         node.specialArgs = { inherit inputs self; };
-        testScript = ''
-          machine.wait_for_unit("multi-user.target")
-        '';
+        testScript =
+          if testScript != null then
+            testScript
+          else
+            ''
+              machine.wait_for_unit("multi-user.target")
+            '';
       };
     };
 }

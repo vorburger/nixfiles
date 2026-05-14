@@ -16,14 +16,18 @@ and the [`dotfiles/NixOS`](https://github.com/vorburger/dotfiles/tree/main/NixOS
 Install [Nix](https://nixos.org/download) and [direnv](https://direnv.net/docs/installation.html),
 and clone this repo, then `cd` (which will automagically put `nixos-rebuild` on your PATH) and run:
 
-    bin/vm.sh test1
-    bin/vm.sh vm1
+    bin/vm.sh test1 clean
+    bin/vm.sh vm1 keep
 
-It should `ssh` into the VM. Alternatively, for `test1` you can login as `tester` with password `x`. (To set `x` for `vorburger`, add `initialPassword = "x"` to `modules/users/_vorburger.nix`... TODO: Improve this!)
+It should `ssh` into the VM. The `vorburger` user is auto-logged in for `vm1`. For `test1` you can also (logout and) login as `tester` with password `x`.
 
 This does not (need to install) use any bootloader, as `qemu` directly boots the kernel. (TODO Remove the Disko and GRUB bits from `test1.nix`.)
 
-Note that `bin/vm.sh` deletes the `$MACH.qcow2` persistent disk image before each run, to ensure that the VM starts in a "pure" state (applying changes like `initialPassword` correctly). If you want to keep the persistent state, run the generated `result/bin/run-$MACH-vm` script directly instead.
+Note that `bin/vm.sh` requires a mandatory second argument to specify the disk state:
+
+- `clean` deletes the `$MACH.qcow2` persistent disk image before the run. This ensures the VM starts in a "pure" state, which is required to apply certain configuration changes like `initialPassword` or disk partitioning.
+
+- `keep` preserves the existing `$MACH.qcow2` file. This "keeps" any stateful changes made inside the VM, such as files created in home directories, installed non-declarative packages, or system logs.
 
 ### Installer ISO
 
