@@ -1,9 +1,9 @@
 _: {
   perSystem =
-    { pkgs, ... }:
+    { pkgs, self', ... }:
     {
-      packages.zensical-site = pkgs.stdenvNoCC.mkDerivation {
-        name = "zensical-site";
+      packages.documentation = pkgs.stdenvNoCC.mkDerivation {
+        name = "documentation";
         src = ../../docs;
         nativeBuildInputs = [ pkgs.zensical ];
         buildPhase = ''
@@ -15,10 +15,19 @@ _: {
         '';
       };
 
+      checks.documentation = self'.packages.documentation;
+
+      apps.watch-documentation = {
+        type = "app";
+        program = pkgs.writeShellScriptBin "watch-documentation" ''
+          ${pkgs.zensical}/bin/zensical serve -f docs/mkdocs.yaml
+        '';
+      };
+
       devshells.default = {
         commands = [
           {
-            name = "zensical-serve";
+            name = "watch-documentation";
             help = "Run zensical in dev mode (live update)";
             command = "${pkgs.zensical}/bin/zensical serve -f docs/mkdocs.yaml";
           }

@@ -57,7 +57,7 @@
 
 1. Cache on CI
 
-1. `mkdocs` a https://aifiles.vorburger.ch
+1. `zensical` a https://aifiles.vorburger.ch
 
 1. Make a much more minimal initial host config
 

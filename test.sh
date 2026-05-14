@@ -4,8 +4,6 @@ set -euo pipefail
 
 nix flake check
 
-nix build .#documentation
-
 nixos-rebuild build-vm --flake .#test1
 
 # TODO Fix testing the first-flake tutorial...
