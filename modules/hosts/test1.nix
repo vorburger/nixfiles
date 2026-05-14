@@ -20,6 +20,8 @@
         boot.loader.grub.devices = [ "/dev/vda" ];
 
         boot.kernelParams = [ "console=ttyS0" ];
+
+        services.virt-guest.enable = true;
       }
     ];
   };
