@@ -4,8 +4,6 @@
 
 1. Create vm2 (graphical) vs. vm1 (console, as it was before) - without copy/paste
 
-1. branch:[`initial-secrets`](https://github.com/vorburger/nixfiles/compare/initial-secrets) vm1 Login, how-to? `../services/_initial-secrets.nix` ??
-
 1. Home Manager `services.syshud` (new, 2026-04-12; update) A simple system status indicator for Wayland compositors.
 
 1. Antigravity, but NOT via home-manager, see
