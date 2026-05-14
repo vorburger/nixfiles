@@ -2,6 +2,10 @@
 
 ## UI
 
+1. Test all hosts
+
+1. vm1 Login, how-to? `../services/_initial-secrets.nix` ??
+
 1. Graphical; initially most minimal - just Brave & Kitty, in Sway?
 
 1. Home Manager `services.syshud` (new, 2026-04-12; update) A simple system status indicator for Wayland compositors.
