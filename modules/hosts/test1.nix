@@ -18,6 +18,7 @@
 
         fileSystems."/" = {
           device = "/dev/disk/by-label/nixos";
+          fsType = "ext4";
         };
 
         # This is currently required to make `nix flake check` happy
