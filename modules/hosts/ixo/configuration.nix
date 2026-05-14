@@ -15,8 +15,8 @@
       (
         { pkgs, ... }:
         {
-          # Help is available on https://nixos.org/nixos/options.html and in the configuration.nix(5) man page.
           networking.hostName = "ixo";
+          system.stateVersion = "26.05";
 
           environment.systemPackages = [
             pkgs.starship
@@ -70,12 +70,6 @@
               grab-page-down=<Alt>PageDown
             '';
           };
-
-          # Some programs need SUID wrappers, can be configured further or are
-          # started in user sessions.
-          # programs.mtr.enable = true;
-
-          system.stateVersion = "26.05";
         }
       )
     ];

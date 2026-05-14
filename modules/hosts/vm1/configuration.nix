@@ -12,22 +12,11 @@
       self.nixosModules.ui
       (_: {
         networking.hostName = "vm1";
+        system.stateVersion = "26.05";
 
         boot.loader.grub.enable = true;
-        # NOT boot.loader.grub.device = "/dev/vda"; # NOT vda1, which is the ESP!
-        # boot.loader.grub.useOSProber = true;
-
-        # Some programs need SUID wrappers, can be configured further or are
-        # started in user sessions.
-        # programs.mtr.enable = true;
-        # programs.gnupg.agent = {
-        #   enable = true;
-        #   enableSSHSupport = true;
-        # };
 
         services.virt-guest.enable = true;
-
-        system.stateVersion = "26.05";
       })
     ];
   };

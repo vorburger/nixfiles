@@ -107,8 +107,6 @@
    '';
    ```
 
-1. Remove Disko & GRUB from test1, if possible
-
 1. VM with UEFI instead of BIOS, and systemd-boot instead of GRUB
 
 1. Rename `test1` to vm-without-bootloader, and vm1 to vm-bios-with-grub-bootloader ?

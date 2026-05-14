@@ -21,7 +21,7 @@ and clone this repo, then `cd` (which will automagically put `nixos-rebuild` on 
 
 It should `ssh` into the VM. The `vorburger` user is auto-logged in for `vm1`. For `test1` you can also (logout and) login as `tester` with password `x`.
 
-This does not (need to install) use any bootloader, as `qemu` directly boots the kernel. (TODO Remove the Disko and GRUB bits from `test1.nix`.)
+This does not (need to install) use any bootloader, as `qemu` directly boots the kernel.
 
 Note that `bin/vm.sh` requires a mandatory second argument to specify the disk state:
 
