@@ -8,7 +8,7 @@
         nodes.machine = {
           imports = [ self.nixosModules.test1 ];
         };
-        node.specialArgs = { inherit inputs; };
+        node.specialArgs = { inherit inputs self; };
         testScript = ''
           machine.wait_for_unit("multi-user.target")
         '';

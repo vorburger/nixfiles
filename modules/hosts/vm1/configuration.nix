@@ -1,16 +1,14 @@
-{ inputs, ... }:
+{ inputs, self, ... }:
 {
   flake.nixosConfigurations.vm1 = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
-    specialArgs = { inherit inputs; };
+    specialArgs = { inherit inputs self; };
 
     modules = [
+      ../_common.nix
       ./_hardware-configuration.nix
       inputs.disko.nixosModules.disko
       (import ../../disko/_boot-and-ext4.nix { device = "/dev/vda"; })
-      ../../services/_networking.nix
-      ../../services/_openssh.nix
-      ../../services/_nix.nix
       ../../users/_vorburger.nix
       {
         # Help is available on https://nixos.org/nixos/options.html and in the configuration.nix(5) man page.

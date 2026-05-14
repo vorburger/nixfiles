@@ -1,16 +1,14 @@
-{ inputs, ... }:
+{ inputs, self, ... }:
 {
   flake.nixosConfigurations.ixo = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
-    specialArgs = { inherit inputs; };
+    specialArgs = { inherit inputs self; };
 
     modules = [
+      ../_common.nix
       ./_hardware-configuration.nix
       inputs.disko.nixosModules.disko
       (import ../../disko/_boot-and-ext4.nix { device = "/dev/nvme0n1"; })
-      ../../services/_networking.nix
-      ../../services/_openssh.nix
-      ../../services/_nix.nix
       ../../services/_initial-secrets.nix
       ../../services/_gpg-with-yubikey.nix
       ../../services/_ssh-tpm-agent.nix

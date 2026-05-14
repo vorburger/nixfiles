@@ -1,10 +1,17 @@
 # ToDo
 
-## Nix
+## UI
 
-1. evaluation warning: `boot.zfs.forceImportRoot` is using the default value of `true`. It is highly recommended to set it to `false`, the new default from 26.11 on, to reduce the risk of data loss. Alternatively, you can silence this warning by explicitly setting it to `true`.
+1. Graphical; initially most minimal - just Brave & Kitty, in Sway?
 
-1. VM, like ixo!!
+1. Home Manager `services.syshud` (new, 2026-04-12; update) A simple system status indicator for Wayland compositors.
+
+1. Antigravity, but NOT via home-manager, see
+   https://github.com/vorburger/dotfiles/commit/21aff996ef847ddeefbde2061f984446682ba1e3
+
+## Workstations & Laptops
+
+1. vm2, like ixo!!
 
 1. Ctrl-Backspace in Fish on Console (only; works over SSH)
 
@@ -23,20 +30,13 @@
 
 1. https://github.com/NixOS/nixos-hardware/blob/master/lenovo/thinkpad/x1/12th-gen/default.ni
 
+1. Sound OK? Home Manager `services.pipewire` (new, 2026-04-11; update) options for configuring the PipeWire server etc. https://github.com/vorburger/nixfiles/pull/6
+
+## Nix Common
+
 1. nix GC automatically
 
 1. Login and go straight into TMUX
-
-1. Graphical; initially most minimal - just Brave & Kitty, in Sway?
-
-1. Home Manager `services.syshud` (new, 2026-04-12; update) A simple system status indicator for Wayland compositors.
-
-1. Sound OK? Home Manager `services.pipewire` (new, 2026-04-11; update) options for configuring the PipeWire server etc. https://github.com/vorburger/nixfiles/pull/6
-
-1. Compare `pstree` on Nix Console and Fedora in GNOME
-
-1. Antigravity, but NOT via home-manager, see
-   https://github.com/vorburger/dotfiles/commit/21aff996ef847ddeefbde2061f984446682ba1e3
 
 1. How to do LUKS encryption?
 
@@ -47,15 +47,17 @@
    $ sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+7 /dev/nvme0n1p2
    ```
 
+1. `tmux` should remember open tabs over restart
+
 1. [Impermanence](https://www.youtube.com/watch?v=ZKBSWS7OOb4&t=6s) with [`preservation`](https://github.com/nix-community/preservation), see [vimjoyer](https://www.vimjoyer.com/vid89-impermanent)
 
 1. `/nix` on separate partition (or LV)
 
+1. Compare `pstree` on Nix Console and Fedora in GNOME
+
 1. Secure Boot!!
    - Not possible to still dual boot Fedora?
    - Does `ssh-tpm-agent` still work?!
-
-1. `tmux` should remember open tabs over restart
 
 1. Cache on CI
 

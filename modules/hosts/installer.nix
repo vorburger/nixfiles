@@ -1,9 +1,10 @@
-{ inputs, ... }:
+{ inputs, self, ... }:
 {
   flake.nixosConfigurations.installer = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
+    specialArgs = { inherit inputs self; };
     modules = [
-      ../services/_openssh.nix
+      ./_common.nix
       "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
       (
         { pkgs, ... }:

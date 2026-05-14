@@ -6,8 +6,7 @@
       # inputs.disko.nixosModules.disko
       # (import ../disko/_boot-and-ext4.nix { device = "/dev/vda"; })
 
-      ../services/_networking.nix
-      ../services/_openssh.nix
+      ./_common.nix
       ../users/_tester.nix
       ../users/_vorburger.nix
       {
@@ -30,7 +29,7 @@
 
   flake.nixosConfigurations.test1 = inputs.nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
-    specialArgs = { inherit inputs; };
+    specialArgs = { inherit inputs self; };
     modules = [ self.nixosModules.test1 ];
   };
 }
