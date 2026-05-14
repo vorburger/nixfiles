@@ -88,7 +88,7 @@
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
-          "nixpkgs-lib"
+          "nixpkgs"
         ]
       },
       "locked": {
@@ -395,9 +395,6 @@
         "import-tree": "import-tree",
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs_7",
-        "nixpkgs-lib": [
-          "nixpkgs"
-        ],
         "treefmt-nix": "treefmt-nix",
         "vorburger-dotfiles": "vorburger-dotfiles"
       }
