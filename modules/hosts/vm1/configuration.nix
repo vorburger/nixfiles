@@ -1,10 +1,7 @@
 { inputs, self, ... }:
 {
-  flake.nixosConfigurations.vm1 = inputs.nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
-    specialArgs = { inherit inputs self; };
-
-    modules = [
+  flake.nixosModules.vm1 = {
+    imports = [
       ../_common.nix
       ./_hardware-configuration.nix
       inputs.disko.nixosModules.disko
@@ -39,4 +36,14 @@
       }
     ];
   };
+
+  flake.nixosConfigurations.vm1 = inputs.nixpkgs.lib.nixosSystem {
+    system = "x86_64-linux";
+    specialArgs = { inherit inputs self; };
+    modules = [ self.nixosModules.vm1 ];
+  };
+
+  imports = [
+    (import ../../tools/_mk-test.nix { inherit inputs self; } "vm1-boot" self.nixosModules.vm1)
+  ];
 }

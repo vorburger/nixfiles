@@ -2,8 +2,6 @@
 
 ## UI
 
-1. Test all hosts
-
 1. vm1 Login, how-to? `../services/_initial-secrets.nix` ??
 
 1. Graphical; initially most minimal - just Brave & Kitty, in Sway?

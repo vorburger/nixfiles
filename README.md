@@ -17,8 +17,9 @@ Install [Nix](https://nixos.org/download) and [direnv](https://direnv.net/docs/i
 and clone this repo, then `cd` (which will automagically put `nixos-rebuild` on your PATH) and run:
 
     bin/vm.sh test1
+    bin/vm.sh vm1
 
-It should `ssh` into the VM (alternatively, you can login as `tester` with password `x` on the Console).
+It should `ssh` into the VM. Alternatively, for `test1` you can login as `tester` with password `x`.
 
 This does not (need to install) use any bootloader, as `qemu` directly boots the kernel. (TODO Remove the Disko and GRUB bits from `test1.nix`.)
 

@@ -5,7 +5,9 @@ name: module: {
     {
       checks.${name} = pkgs.testers.runNixOSTest {
         inherit name;
-        nodes.machine = module;
+        nodes.machine = {
+          imports = [ module ];
+        };
         node.specialArgs = { inherit inputs self; };
         testScript = ''
           machine.wait_for_unit("multi-user.target")
