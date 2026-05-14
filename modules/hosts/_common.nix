@@ -9,6 +9,8 @@
     self.nixosModules.ssh-agent-mux
     self.nixosModules.pipewire-extra
     self.nixosModules.gnome-extra
+    self.nixosModules.fprintd-extra
+    self.nixosModules.kmscon-extra
     ../services/_ch.nix
     ../services/_networking.nix
     ../services/_openssh.nix
