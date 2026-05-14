@@ -10,10 +10,6 @@
       url = "github:vorburger/aifiles";
       flake = false;
     };
-    auto-follow = {
-      url = "github:fzakaria/nix-auto-follow";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     devshell = {
       url = "github:numtide/devshell";
       inputs.nixpkgs.follows = "nixpkgs";
