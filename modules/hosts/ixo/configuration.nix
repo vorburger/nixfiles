@@ -17,8 +17,7 @@
           boot.loader.efi.canTouchEfiVariables = true;
 
           environment.systemPackages = [
-            pkgs.starship
-            pkgs.pulseaudio # Provides `paplay` for audio alerts
+            pkgs.starship # TODO Move to dotfiles repo
           ];
 
           services.initial-secrets.enable = true;

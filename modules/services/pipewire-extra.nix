@@ -25,6 +25,7 @@ in
 
         environment.systemPackages = [
           pkgs.sound-theme-freedesktop
+          pkgs.pulseaudio # Provides `paplay` for audio alerts (and `pactl`)
         ];
       };
   };
