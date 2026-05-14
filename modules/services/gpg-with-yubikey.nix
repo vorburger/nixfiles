@@ -1,21 +1,16 @@
+let
+  inherit (import ../../lib/mk-service.nix) mkService;
+in
 {
-  flake.nixosModules.gpg-with-yubikey =
-    {
-      config,
-      lib,
-      pkgs,
-      ...
-    }:
-    let
-      cfg = config.services.gpg-with-yubikey;
-      ssh = false; # No need anymore, as we use ssh-tpm-agent
-    in
-    {
-      options.services.gpg-with-yubikey = {
-        enable = lib.mkEnableOption "GPG with YubiKey support";
-      };
-
-      config = lib.mkIf cfg.enable {
+  flake.nixosModules.gpg-with-yubikey = mkService {
+    name = "gpg-with-yubikey";
+    description = "GPG with YubiKey support";
+    content =
+      { pkgs, ... }:
+      let
+        ssh = false; # No need anymore, as we use ssh-tpm-agent
+      in
+      {
         # Enable the PC/SC Smart Card Daemon, required for GnuPG to communicate with YubiKeys
         services.pcscd.enable = true;
 
@@ -51,5 +46,5 @@
           pinentry-curses
         ];
       };
-    };
+  };
 }

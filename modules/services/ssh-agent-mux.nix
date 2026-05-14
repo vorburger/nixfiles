@@ -1,20 +1,13 @@
+let
+  inherit (import ../../lib/mk-service.nix) mkService;
+in
 {
-  flake.nixosModules.ssh-agent-mux =
-    {
-      config,
-      lib,
-      pkgs,
-      ...
-    }:
-    let
-      cfg = config.services.ssh-agent-mux;
-    in
-    {
-      options.services.ssh-agent-mux = {
-        enable = lib.mkEnableOption "SSH agent multiplexer";
-      };
-
-      config = lib.mkIf cfg.enable {
+  flake.nixosModules.ssh-agent-mux = mkService {
+    name = "ssh-agent-mux";
+    description = "SSH agent multiplexer";
+    content =
+      { pkgs, ... }:
+      {
         # Install the ssh-agent-mux package
         environment.systemPackages = [ pkgs.ssh-agent-mux ];
 
@@ -51,5 +44,5 @@
           end
         '';
       };
-    };
+  };
 }

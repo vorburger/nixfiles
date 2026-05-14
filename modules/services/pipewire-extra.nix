@@ -1,20 +1,13 @@
+let
+  inherit (import ../../lib/mk-service.nix) mkService;
+in
 {
-  flake.nixosModules.pipewire-extra =
-    {
-      config,
-      lib,
-      pkgs,
-      ...
-    }:
-    let
-      cfg = config.services.pipewire-extra;
-    in
-    {
-      options.services.pipewire-extra = {
-        enable = lib.mkEnableOption "extra PipeWire configuration";
-      };
-
-      config = lib.mkIf cfg.enable {
+  flake.nixosModules.pipewire-extra = mkService {
+    name = "pipewire-extra";
+    description = "extra PipeWire configuration";
+    content =
+      { pkgs, ... }:
+      {
         # Enable sound with pipewire.
         security.rtkit.enable = true;
         services.pipewire = {
@@ -34,5 +27,5 @@
           pkgs.sound-theme-freedesktop
         ];
       };
-    };
+  };
 }

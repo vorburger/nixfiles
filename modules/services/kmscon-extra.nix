@@ -1,20 +1,13 @@
+let
+  inherit (import ../../lib/mk-service.nix) mkService;
+in
 {
-  flake.nixosModules.kmscon-extra =
-    {
-      config,
-      lib,
-      pkgs,
-      ...
-    }:
-    let
-      cfg = config.services.kmscon-extra;
-    in
-    {
-      options.services.kmscon-extra = {
-        enable = lib.mkEnableOption "extra kmscon configuration";
-      };
-
-      config = lib.mkIf cfg.enable {
+  flake.nixosModules.kmscon-extra = mkService {
+    name = "kmscon-extra";
+    description = "extra kmscon configuration";
+    content =
+      { pkgs, ... }:
+      {
         # This is a fallback for very early boot before kmscon starts.
         console = {
           font = "ter-v24n";
@@ -53,5 +46,5 @@
           '';
         };
       };
-    };
+  };
 }

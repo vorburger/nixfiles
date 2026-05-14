@@ -1,20 +1,13 @@
+let
+  inherit (import ../../lib/mk-service.nix) mkService;
+in
 {
-  flake.nixosModules.ssh-tpm-agent =
-    {
-      config,
-      lib,
-      pkgs,
-      ...
-    }:
-    let
-      cfg = config.services.ssh-tpm-agent;
-    in
-    {
-      options.services.ssh-tpm-agent = {
-        enable = lib.mkEnableOption "SSH TPM agent support";
-      };
-
-      config = lib.mkIf cfg.enable {
+  flake.nixosModules.ssh-tpm-agent = mkService {
+    name = "ssh-tpm-agent";
+    description = "SSH TPM agent support";
+    content =
+      { pkgs, ... }:
+      {
         security.tpm2.enable = true;
 
         # Install the ssh-tpm-agent package
@@ -40,5 +33,5 @@
           wantedBy = [ "multi-user.target" ];
         };
       };
-    };
+  };
 }

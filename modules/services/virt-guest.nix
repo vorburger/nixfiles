@@ -1,12 +1,13 @@
+let
+  inherit (import ../../lib/mk-service.nix) mkService;
+in
 {
-  flake.nixosModules.virt-guest =
-    { config, lib, ... }:
-    let
-      cfg = config.services.virt-guest;
-    in
-    {
-      options.services.virt-guest = {
-        enable = lib.mkEnableOption "optimized VM guest settings";
+  flake.nixosModules.virt-guest = mkService {
+    name = "virt-guest";
+    description = "optimized VM guest settings";
+    extraOptions =
+      { lib, ... }:
+      {
         memorySize = lib.mkOption {
           type = lib.types.int;
           default = 8192;
@@ -18,8 +19,9 @@
           description = "Number of CPU cores for the VM.";
         };
       };
-
-      config = lib.mkIf cfg.enable {
+    content =
+      { cfg, ... }:
+      {
         boot.kernelModules = [ "virtio_gpu" ];
         hardware.graphics.enable = true;
         services.xserver.videoDrivers = [ "virtio" ];
@@ -61,5 +63,5 @@
           };
         };
       };
-    };
+  };
 }

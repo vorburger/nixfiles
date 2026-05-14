@@ -21,4 +21,5 @@
   services.networking-extra.enable = lib.mkDefault true;
   services.openssh-extra.enable = lib.mkDefault true;
   services.nix-extra.enable = lib.mkDefault true;
+  services.zfs-extra.enable = lib.mkDefault true;
 }

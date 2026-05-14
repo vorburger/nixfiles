@@ -1,20 +1,13 @@
+let
+  inherit (import ../../lib/mk-service.nix) mkService;
+in
 {
-  flake.nixosModules.gnome-extra =
-    {
-      config,
-      lib,
-      pkgs,
-      ...
-    }:
-    let
-      cfg = config.services.gnome-extra;
-    in
-    {
-      options.services.gnome-extra = {
-        enable = lib.mkEnableOption "extra GNOME configuration";
-      };
-
-      config = lib.mkIf cfg.enable {
+  flake.nixosModules.gnome-extra = mkService {
+    name = "gnome-extra";
+    description = "extra GNOME configuration";
+    content =
+      { pkgs, ... }:
+      {
         services = {
           displayManager.gdm.enable = true;
           desktopManager.gnome.enable = true;
@@ -33,5 +26,5 @@
           gnome-tour
         ];
       };
-    };
+  };
 }
