@@ -1,6 +1,7 @@
 { inputs, lib, ... }:
 {
   flake-file.inputs.git-hooks.url = "github:cachix/git-hooks.nix";
+  flake-file.inputs.git-hooks.inputs.nixpkgs.follows = "nixpkgs";
 
   imports = [
     inputs.git-hooks.flakeModule
