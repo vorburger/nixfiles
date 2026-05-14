@@ -34,15 +34,6 @@
           boot.loader.systemd-boot.enable = true;
           boot.loader.efi.canTouchEfiVariables = true;
 
-          # TODO Factor all of this out into an _local.nix, and re-use it...
-          time.timeZone = "Europe/Zurich";
-          i18n.defaultLocale = "en_GB.UTF-8";
-          services.xserver.xkb = {
-            # TODO Avoid repetition with similar in kmscon
-            layout = "ch";
-            variant = "de";
-          };
-
           console = {
             # This is a fallback for very early boot before kmscon starts.
             font = "ter-v24n";
@@ -50,8 +41,6 @@
               pkgs.kbd
               pkgs.terminus_font
             ];
-            # TODO Centralize this in the same place as the xserver.xkb and kmscon
-            keyMap = "sg";
           };
 
           services.getty.loginProgram = "/run/current-system/sw/bin/login";

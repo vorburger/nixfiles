@@ -17,15 +17,6 @@
         # NOT boot.loader.grub.device = "/dev/vda"; # NOT vda1, which is the ESP!
         # boot.loader.grub.useOSProber = true;
 
-        # TODO Factor all of this out into an _local.nix, and re-use it...
-        time.timeZone = "Europe/Zurich";
-        i18n.defaultLocale = "en_GB.UTF-8";
-        services.xserver.xkb = {
-          layout = "ch";
-          variant = "";
-        };
-        console.keyMap = "sg";
-
         # Some programs need SUID wrappers, can be configured further or are
         # started in user sessions.
         # programs.mtr.enable = true;
