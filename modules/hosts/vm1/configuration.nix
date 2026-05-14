@@ -8,33 +8,39 @@
       inputs.disko.nixosModules.disko
       (import ../../disko/_boot-and-ext4.nix { device = "/dev/vda"; })
       ../../users/_vorburger.nix
-      {
-        # Help is available on https://nixos.org/nixos/options.html and in the configuration.nix(5) man page.
-        networking.hostName = "vm1";
+      (
+        { modulesPath, ... }:
+        {
+          imports = [ (modulesPath + "/virtualisation/qemu-vm.nix") ];
+          # Help is available on https://nixos.org/nixos/options.html and in the configuration.nix(5) man page.
+          networking.hostName = "vm1";
 
-        boot.loader.grub.enable = true;
-        # NOT boot.loader.grub.device = "/dev/vda"; # NOT vda1, which is the ESP!
-        # boot.loader.grub.useOSProber = true;
+          boot.loader.grub.enable = true;
+          # NOT boot.loader.grub.device = "/dev/vda"; # NOT vda1, which is the ESP!
+          # boot.loader.grub.useOSProber = true;
 
-        # TODO Factor all of this out into an _local.nix, and re-use it...
-        time.timeZone = "Europe/Zurich";
-        i18n.defaultLocale = "en_GB.UTF-8";
-        services.xserver.xkb = {
-          layout = "ch";
-          variant = "";
-        };
-        console.keyMap = "sg";
+          # TODO Factor all of this out into an _local.nix, and re-use it...
+          time.timeZone = "Europe/Zurich";
+          i18n.defaultLocale = "en_GB.UTF-8";
+          services.xserver.xkb = {
+            layout = "ch";
+            variant = "";
+          };
+          console.keyMap = "sg";
 
-        # Some programs need SUID wrappers, can be configured further or are
-        # started in user sessions.
-        # programs.mtr.enable = true;
-        # programs.gnupg.agent = {
-        #   enable = true;
-        #   enableSSHSupport = true;
-        # };
+          # Some programs need SUID wrappers, can be configured further or are
+          # started in user sessions.
+          # programs.mtr.enable = true;
+          # programs.gnupg.agent = {
+          #   enable = true;
+          #   enableSSHSupport = true;
+          # };
 
-        system.stateVersion = "26.05";
-      }
+          system.stateVersion = "26.05";
+
+          virtualisation.memorySize = 4096;
+        }
+      )
     ];
   };
 
