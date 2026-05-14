@@ -1,5 +1,6 @@
 { inputs, lib, ... }:
 {
+  # See https://github.com/denful/flake-file/issues/115
   # This is a local copy of (inputs.flake-file + "/modules/dendritic/dendritic.nix")
   # but with 'flake.modules = { };' and 'flake-parts.flakeModules.modules' removed
   # to fix the "unknown flake output 'modules'" warning from nix flake check.

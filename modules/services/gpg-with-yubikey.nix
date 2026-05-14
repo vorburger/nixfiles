@@ -1,0 +1,55 @@
+{
+  flake.nixosModules.gpg-with-yubikey =
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
+    let
+      cfg = config.services.gpg-with-yubikey;
+      ssh = false; # No need anymore, as we use ssh-tpm-agent
+    in
+    {
+      options.services.gpg-with-yubikey = {
+        enable = lib.mkEnableOption "GPG with YubiKey support";
+      };
+
+      config = lib.mkIf cfg.enable {
+        # Enable the PC/SC Smart Card Daemon, required for GnuPG to communicate with YubiKeys
+        services.pcscd.enable = true;
+
+        # Enable Udev rules for YubiKeys
+        services.udev.packages = with pkgs; [
+          yubikey-personalization
+          libu2f-host
+        ];
+
+        # Enable the GnuPG agent
+        programs.gnupg.agent = {
+          enable = true;
+          enableSSHSupport = ssh;
+          pinentryPackage = pkgs.pinentry-curses;
+        };
+
+        # If SSH, then disable the default NixOS ssh-agent to ensure it doesn't conflict with GnuPG
+        programs.ssh.startAgent = !ssh;
+
+        # Some setups need GPG_TTY for pinentry to work correctly
+        environment.interactiveShellInit = ''
+          export GPG_TTY=$(tty)
+        '';
+        programs.fish.interactiveShellInit = ''
+          set -gx GPG_TTY (tty)
+        '';
+
+        # Ensure gnupg and useful tools are installed
+        environment.systemPackages = with pkgs; [
+          gnupg
+          yubikey-manager
+          # pinentry-curses is usually handled by pinentryFlavor, but having it explicitly can help
+          pinentry-curses
+        ];
+      };
+    };
+}

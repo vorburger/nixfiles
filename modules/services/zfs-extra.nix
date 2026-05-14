@@ -1,5 +1,5 @@
 {
-  flake.nixosModules.zfs = {
+  flake.nixosModules.zfs-extra = {
     boot.zfs.forceImportRoot = false;
   };
 }

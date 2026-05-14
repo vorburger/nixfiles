@@ -6,11 +6,6 @@
       ./_hardware-configuration.nix
       inputs.disko.nixosModules.disko
       (import ../../disko/_boot-and-ext4.nix { device = "/dev/nvme0n1"; })
-      ../../services/_initial-secrets.nix
-      ../../services/_gpg-with-yubikey.nix
-      ../../services/_ssh-tpm-agent.nix
-      ../../services/_ssh-agent-mux.nix
-      ../../services/_pipewire.nix
       ../../users/_vorburger.nix
       (
         { pkgs, ... }:
@@ -24,6 +19,10 @@
           ];
 
           services.initial-secrets.enable = true;
+          services.gpg-with-yubikey.enable = true;
+          services.ssh-tpm-agent.enable = true;
+          services.ssh-agent-mux.enable = true;
+          services.pipewire-extra.enable = true;
 
           services.fprintd.enable = true;
           # Remember to enroll fingerprints with `fprintd-enroll` (for each user).
