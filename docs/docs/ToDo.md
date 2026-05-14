@@ -2,11 +2,11 @@
 
 ## Nix
 
-1. https://github.blog/changelog/2026-04-07-dependabot-version-updates-now-support-the-nix-ecosystem/
-
 1. Add install-nix skill from https://github.com/vorburger/aifiles
 
 1. VM, like ixo!!
+
+1. Ctrl-Backspace in Fish on Console (only; works over SSH)
 
 1. Alt Left/Right in nano
 
@@ -16,8 +16,6 @@
 1. `pass`, via ext. YK
 
 1. True Colors!! Both on Console, and when logged in remotely over ssh in tmux
-
-1. Ctrl-Backspace in Fish on Console (only; works over SSH)
 
 1. How to solve <> problem
 
@@ -30,6 +28,10 @@
 1. Login and go straight into TMUX
 
 1. Graphical; initially most minimal - just Brave & Kitty, in Sway?
+
+1. Home Manager `services.syshud` (new, 2026-04-12; update) A simple system status indicator for Wayland compositors.
+
+1. Sound OK? Home Manager `services.pipewire` (new, 2026-04-11; update) options for configuring the PipeWire server etc. https://github.com/vorburger/nixfiles/pull/6
 
 1. Compare `pstree` on Nix Console and Fedora in GNOME
 
@@ -45,7 +47,7 @@
    $ sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+7 /dev/nvme0n1p2
    ```
 
-1. Impermanence
+1. [Impermanence](https://www.youtube.com/watch?v=ZKBSWS7OOb4&t=6s) with [`preservation`](https://github.com/nix-community/preservation), see [vimjoyer](https://www.vimjoyer.com/vid89-impermanent)
 
 1. `/nix` on separate partition (or LV)
 
