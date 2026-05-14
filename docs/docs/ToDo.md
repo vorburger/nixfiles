@@ -2,7 +2,9 @@
 
 ## UI
 
-1. vm1 Login, how-to? `../services/_initial-secrets.nix` ??
+1. branch:[`fix-nix-flake-warnings`](https://github.com/vorburger/nixfiles/compare/fix-nix-flake-warnings)
+
+1. branch:[`initial-secrets`](https://github.com/vorburger/nixfiles/compare/initial-secrets) vm1 Login, how-to? `../services/_initial-secrets.nix` ??
 
 1. Graphical; initially most minimal - just Brave & Kitty, in Sway?
 
