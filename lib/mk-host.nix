@@ -16,6 +16,9 @@
       modules ? [ ],
       testScript ? null,
     }:
+    let
+      inherit (import ./mk-test.nix { inherit inputs self lib; }) mkTest;
+    in
     {
       flake.nixosModules.${name} = {
         imports =
@@ -40,9 +43,7 @@
       };
 
       imports = lib.optional (testScript != null || name != "installer") (
-        import ../modules/tools/_mk-test.nix {
-          inherit inputs self;
-        } "${name}-boot" self.nixosModules.${name} testScript
+        mkTest "${name}-boot" self.nixosModules.${name} testScript
       );
     };
 }
