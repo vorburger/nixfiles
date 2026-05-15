@@ -1,5 +1,46 @@
 # ToDo
 
+1. https://2026.nixcon.org ?
+
+1. Ixo with GNOME
+
+1. https://github.com/NixOS/nixos-hardware/blob/master/lenovo/thinkpad/x1/12th-gen/default.ni
+
+1. `nrs` script, which does `sudo nixos-rebuild switch --flake .` - AFTER checking that there are no dirty un-committed `nixfiles` AND that they have been pushed to the remote repo.
+
+1. Workstation 🖥️ with `pam_u2f.so` for `sudo` with SK
+
+1. Workstation 0.1 (on separate drive; but first backup ToNAS)
+
+1. ZFS; first in VM, then on BM
+
+1. nix GC automatically
+
+1. `/nix` on separate partition (or LV)
+
+1. How to do LUKS encryption?
+
+   ```nix
+   boot.initrd.systemd.enable = true; # Required for modern systemd-cryptsetup
+   security.tpm2.enable = true;
+
+   $ sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+7 /dev/nvme0n1p2
+   ```
+
+1. [Impermanence](https://www.youtube.com/watch?v=ZKBSWS7OOb4&t=6s) with [`preservation`](https://github.com/nix-community/preservation), see [vimjoyer](https://www.vimjoyer.com/vid89-impermanent)
+
+1. Cloud VMs? `imports = [ "${modulesPath}/virtualisation/amazon-image.nix" ]` ? See e.g. [this announcement](https://www.haskellforall.com/2023/01/announcing-nixos-rebuild-new-deployment.html).
+
+1. Secure Boot!!
+   - Not possible to still dual boot Fedora?
+   - Does `ssh-tpm-agent` still work?!
+
+1. Ixo solve <> key map problem (how?)
+
+1. Ixo powersaving
+
+1. Blog about my NixOS experience ([similar to this](https://michael.stapelberg.ch/posts/2025-06-01-nixos-installation-declarative/))
+
 ## Workstations & Laptops
 
 1. Fix why locale-ch keyboard layout does not work in GNOME VM ... the Settings Keyboard does show ch-de, but the keys aren't mapped correctly. Perhaps this is more of a QEMU than a GNOME thing?
@@ -18,11 +59,7 @@
 
 1. True Colors!! Both on Console, and when logged in remotely over ssh in tmux
 
-1. How to solve <> problem
-
 1. Try `services.howdy.enable = true; security.pam.services.sudo.howdyAuth = true;`
-
-1. https://github.com/NixOS/nixos-hardware/blob/master/lenovo/thinkpad/x1/12th-gen/default.ni
 
 1. Sound OK? Home Manager `services.pipewire` (new, 2026-04-11; update) options for configuring the PipeWire server etc. https://github.com/vorburger/nixfiles/pull/6
 
@@ -30,30 +67,11 @@
 
 ## Nix Common
 
-1. nix GC automatically
-
 1. Login and go straight into TMUX
-
-1. How to do LUKS encryption?
-
-   ```nix
-   boot.initrd.systemd.enable = true; # Required for modern systemd-cryptsetup
-   security.tpm2.enable = true;
-
-   $ sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+7 /dev/nvme0n1p2
-   ```
 
 1. `tmux` should remember open tabs over restart
 
-1. [Impermanence](https://www.youtube.com/watch?v=ZKBSWS7OOb4&t=6s) with [`preservation`](https://github.com/nix-community/preservation), see [vimjoyer](https://www.vimjoyer.com/vid89-impermanent)
-
-1. `/nix` on separate partition (or LV)
-
 1. Compare `pstree` on Nix Console and Fedora in GNOME
-
-1. Secure Boot!!
-   - Not possible to still dual boot Fedora?
-   - Does `ssh-tpm-agent` still work?!
 
 1. Cache on CI
 
@@ -63,13 +81,9 @@
 
 1. Use `sopsnix` or `agenix` for secrets management (instead of `nixos-anywhere --extra-files`). Maybe together with https://github.com/Foxboron/age-plugin-tpm ?
 
-1. `nrs` script, which does `sudo nixos-rebuild switch --flake .` - AFTER checking that there are no dirty un-committed `nixfiles` AND that they have been pushed to the remote repo.
-
 1. Try https://github.com/Foxboron/ssh-tpm-agent/issues/109
 
 1. Try https://yazi-rs.github.io
-
-1. Blog about my NixOS experience ([similar to this](https://michael.stapelberg.ch/posts/2025-06-01-nixos-installation-declarative/))
 
 1. Try https://github.com/microvm-nix/microvm.nix?
    See https://michael.stapelberg.ch/posts/2026-02-01-coding-agent-microvm-nix/.
@@ -98,10 +112,6 @@
 1. VM with UEFI instead of BIOS, and systemd-boot instead of GRUB
 
 1. `nixos-rebuild ... --specialisation XYZ` for different use cases?
-
-1. Cloud VMs? `imports = [ "${modulesPath}/virtualisation/amazon-image.nix" ]` ? See e.g. [this announcement](https://www.haskellforall.com/2023/01/announcing-nixos-rebuild-new-deployment.html).
-
-1. Workstation 🖥️ with `pam_u2f.so` for `sudo` with SK
 
 1. Clan!
    - https://docs.clan.lol/guides/nixpkgs-flake-input/
