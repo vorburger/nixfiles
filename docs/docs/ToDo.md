@@ -1,7 +1,5 @@
 # ToDo
 
-1. VM testing; https://github.com/anatol/vmtest for `systemctl status` (porcelaim?)
-
 1. Rename test1 to console-grub, vm1 to gnome-grub; incl. README and any other mentions
 
 1. How could we separate "VM" from "configuration"? I would like all 3 hosts (ixo, console-grub, gnome-grub) to be able to be either launched as VMs, or installed as bare metal. But the current architecture probably doesn't support that very well, yet - does it?

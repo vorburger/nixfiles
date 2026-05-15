@@ -22,7 +22,6 @@ mkHost {
     }
   ];
   testScript = ''
-    machine.wait_for_unit("multi-user.target")
     machine.succeed("lsmod | grep virtio_gpu")
     machine.succeed("kitty --version")
     machine.succeed("brave --version")

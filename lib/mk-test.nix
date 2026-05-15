@@ -15,12 +15,19 @@
           };
           node.specialArgs = { inherit inputs self; };
           testScript =
-            if testScript != null then
-              testScript
-            else
-              ''
+            let
+              bootCheck = ''
                 machine.wait_for_unit("multi-user.target")
+                machine.succeed("systemctl status --no-pager")
               '';
+            in
+            if testScript != null then
+              ''
+                ${bootCheck}
+                ${testScript}
+              ''
+            else
+              bootCheck;
         };
       };
   };
