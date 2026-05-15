@@ -67,13 +67,9 @@
 
 1. #AI extract an `_local.nix` from vm1/configuration.nix, re-use it in ixo/configuration.nix
 
-1. #AI Make nixos-anywhere available in the dev shell of this project
-
 1. Use `sopsnix` or `agenix` for secrets management (instead of `nixos-anywhere --extra-files`). Maybe together with https://github.com/Foxboron/age-plugin-tpm ?
 
 1. `nrs` script, which does `sudo nixos-rebuild switch --flake .` - AFTER checking that there are no dirty un-committed `nixfiles` AND that they have been pushed to the remote repo.
-
-1. Move `nix-update` skill to `nixfiles` repo - but reference it as input to make it available here... how?
 
 1. Try https://github.com/Foxboron/ssh-tpm-agent/issues/109
 
@@ -81,12 +77,12 @@
 
 1. Blog about my NixOS experience ([similar to this](https://michael.stapelberg.ch/posts/2025-06-01-nixos-installation-declarative/))
 
-1. Upstream configurations of any services et al. which ideally shouldn't be here at all
-
 1. Try https://github.com/microvm-nix/microvm.nix?
    See https://michael.stapelberg.ch/posts/2026-02-01-coding-agent-microvm-nix/.
 
 ## Upstream
+
+1. Upstream configurations of any services et al. which ideally shouldn't be here at all
 
 1. [ssh-tpm-agent: keyutils](https://github.com/NixOS/nixpkgs/pull/505874)
 
@@ -165,7 +161,7 @@
 
 1. Run https://docs.enola.dev/use/execmd
 
-1. Automagically extract TODO list
+1. Automagically extract TODO list to MD
 
 ## Low Priority / Nice to Have
 

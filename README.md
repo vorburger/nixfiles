@@ -57,7 +57,7 @@ Then SSH into it with the baked-in SSH public key as user `nixos`, for a VM prob
 
 And now we can use [NixOS Anywhere](docs/docs/reference/nixos-anywhere.md) to install NixOS:
 
-    nix run github:nix-community/nixos-anywhere -- --flake .#vm1 --target-host nixos@192.168.122.3
+    nixos-anywhere --flake .#vm1 --target-host nixos@192.168.122.3
 
 If it works and completes successfully, you can then `ssh` into the installed VM as user `vorburger`:
 
@@ -90,7 +90,7 @@ Let's store the IP and name of that new machine, and then do the following, in t
     # ... create your .nmconnection file in ~/VAULT/$HOSTNEW/extra-files/etc/NetworkManager/system-connections/ ...
     chmod 600 ~/VAULT/$HOSTNEW/extra-files/etc/NetworkManager/system-connections/*.nmconnection
 
-    nix run github:nix-community/nixos-anywhere -- --extra-files ~/VAULT/$HOSTNEW/extra-files --flake .#$HOSTNEW --target-host nixos@$IP
+    nixos-anywhere --extra-files ~/VAULT/$HOSTNEW/extra-files --flake .#$HOSTNEW --target-host nixos@$IP
 
 ### Maintenance
 
