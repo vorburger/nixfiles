@@ -16,14 +16,14 @@ and the [`dotfiles/NixOS`](https://github.com/vorburger/dotfiles/tree/main/NixOS
 Install [Nix](https://nixos.org/download) and [direnv](https://direnv.net/docs/installation.html),
 and clone this repo, then `cd` (which will automagically put `nixos-rebuild` on your PATH) and run:
 
-    bin/vm.sh test1 clean
-    bin/vm.sh vm1 keep
+    vm test1 clean
+    vm vm1 keep
 
 It should `ssh` into the VM. The `vorburger` user is auto-logged in for `vm1`. For `test1` you can also (logout and) login as `tester` with password `x`.
 
 This does not (need to install) use any bootloader, as `qemu` directly boots the kernel.
 
-Note that `bin/vm.sh` requires a mandatory second argument to specify the disk state:
+Note that `vm` requires a mandatory second argument to specify the disk state:
 
 - `clean` deletes the `$MACH.qcow2` persistent disk image before the run. This ensures the VM starts in a "pure" state, which is required to apply certain configuration changes like `initialPassword` or disk partitioning.
 

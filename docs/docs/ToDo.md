@@ -1,7 +1,5 @@
 # ToDo
 
-1. Make `bin/vm.sh` a `modules/tools/vm.nix` command available in devshell as `vm`
-
 1. VM testing; https://github.com/anatol/vmtest for `systemctl status` (porcelaim?)
 
 1. Rename test1 to console-grub, vm1 to gnome-grub; incl. README and any other mentions
@@ -64,8 +62,6 @@
 1. Cache on CI
 
 1. `zensical` a https://aifiles.vorburger.ch
-
-1. Make a much more minimal initial host config
 
 1. WiFi setup baked in into installer, as it now is for ixo
 
