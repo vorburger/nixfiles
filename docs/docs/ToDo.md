@@ -1,17 +1,17 @@
 # ToDo
 
-## UI
+1. Make `bin/vm.sh` a `modules/tools/vm.nix` command available in devshell as `vm`
 
-1. Create vm2 (graphical) vs. vm1 (console, as it was before) - without copy/paste
+1. VM testing; https://github.com/anatol/vmtest for `systemctl status` (porcelaim?)
 
-1. Home Manager `services.syshud` (new, 2026-04-12; update) A simple system status indicator for Wayland compositors.
+1. Rename test1 to console-grub, vm1 to gnome-grub; incl. README and any other mentions
 
-1. Antigravity, but NOT via home-manager, see
-   https://github.com/vorburger/dotfiles/commit/21aff996ef847ddeefbde2061f984446682ba1e3
+1. How could we separate "VM" from "configuration"? I would like all 3 hosts (ixo, console-grub, gnome-grub) to be able to be either launched as VMs, or installed as bare metal. But the current architecture probably doesn't support that very well, yet - does it?
 
 ## Workstations & Laptops
 
-1. vm2, like ixo!!
+1. Antigravity, but NOT via home-manager, see
+   https://github.com/vorburger/dotfiles/commit/21aff996ef847ddeefbde2061f984446682ba1e3
 
 1. Ctrl-Backspace in Fish on Console (only; works over SSH)
 
@@ -31,6 +31,8 @@
 1. https://github.com/NixOS/nixos-hardware/blob/master/lenovo/thinkpad/x1/12th-gen/default.ni
 
 1. Sound OK? Home Manager `services.pipewire` (new, 2026-04-11; update) options for configuring the PipeWire server etc. https://github.com/vorburger/nixfiles/pull/6
+
+1. Home Manager `services.syshud` (new, 2026-04-12; update) A simple system status indicator for Wayland compositors.
 
 ## Nix Common
 
@@ -109,10 +111,6 @@
 
 1. VM with UEFI instead of BIOS, and systemd-boot instead of GRUB
 
-1. Rename `test1` to vm-without-bootloader, and vm1 to vm-bios-with-grub-bootloader ?
-
-1. VM testing; https://github.com/anatol/vmtest for `systemctl status` (porcelaim?)
-
 1. `nixos-rebuild ... --specialisation XYZ` for different use cases?
 
 1. Cloud VMs? `imports = [ "${modulesPath}/virtualisation/amazon-image.nix" ]` ? See e.g. [this announcement](https://www.haskellforall.com/2023/01/announcing-nixos-rebuild-new-deployment.html).
@@ -132,15 +130,7 @@
 
 1. Try https://nixcademy.com/posts/auto-growing-nixos-appliance-images-with-systemd-repart/
 
-## Gemini CLI
-
-1. Reads all `docs/**.md` in GEMINI.md ?!
-
-1. Despite `.gemini/settings.json` it still asks for confirmation to run `nix fmt` - why?
-
 ## Tools
-
-1. Make `bin/vm.sh` a `modules/tools/vm.nix` command available in devshell as `vm`
 
 1. https://github.com/maralorn/nix-output-monitor
 
