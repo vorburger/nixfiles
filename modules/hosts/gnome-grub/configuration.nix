@@ -8,7 +8,7 @@ let
   inherit (import ../../../lib/mk-host.nix { inherit inputs self lib; }) mkHost;
 in
 mkHost {
-  name = "vm1";
+  name = "gnome-grub";
   diskoDevice = "/dev/vda";
   modules = [
     ./_hardware-configuration.nix

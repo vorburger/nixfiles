@@ -16,10 +16,10 @@ and the [`dotfiles/NixOS`](https://github.com/vorburger/dotfiles/tree/main/NixOS
 Install [Nix](https://nixos.org/download) and [direnv](https://direnv.net/docs/installation.html),
 and clone this repo, then `cd` (which will automagically put `nixos-rebuild` on your PATH) and run:
 
-    vm test1 clean
-    vm vm1 keep
+    vm console-grub clean
+    vm gnome-grub keep
 
-It should `ssh` into the VM. The `vorburger` user is auto-logged in for `vm1`. For `test1` you can also (logout and) login as `tester` with password `x`.
+It should `ssh` into the VM. The `vorburger` user is auto-logged in for `gnome-grub`. For `console-grub` you can also (logout and) login as `tester` with password `x`.
 
 This does not (need to install) use any bootloader, as `qemu` directly boots the kernel.
 
@@ -57,7 +57,7 @@ Then SSH into it with the baked-in SSH public key as user `nixos`, for a VM prob
 
 And now we can use [NixOS Anywhere](docs/docs/reference/nixos-anywhere.md) to install NixOS:
 
-    nixos-anywhere --flake .#vm1 --target-host nixos@192.168.122.3
+    nixos-anywhere --flake .#gnome-grub --target-host nixos@192.168.122.3
 
 If it works and completes successfully, you can then `ssh` into the installed VM as user `vorburger`:
 
@@ -77,7 +77,7 @@ Let's store the IP and name of that new machine, and then do the following, in t
     export HOSTNEW=xyz
 
     mkdir modules/hosts/$HOSTNEW
-    cp modules/hosts/vm1/configuration.nix modules/hosts/$HOSTNEW/
+    cp modules/hosts/gnome-grub/configuration.nix modules/hosts/$HOSTNEW/
 
     # TODO Automate this?
     # edit modules/hosts/$HOSTNEW/configuration.nix: Change the hostname (twice) & device

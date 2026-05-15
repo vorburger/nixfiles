@@ -8,7 +8,7 @@ let
   inherit (import ../../lib/mk-host.nix { inherit inputs self lib; }) mkHost;
 in
 mkHost {
-  name = "test1";
+  name = "console-grub";
   diskoDevice = "/dev/vda";
   modules = [
     ../users/_tester.nix

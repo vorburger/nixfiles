@@ -1,7 +1,5 @@
 # ToDo
 
-1. Rename test1 to console-grub, vm1 to gnome-grub; incl. README and any other mentions
-
 1. How could we separate "VM" from "configuration"? I would like all 3 hosts (ixo, console-grub, gnome-grub) to be able to be either launched as VMs, or installed as bare metal. But the current architecture probably doesn't support that very well, yet - does it?
 
 ## Workstations & Laptops
@@ -63,7 +61,7 @@
 
 1. WiFi setup baked in into installer, as it now is for ixo
 
-1. #AI extract an `_local.nix` from vm1/configuration.nix, re-use it in ixo/configuration.nix
+1. #AI extract an `_local.nix` from gnome-grub/configuration.nix, re-use it in ixo/configuration.nix
 
 1. Use `sopsnix` or `agenix` for secrets management (instead of `nixos-anywhere --extra-files`). Maybe together with https://github.com/Foxboron/age-plugin-tpm ?
 
