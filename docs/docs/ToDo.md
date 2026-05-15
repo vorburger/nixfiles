@@ -1,8 +1,8 @@
 # ToDo
 
-1. How could we separate "VM" from "configuration"? I would like all 3 hosts (ixo, console-grub, gnome-grub) to be able to be either launched as VMs, or installed as bare metal. But the current architecture probably doesn't support that very well, yet - does it?
-
 ## Workstations & Laptops
+
+1. Fix why locale-ch keyboard layout does not work in GNOME VM ... the Settings Keyboard does show ch-de, but the keys aren't mapped correctly. Perhaps this is more of a QEMU than a GNOME thing?
 
 1. Antigravity, but NOT via home-manager, see
    https://github.com/vorburger/dotfiles/commit/21aff996ef847ddeefbde2061f984446682ba1e3
@@ -60,8 +60,6 @@
 1. `zensical` a https://aifiles.vorburger.ch
 
 1. WiFi setup baked in into installer, as it now is for ixo
-
-1. #AI extract an `_local.nix` from gnome-grub/configuration.nix, re-use it in ixo/configuration.nix
 
 1. Use `sopsnix` or `agenix` for secrets management (instead of `nixos-anywhere --extra-files`). Maybe together with https://github.com/Foxboron/age-plugin-tpm ?
 

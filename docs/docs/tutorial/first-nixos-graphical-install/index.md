@@ -69,8 +69,8 @@ After editing, run `sudo nixos-rebuild switch` again; you now have `git` and `fi
 It's a good idea to keep your NixOS configuration files in a Git repository. Create your own `nixfiles` Git repository now - similar to this! Then do something like:
 
 ```sh
-mkdir modules/hosts/gnome-grub
-scp "192.168.122.72:/etc/nixos/*" modules/hosts/gnome-grub/
+mkdir modules/hosts/gnome-vm
+scp "192.168.122.72:/etc/nixos/*" modules/hosts/gnome-vm/
 ```
 
 TODO Beware that if you use a layout like this repo,

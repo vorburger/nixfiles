@@ -6,8 +6,8 @@
 
 ## Test
 
-    nix run github:nix-community/nixos-anywhere -- --flake .#gnome-grub --vm-test
+    nix run github:nix-community/nixos-anywhere -- --flake .#gnome-vm --vm-test
 
 ## Install
 
-    nix run github:nix-community/nixos-anywhere -- --flake .#gnome-grub --target-host nixos@192.168.122.3
+    nix run github:nix-community/nixos-anywhere -- --flake .#gnome-vm --target-host nixos@192.168.122.3

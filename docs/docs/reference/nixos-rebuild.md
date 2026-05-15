@@ -8,7 +8,7 @@
 
 ## VM
 
-    nixos-rebuild build-vm --flake .#console-grub
+    nixos-rebuild build-vm --flake .#console-vm
 
 ## Local
 

@@ -16,10 +16,10 @@ and the [`dotfiles/NixOS`](https://github.com/vorburger/dotfiles/tree/main/NixOS
 Install [Nix](https://nixos.org/download) and [direnv](https://direnv.net/docs/installation.html),
 and clone this repo, then `cd` (which will automagically put `nixos-rebuild` on your PATH) and run:
 
-    vm console-grub clean
-    vm gnome-grub keep
+    vm console-vm clean
+    vm gnome-vm keep
 
-It should `ssh` into the VM. The `vorburger` user is auto-logged in for `gnome-grub`. For `console-grub` you can also (logout and) login as `tester` with password `x`.
+It should `ssh` into the VM. The `vorburger` user is auto-logged in for `gnome-vm`. For `console-vm` you can also (logout and) login as `tester` with password `x`.
 
 This does not (need to install) use any bootloader, as `qemu` directly boots the kernel.
 
@@ -57,7 +57,7 @@ Then SSH into it with the baked-in SSH public key as user `nixos`, for a VM prob
 
 And now we can use [NixOS Anywhere](docs/docs/reference/nixos-anywhere.md) to install NixOS:
 
-    nixos-anywhere --flake .#gnome-grub --target-host nixos@192.168.122.3
+    nixos-anywhere --flake .#gnome-vm --target-host nixos@192.168.122.3
 
 If it works and completes successfully, you can then `ssh` into the installed VM as user `vorburger`:
 
@@ -77,12 +77,12 @@ Let's store the IP and name of that new machine, and then do the following, in t
     export HOSTNEW=xyz
 
     mkdir modules/hosts/$HOSTNEW
-    cp modules/hosts/gnome-grub/configuration.nix modules/hosts/$HOSTNEW/
+    cp modules/hosts/gnome-vm.nix modules/hosts/$HOSTNEW.nix
 
     # TODO Automate this?
-    # edit modules/hosts/$HOSTNEW/configuration.nix: Change the hostname (twice) & device
+    # edit modules/hosts/$HOSTNEW.nix: Change the hostname & device
 
-    ssh nixos@$IP "nixos-generate-config --no-filesystems --dir /tmp && cat /tmp/hardware-configuration.nix" >modules/hosts/$HOSTNEW/_hardware-configuration.nix
+    ssh nixos@$IP "nixos-generate-config --no-filesystems --dir /tmp && cat /tmp/hardware-configuration.nix" >modules/profiles/hardware/_$HOSTNEW.nix
 
     mkdir -p ~/VAULT/$HOSTNEW/extra-files/etc/secrets
     mkdir -p ~/VAULT/$HOSTNEW/extra-files/etc/NetworkManager/system-connections

@@ -37,11 +37,6 @@ in
             ];
           }
         ];
-        services.getty.autologinUser = "vorburger";
-        services.displayManager.autoLogin = {
-          enable = true;
-          user = "vorburger";
-        };
 
         virtualisation = {
           vmVariant = {
