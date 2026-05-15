@@ -1,38 +1,36 @@
-{ inputs, self, ... }:
 {
-  flake.nixosModules.installer = {
-    imports = [
-      ./_common.nix
-      "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-      (
-        { pkgs, ... }:
-        {
-          environment.systemPackages = [
-            pkgs.git
-            pkgs.nano
-            pkgs.disko
-          ];
+  inputs,
+  self,
+  lib,
+  ...
+}:
+let
+  inherit (import ../../lib/mk-host.nix { inherit inputs self lib; }) mkHost;
+in
+mkHost {
+  name = "installer";
+  useDefaultUser = false;
+  modules = [
+    "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+    (
+      { pkgs, ... }:
+      {
+        environment.systemPackages = [
+          pkgs.git
+          pkgs.nano
+          pkgs.disko
+        ];
 
-          users.users.nixos.openssh.authorizedKeys.keys = import ../users/_vorburger-authorizedKeys.nix;
+        users.users.nixos.openssh.authorizedKeys.keys = import ../users/_vorburger-authorizedKeys.nix;
 
-          console = {
-            earlySetup = true;
-            packages = with pkgs; [ terminus_font ];
-            font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
-          };
+        console = {
+          earlySetup = true;
+          packages = with pkgs; [ terminus_font ];
+          font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
+        };
 
-          boot.kernelParams = [ "video=1920x1080" ];
-
-          # Use latest kernel (for better hardware support)
-          # boot.kernelPackages = pkgs.linuxPackages_latest;
-        }
-      )
-    ];
-  };
-
-  flake.nixosConfigurations.installer = inputs.nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
-    specialArgs = { inherit inputs self; };
-    modules = [ self.nixosModules.installer ];
-  };
+        boot.kernelParams = [ "video=1920x1080" ];
+      }
+    )
+  ];
 }
