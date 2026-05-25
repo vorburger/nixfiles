@@ -247,6 +247,21 @@
         "type": "github"
       }
     },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1779258371,
+        "narHash": "sha256-j1iZsLy6oFApqR1oiDmHhvkwxXqcNi0aoSJj643LuwU=",
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "rev": "c97bc4d15bd3473dd095e8e8ba57330ab1943a77",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1778443072,
@@ -274,6 +289,7 @@
         "home-manager": "home-manager",
         "import-tree": "import-tree",
         "nix-index-database": "nix-index-database",
+        "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "treefmt-nix": "treefmt-nix",
         "vorburger-dotfiles": "vorburger-dotfiles"

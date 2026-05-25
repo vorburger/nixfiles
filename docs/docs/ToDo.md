@@ -6,6 +6,8 @@
 
 1. https://github.com/NixOS/nixos-hardware/tree/master#using-nix-flakes-support for `lenovo-thinkpad-x1-12th-gen` from https://github.com/NixOS/nixos-hardware/blob/master/lenovo/thinkpad/x1/12th-gen/default.nix
 
+1. NUC, permanently on, with Wireguard
+
 1. `nrs` script, which does `sudo nixos-rebuild switch --flake .` - AFTER checking that there are no dirty un-committed `nixfiles` AND that they have been pushed to the remote repo.
 
 1. Workstation 🖥️ with `pam_u2f.so` for `sudo` with SK
