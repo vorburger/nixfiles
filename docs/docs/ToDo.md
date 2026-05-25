@@ -4,9 +4,7 @@
 
 1. Ixo with GNOME
 
-1. https://github.com/NixOS/nixos-hardware/tree/master#using-nix-flakes-support for `lenovo-thinkpad-x1-12th-gen` from https://github.com/NixOS/nixos-hardware/blob/master/lenovo/thinkpad/x1/12th-gen/default.nix
-
-1. NUC, permanently on, with Wireguard
+1. [NUC](https://github.com/NixOS/nixos-hardware/blob/c97bc4d15bd3473dd095e8e8ba57330ab1943a77/flake.nix#L215) as `khany`: Permanently on, with Wireguard
 
 1. `nrs` script, which does `sudo nixos-rebuild switch --flake .` - AFTER checking that there are no dirty un-committed `nixfiles` AND that they have been pushed to the remote repo.
 
@@ -172,6 +170,8 @@
 1. Automagically extract TODO list to MD
 
 ## Low Priority / Nice to Have
+
+1. How to make `nix` faster? Try alt. impls?
 
 1. https://snowfall.org ?
 
