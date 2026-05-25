@@ -4,7 +4,7 @@
 
 1. Ixo with GNOME
 
-1. https://github.com/NixOS/nixos-hardware/blob/master/lenovo/thinkpad/x1/12th-gen/default.ni
+1. https://github.com/NixOS/nixos-hardware/tree/master#using-nix-flakes-support for `lenovo-thinkpad-x1-12th-gen` from https://github.com/NixOS/nixos-hardware/blob/master/lenovo/thinkpad/x1/12th-gen/default.nix
 
 1. `nrs` script, which does `sudo nixos-rebuild switch --flake .` - AFTER checking that there are no dirty un-committed `nixfiles` AND that they have been pushed to the remote repo.
 
@@ -12,7 +12,7 @@
 
 1. Workstation 0.1 (on separate drive; but first backup ToNAS)
 
-1. ZFS; first in VM, then on BM
+1. ZFS; first in VM, then on BM https://wiki.nixos.org/wiki/ZFS
 
 1. nix GC automatically
 
@@ -28,6 +28,8 @@
    ```
 
 1. [Impermanence](https://www.youtube.com/watch?v=ZKBSWS7OOb4&t=6s) with [`preservation`](https://github.com/nix-community/preservation), see [vimjoyer](https://www.vimjoyer.com/vid89-impermanent)
+
+1. https://wiki.nixos.org/wiki/Secret_Service, consider https://dewaldv.com/posts/2026-03-24-proton-pass-secret-service/ ?
 
 1. Cloud VMs? `imports = [ "${modulesPath}/virtualisation/amazon-image.nix" ]` ? See e.g. [this announcement](https://www.haskellforall.com/2023/01/announcing-nixos-rebuild-new-deployment.html).
 
