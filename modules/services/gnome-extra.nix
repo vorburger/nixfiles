@@ -12,7 +12,6 @@ in
           displayManager.gdm.enable = true;
           desktopManager.gnome.enable = true;
 
-          gnome.core-apps.enable = false;
           gnome.localsearch.enable = false;
           gnome.tinysparql.enable = false;
 
@@ -23,7 +22,14 @@ in
         };
 
         environment.gnome.excludePackages = with pkgs; [
-          gnome-tour
+          gnome-tour # Welcome tour wizard
+          gnome-connections # Remote desktop client
+          epiphany # GNOME Web Browser
+          geary # GNOME Email client
+          gnome-maps # Maps
+          gnome-weather # Weather
+          gnome-contacts # Contacts
+          gnome-music # Music player
         ];
       };
   };
