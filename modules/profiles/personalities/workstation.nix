@@ -1,11 +1,12 @@
 {
   flake.nixosModules.personality-workstation =
-    { pkgs, ... }:
+    { pkgs, inputs, ... }:
     {
       system.stateVersion = "26.05";
 
       environment.systemPackages = [
         pkgs.starship # TODO Move to dotfiles repo
+        inputs.antigravity.packages.${pkgs.stdenv.hostPlatform.system}.google-antigravity-cli # agy (UI is in ui.nix)
       ];
 
       services.initial-secrets.enable = true;

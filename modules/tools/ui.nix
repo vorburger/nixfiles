@@ -14,7 +14,7 @@
           '';
         })
         pkgs.brave
-        inputs.antigravity.packages.${pkgs.stdenv.hostPlatform.system}.default
+        inputs.antigravity.packages.${pkgs.stdenv.hostPlatform.system}.default # CLI is in workstation.nix
       ];
     };
 }

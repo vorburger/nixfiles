@@ -2,8 +2,6 @@
 
 1. https://2026.nixcon.org ?
 
-1. Antigravity
-
 1. `nrs` script, which does `sudo nixos-rebuild switch --flake .` - AFTER checking that there are no dirty un-committed `nixfiles` AND that they have been pushed to the remote repo.
 
 1. Ixo powersaving: powerctl? tlp?
