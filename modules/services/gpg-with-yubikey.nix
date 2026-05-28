@@ -29,6 +29,7 @@ in
 
         # If SSH, then disable the default NixOS ssh-agent to ensure it doesn't conflict with GnuPG
         programs.ssh.startAgent = !ssh;
+        services.gnome.gcr-ssh-agent.enable = ssh;
 
         # Some setups need GPG_TTY for pinentry to work correctly
         environment.interactiveShellInit = ''

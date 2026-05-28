@@ -4,17 +4,29 @@
 
 1. Ixo with GNOME
 
-1. [NUC](https://github.com/NixOS/nixos-hardware/blob/c97bc4d15bd3473dd095e8e8ba57330ab1943a77/flake.nix#L215) as `khany`: Permanently on, with Wireguard
+1. Antigravity
+
+1. Nix lang tutorial
+
+1. Ixo powersaving: powerctl?
+
+1. Make pre-commit run `nix flake check`
+
+1. Ctrl-R ?
 
 1. `nrs` script, which does `sudo nixos-rebuild switch --flake .` - AFTER checking that there are no dirty un-committed `nixfiles` AND that they have been pushed to the remote repo.
+
+1. nix GC automatically
+
+1. Check `systemctl status` and show failures
+
+1. [NUC](https://github.com/NixOS/nixos-hardware/blob/c97bc4d15bd3473dd095e8e8ba57330ab1943a77/flake.nix#L215) as `khany`: Permanently on, with Wireguard
 
 1. Workstation 🖥️ with `pam_u2f.so` for `sudo` with SK
 
 1. Workstation 0.1 (on separate drive; but first backup ToNAS)
 
 1. ZFS; first in VM, then on BM https://wiki.nixos.org/wiki/ZFS
-
-1. nix GC automatically
 
 1. `/nix` on separate partition (or LV)
 
@@ -38,8 +50,6 @@
    - Does `ssh-tpm-agent` still work?!
 
 1. Ixo solve <> key map problem (how?)
-
-1. Ixo powersaving
 
 1. Blog about my NixOS experience ([similar to this](https://michael.stapelberg.ch/posts/2025-06-01-nixos-installation-declarative/))
 
