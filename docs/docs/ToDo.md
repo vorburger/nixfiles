@@ -2,19 +2,21 @@
 
 1. https://2026.nixcon.org ?
 
-1. Ixo with GNOME
-
 1. Antigravity
+
+1. `nrs` script, which does `sudo nixos-rebuild switch --flake .` - AFTER checking that there are no dirty un-committed `nixfiles` AND that they have been pushed to the remote repo.
+
+1. Ixo powersaving: powerctl? tlp?
+
+1. Configure GNOME Keyboard to "German (Switzerland)" instead of ch+de
+
+1. Configure GNOME Power Setttings to Preserve Battery Health
 
 1. Nix lang tutorial
 
-1. Ixo powersaving: powerctl?
-
 1. Make pre-commit run `nix flake check`
 
-1. Ctrl-R ?
-
-1. `nrs` script, which does `sudo nixos-rebuild switch --flake .` - AFTER checking that there are no dirty un-committed `nixfiles` AND that they have been pushed to the remote repo.
+1. Ctrl-R is broken on Console, but works in Kitty on GNOME
 
 1. nix GC automatically
 

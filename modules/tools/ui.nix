@@ -1,6 +1,7 @@
+# TODO Move ui.nix to //modules/profiles/personalities
 {
   flake.nixosModules.ui =
-    { pkgs, ... }:
+    { pkgs, inputs, ... }:
     {
       environment.systemPackages = [
         (pkgs.symlinkJoin {
@@ -13,6 +14,7 @@
           '';
         })
         pkgs.brave
+        inputs.antigravity.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
     };
 }
