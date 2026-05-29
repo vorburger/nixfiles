@@ -8,7 +8,7 @@
 ## Demo
 
 ```nix
-{% include "flake.nix" %}
+--8<-- "tutorial/first-flake/flake.nix"
 ```
 
 ```sh

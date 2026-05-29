@@ -35,3 +35,7 @@ theme:
   features:
     - navigation.footer
     - content.action.edit
+
+markdown_extensions:
+  - pymdownx.snippets
+  - pymdownx.superfences
