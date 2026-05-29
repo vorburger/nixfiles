@@ -2,8 +2,6 @@
 
 1. https://2026.nixcon.org ?
 
-1. Fix https://github.com/jacopone/antigravity-nix/issues/50
-
 1. Backup ~/.gemini to Git; and merge with other machine
 
 1. Make Antigravity View Zoom In persistet, and always start it maximzed
