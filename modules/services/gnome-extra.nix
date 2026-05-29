@@ -32,6 +32,14 @@ in
           gnome-music # Music player
           gnome-calendar # Calendar
         ];
+
+        environment.systemPackages = with pkgs; [
+          gnome-boxes
+        ];
+
+        virtualisation.libvirtd.enable = true;
+
+        users.users.vorburger.extraGroups = [ "libvirtd" ];
       };
   };
 }

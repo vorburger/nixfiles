@@ -79,10 +79,8 @@ Let's store the IP and name of that new machine, and then do the following, in t
     export IP=192.168.1.121
     export HOSTNEW=xyz
 
-    mkdir modules/hosts/$HOSTNEW
     cp modules/hosts/gnome-vm.nix modules/hosts/$HOSTNEW.nix
 
-    # TODO Automate this?
     # edit modules/hosts/$HOSTNEW.nix: Change the hostname & device
 
     ssh nixos@$IP "nixos-generate-config --no-filesystems --dir /tmp && cat /tmp/hardware-configuration.nix" >modules/profiles/hardware/_$HOSTNEW.nix
