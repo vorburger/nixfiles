@@ -1,19 +1,16 @@
 {
   flake.nixosModules.ui =
     { pkgs, inputs, ... }:
+    let
+      inherit (import ../../../lib/wrap-flags.nix { inherit pkgs; }) wrapFlags;
+    in
     {
       environment.systemPackages = [
-        (pkgs.symlinkJoin {
-          name = "kitty";
-          paths = [ pkgs.kitty ];
-          nativeBuildInputs = [ pkgs.makeWrapper ];
-          postBuild = ''
-            wrapProgram $out/bin/kitty \
-              --add-flags "--start-as=fullscreen"
-          '';
-        })
+        (wrapFlags pkgs.kitty "kitty" "--start-as=fullscreen")
         pkgs.brave
-        inputs.antigravity.packages.${pkgs.stdenv.hostPlatform.system}.default # CLI is in workstation.nix
+        (wrapFlags inputs.antigravity.packages.${pkgs.stdenv.hostPlatform.system}.default "antigravity"
+          "--start-maximized"
+        ) # CLI is in workstation.nix
       ];
     };
 }
