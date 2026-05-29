@@ -4,8 +4,6 @@
 
 1. Backup ~/.gemini to Git; and merge with other machine
 
-1. `nrs` script, which does `sudo nixos-rebuild switch --flake .` - AFTER checking that there are no dirty un-committed `nixfiles` AND that they have been pushed to the remote repo.
-
 1. Configure GNOME Keyboard to "German (Switzerland)" instead of ch+de; this should also fix why locale-ch keyboard layout does not work in GNOME VM ... the Settings Keyboard does show ch-de, but the keys aren't mapped correctly. Perhaps this is more of a QEMU than a GNOME thing?
 
 1. Configure GNOME Power Setttings to Preserve Battery Health
