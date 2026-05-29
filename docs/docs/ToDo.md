@@ -8,19 +8,15 @@
 
 1. Ixo powersaving: powerctl? tlp?
 
-1. Configure GNOME Keyboard to "German (Switzerland)" instead of ch+de
+1. Configure GNOME Keyboard to "German (Switzerland)" instead of ch+de; this should also fix why locale-ch keyboard layout does not work in GNOME VM ... the Settings Keyboard does show ch-de, but the keys aren't mapped correctly. Perhaps this is more of a QEMU than a GNOME thing?
 
 1. Configure GNOME Power Setttings to Preserve Battery Health
 
 1. Nix lang tutorial
 
-1. Make pre-commit run `nix flake check`
-
 1. Ctrl-R is broken on Console, but works in Kitty on GNOME
 
 1. nix GC automatically
-
-1. Check `systemctl status` and show failures
 
 1. [NUC](https://github.com/NixOS/nixos-hardware/blob/c97bc4d15bd3473dd095e8e8ba57330ab1943a77/flake.nix#L215) as `khany`: Permanently on, with Wireguard
 
@@ -43,6 +39,8 @@
 
 1. [Impermanence](https://www.youtube.com/watch?v=ZKBSWS7OOb4&t=6s) with [`preservation`](https://github.com/nix-community/preservation), see [vimjoyer](https://www.vimjoyer.com/vid89-impermanent)
 
+1. Secrets with `age`; transition with [`passage`](https://github.com/FiloSottile/passage); THEN use `sopsnix` or `agenix` for secrets management (instead of `nixos-anywhere --extra-files`). Maybe together with https://github.com/Foxboron/age-plugin-tpm ?
+
 1. https://wiki.nixos.org/wiki/Secret_Service, consider https://dewaldv.com/posts/2026-03-24-proton-pass-secret-service/ ?
 
 1. Cloud VMs? `imports = [ "${modulesPath}/virtualisation/amazon-image.nix" ]` ? See e.g. [this announcement](https://www.haskellforall.com/2023/01/announcing-nixos-rebuild-new-deployment.html).
@@ -57,10 +55,7 @@
 
 ## Workstations & Laptops
 
-1. Fix why locale-ch keyboard layout does not work in GNOME VM ... the Settings Keyboard does show ch-de, but the keys aren't mapped correctly. Perhaps this is more of a QEMU than a GNOME thing?
-
-1. Antigravity, but NOT via home-manager, see
-   https://github.com/vorburger/dotfiles/commit/21aff996ef847ddeefbde2061f984446682ba1e3
+1. https://github.com/vorburger/password-store/pulls for `pass`
 
 1. Ctrl-Backspace in Fish on Console (only; works over SSH)
 
@@ -68,8 +63,6 @@
 
 1. Shift Up/Down, Alt Up/Down, Ctrl PgUp/PgDown
    https://gemini.google.com/app/394387d4e13b598c
-
-1. `pass`, via ext. YK
 
 1. True Colors!! Both on Console, and when logged in remotely over ssh in tmux
 
@@ -79,7 +72,9 @@
 
 1. Home Manager `services.syshud` (new, 2026-04-12; update) A simple system status indicator for Wayland compositors.
 
-## Nix Common
+## Nix Common #later
+
+1. Check `systemctl status` and show failures
 
 1. Login and go straight into TMUX
 
@@ -92,8 +87,6 @@
 1. `zensical` a https://aifiles.vorburger.ch
 
 1. WiFi setup baked in into installer, as it now is for ixo
-
-1. Use `sopsnix` or `agenix` for secrets management (instead of `nixos-anywhere --extra-files`). Maybe together with https://github.com/Foxboron/age-plugin-tpm ?
 
 1. Try https://github.com/Foxboron/ssh-tpm-agent/issues/109
 

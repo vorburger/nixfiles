@@ -5,6 +5,7 @@
       system.stateVersion = "26.05";
 
       environment.systemPackages = [
+        pkgs.pass
         pkgs.starship # TODO Move to dotfiles repo
         inputs.antigravity.packages.${pkgs.stdenv.hostPlatform.system}.google-antigravity-cli # agy (UI is in ui.nix)
       ];
