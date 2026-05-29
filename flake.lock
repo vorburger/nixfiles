@@ -380,11 +380,11 @@
       },
       "locked": {
         "dir": "dotfiles/home-manager",
-        "lastModified": 1778754783,
-        "narHash": "sha256-VtYL57E0Zyo29Leev9QZeI5QB5CSIesgVxDzLhc77k4=",
+        "lastModified": 1780068766,
+        "narHash": "sha256-oJD6RGtLFCnk5Livz5sjWXWRvdkBE4MxNLHA8lSHGd0=",
         "owner": "vorburger",
         "repo": "dotfiles",
-        "rev": "50d3d98a70a24c27b7603afda6ae50a378d55f2a",
+        "rev": "9e84cfd1f8b5efdaf5c4d654f4d7a444b05894b0",
         "type": "github"
       },
       "original": {
