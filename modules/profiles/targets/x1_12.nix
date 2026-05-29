@@ -15,5 +15,8 @@
 
       boot.loader.systemd-boot.enable = true;
       boot.loader.efi.canTouchEfiVariables = true;
+
+      # Workaround for shutdown/poweroff hang caused by the Intel NPU driver
+      boot.blacklistedKernelModules = [ "intel_vpu" ];
     };
 }
