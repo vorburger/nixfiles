@@ -30,6 +30,7 @@ in
           gnome-weather # Weather
           gnome-contacts # Contacts
           gnome-music # Music player
+          gnome-calendar # Calendar
         ];
       };
   };
