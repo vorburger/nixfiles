@@ -79,11 +79,16 @@ Let's store the IP and name of that new machine, and then do the following, in t
     export IP=192.168.1.121
     export HOSTNEW=xyz
 
-    cp modules/hosts/gnome-vm.nix modules/hosts/$HOSTNEW.nix
+    ssh nixos@$IP "nixos-generate-config --no-filesystems --dir /tmp && cat /tmp/hardware-configuration.nix" >modules/profiles/targets/KIND-OF-HOST.nix
+    # edit KIND-OF-HOST.nix to make it like modules/profiles/targets/x1_12.nix etc.
 
-    # edit modules/hosts/$HOSTNEW.nix: Change the hostname & device
+    cp modules/hosts/ixo(-vm).nix modules/hosts/$HOSTNEW.nix
+    # edit modules/hosts/$HOSTNEW.nix: Change the hostname & device=/dev/...
+    nix flake check
 
-    ssh nixos@$IP "nixos-generate-config --no-filesystems --dir /tmp && cat /tmp/hardware-configuration.nix" >modules/profiles/hardware/_$HOSTNEW.nix
+    nixos-anywhere --flake .#$HOSTNEW --target-host nixos@$IP
+
+Or, optionally:
 
     mkdir -p ~/VAULT/$HOSTNEW/extra-files/etc/secrets
     mkdir -p ~/VAULT/$HOSTNEW/extra-files/etc/NetworkManager/system-connections
