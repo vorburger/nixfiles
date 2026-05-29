@@ -32,18 +32,21 @@ Note that `vm` requires a mandatory second argument to specify the disk state:
 ### Installer ISO
 
     nix build .#nixosConfigurations.installer.config.system.build.isoImage
-    sudo chown vorburger:vorburger result/iso/nixos-minimal-*-linux.iso
+    rm -f nixos-*.iso
+    cp --no-preserve=mode,ownership result/iso/nixos-minimal-*-linux.iso .
 
-Run `result/iso/nixos-minimal-*-x86_64-linux.iso` in e.g. GNOME Boxes.
+Run `./nixos-minimal-*-x86_64-linux.iso` in e.g. GNOME Boxes.
 To write it to USB stick and boot a physical machine from it:
 
-In Bash/Zsh:
+In Bash/Zsh (works automatically if there is exactly one matching file):
 
-    sudo dd if=$(realpath result/iso/nixos-*.iso) of=/dev/... status=progress
+    sudo dd if=./nixos-*.iso of=/dev/... status=progress
+    sync
 
-In Fish shell:
+In Fish shell (using inline command substitution):
 
-    sudo dd if=(realpath result/iso/nixos-*.iso) of=/dev/... status=progress
+    sudo dd if=(echo ./nixos-*.iso) of=/dev/... status=progress
+    sync
 
 Boot this ISO; you'll be auto logged on the console as `nixos` (without password).
 
