@@ -22,6 +22,7 @@ mkHost {
         ];
 
         users.users.nixos.openssh.authorizedKeys.keys = import ../users/_vorburger-authorizedKeys.nix;
+        users.users.root.openssh.authorizedKeys.keys = import ../users/_vorburger-authorizedKeys.nix;
 
         console = {
           earlySetup = true;
