@@ -40,8 +40,22 @@
   # TODO Enable autologin AFTER we have LUKS which will have another password, first..
   # services.getty.autologinUser = "vorburger";
 
+  # User Private Groups (UPG) setup:
+  # By default, NixOS sets isNormalUser's primary group to GID 100 (users).
+  # However, a shared GID 100 means that any user on the system with group-read
+  # permission (e.g. 0640/0750) could read any other user's files.
+  # Using UPG (a group dedicated to the user) ensures files aren't leaked to
+  # other users via group permissions, which is the standard on Fedora and Debian.
+  # We also pin the UID and GID to 1000 for consistency and compatibility
+  # with Fedora setups (e.g., when sharing external storage or NFS).
+  users.groups.vorburger = {
+    gid = 1000;
+  };
+
   users.users.vorburger = {
     description = "Michael Vorburger";
+    uid = 1000;
+    group = "vorburger";
     openssh.authorizedKeys.keys = import ./_vorburger-authorizedKeys.nix;
     isNormalUser = true;
     extraGroups = [
