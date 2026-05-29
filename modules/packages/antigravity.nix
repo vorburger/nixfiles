@@ -45,7 +45,8 @@
             asar extract resources/app.asar temp_app
             substituteInPlace temp_app/dist/utils.js \
               --replace-fail "const win = new electron_1.BrowserWindow({" "const win = new electron_1.BrowserWindow({ show: false, " \
-              --replace-fail "void win.loadURL(url);" "win.maximize(); win.show(); void win.loadURL(url);"
+              --replace-fail "preload: path_1.default.join(__dirname, 'preload.js')," "preload: path_1.default.join(__dirname, 'preload.js'), zoomFactor: 1.5," \
+              --replace-fail "void win.loadURL(url);" "win.maximize(); win.show(); win.webContents.on('dom-ready', () => { win.webContents.setZoomFactor(1.5); }); win.webContents.on('did-finish-load', () => { win.webContents.setZoomFactor(1.5); }); void win.loadURL(url);"
             asar pack temp_app resources/app.asar
             rm -rf temp_app
           fi

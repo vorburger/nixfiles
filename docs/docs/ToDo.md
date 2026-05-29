@@ -2,11 +2,7 @@
 
 1. https://2026.nixcon.org ?
 
-1. TMUX persistence
-
 1. Backup ~/.gemini to Git; and merge with other machine
-
-1. Make Antigravity View Zoom In persistent, and always start it maximzed
 
 1. `nrs` script, which does `sudo nixos-rebuild switch --flake .` - AFTER checking that there are no dirty un-committed `nixfiles` AND that they have been pushed to the remote repo.
 
