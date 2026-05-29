@@ -2,11 +2,11 @@
 
 1. https://2026.nixcon.org ?
 
+1. rm ToDo.md && mv docs/docs/ToDo.md
+
 1. Backup ~/.gemini to Git; and merge with other machine
 
 1. `nrs` script, which does `sudo nixos-rebuild switch --flake .` - AFTER checking that there are no dirty un-committed `nixfiles` AND that they have been pushed to the remote repo.
-
-1. Ixo powersaving: powerctl? tlp?
 
 1. Configure GNOME Keyboard to "German (Switzerland)" instead of ch+de; this should also fix why locale-ch keyboard layout does not work in GNOME VM ... the Settings Keyboard does show ch-de, but the keys aren't mapped correctly. Perhaps this is more of a QEMU than a GNOME thing?
 
@@ -37,6 +37,8 @@
    $ sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+7 /dev/nvme0n1p2
    ```
 
+1. Ixo powersaving: powerctl? tlp?
+
 1. [Impermanence](https://www.youtube.com/watch?v=ZKBSWS7OOb4&t=6s) with [`preservation`](https://github.com/nix-community/preservation), see [vimjoyer](https://www.vimjoyer.com/vid89-impermanent)
 
 1. Secrets with `age`; transition with [`passage`](https://github.com/FiloSottile/passage); THEN use `sopsnix` or `agenix` for secrets management (instead of `nixos-anywhere --extra-files`). Maybe together with https://github.com/Foxboron/age-plugin-tpm ?
@@ -48,6 +50,8 @@
 1. Secure Boot!!
    - Not possible to still dual boot Fedora?
    - Does `ssh-tpm-agent` still work?!
+
+1. https://nixos.org/manual/nixos/stable/#sec-upgrading-automatic
 
 1. Ixo solve <> key map problem (how?)
 
@@ -68,8 +72,6 @@
 
 1. Try `services.howdy.enable = true; security.pam.services.sudo.howdyAuth = true;`
 
-1. Sound OK? Home Manager `services.pipewire` (new, 2026-04-11; update) options for configuring the PipeWire server etc. https://github.com/vorburger/nixfiles/pull/6
-
 1. Home Manager `services.syshud` (new, 2026-04-12; update) A simple system status indicator for Wayland compositors.
 
 ## Nix Common #later
@@ -83,8 +85,6 @@
 1. Compare `pstree` on Nix Console and Fedora in GNOME
 
 1. Cache on CI
-
-1. `zensical` a https://aifiles.vorburger.ch
 
 1. WiFi setup baked in into installer, as it now is for ixo
 
