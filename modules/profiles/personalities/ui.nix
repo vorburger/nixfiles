@@ -1,4 +1,3 @@
-# TODO Move ui.nix to //modules/profiles/personalities
 {
   flake.nixosModules.ui =
     { pkgs, inputs, ... }:
