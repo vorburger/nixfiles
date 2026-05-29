@@ -2,7 +2,7 @@
 
 1. https://2026.nixcon.org ?
 
-1. Fix Laptop Shutdown
+1. TMUX persistence
 
 1. Backup ~/.gemini to Git; and merge with other machine
 
