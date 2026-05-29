@@ -1,3 +1,9 @@
+# This module defines a patched version of Google Antigravity.
+# Antigravity is a standalone Electron app with hardcoded window dimensions (1400x900)
+# defined in its BrowserWindow configuration. Because Electron/Chromium ignores command-line
+# flags like `--start-maximized` when the dimensions are set explicitly, this module patches
+# the application code directly (in `dist/utils.js` inside `resources/app.asar`) to make it
+# always start maximized on startup.
 { inputs, ... }:
 {
   perSystem =
