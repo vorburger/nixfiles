@@ -15,6 +15,7 @@
     self.nixosModules.networking-extra
     self.nixosModules.openssh-extra
     self.nixosModules.nix-extra
+    self.nixosModules.fwupd-extra
   ];
 
   services.locale-ch.enable = lib.mkDefault true;
@@ -22,4 +23,5 @@
   services.openssh-extra.enable = lib.mkDefault true;
   services.nix-extra.enable = lib.mkDefault true;
   services.zfs-extra.enable = lib.mkDefault true;
+  services.fwupd-extra.enable = lib.mkDefault true;
 }
