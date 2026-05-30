@@ -10,6 +10,9 @@ in
         "nix-command"
         "flakes"
       ];
+
+      # systemctl status nix-gc.service
+      nix.gc.automatic = true;
     };
   };
 }

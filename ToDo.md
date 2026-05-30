@@ -2,10 +2,6 @@
 
 1. https://2026.nixcon.org ?
 
-1. GNOME file-roller
-
-1. nix GC automatically https://nixos.org/manual/nixos/stable/#sec-nix-gc
-
 1. `/boot` clean?
 
 1. https://clan.lol/docs/25.11/guides/vars/vars-overview
@@ -29,6 +25,8 @@
 
 1. `/nix` on separate partition (or LV)
 
+1. https://status.nixos.org Stable NixOS instead of -unstable for hosts machines with ZFS
+
 1. ZFS; first in VM, then on ThinkStation (BM) https://wiki.nixos.org/wiki/ZFS
 
 1. `users.mutableUsers` should be false
@@ -41,7 +39,7 @@
 
 1. https://wiki.nixos.org/wiki/Secret_Service, consider https://dewaldv.com/posts/2026-03-24-proton-pass-secret-service/ ?
 
-1. Backups ... https://www.borgbackup.org ?  syncthing
+1. Backups ... https://www.borgbackup.org ? syncthing
 
 1. https://syncthing.net server, for client on Android for Photos
 
@@ -195,4 +193,3 @@
 ## Future
 
 1. [Enola.dev](https://docs.enola.dev) AI for https://github.com/NixOS/nixpkgs/pulls ?
-
