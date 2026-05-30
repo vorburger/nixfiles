@@ -27,6 +27,8 @@
               bootCheck = ''
                 machine.wait_for_unit("multi-user.target")
                 machine.succeed("systemctl status --no-pager")
+                # Ensure no systemd units have failed (ignoring register-nix-paths.service which is expected to fail in VM tests of installer profiles)
+                machine.fail("systemctl --failed --no-legend | grep -v 'register-nix-paths.service' | grep -q .")
               '';
             in
             if testScript != null then

@@ -17,9 +17,8 @@ in
           pkgs.keyutils
         ];
 
-        systemd.services.ssh-tpm-agent = {
+        systemd.user.services.ssh-tpm-agent = {
           description = "ssh-tpm-agent";
-          after = [ "pinned.target" ];
           serviceConfig = {
             ExecStart = "${pkgs.ssh-tpm-agent}/bin/ssh-tpm-agent";
             KeyringMode = "inherit";
