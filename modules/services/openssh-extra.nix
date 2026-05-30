@@ -12,6 +12,13 @@ in
       services.openssh.settings.AllowTcpForwarding = false;
       services.openssh.settings.X11Forwarding = false;
 
+      services.openssh.extraConfig = ''
+        Match User vorburger
+          PasswordAuthentication no
+          KbdInteractiveAuthentication no
+          PubkeyAuthentication yes
+      '';
+
       networking.firewall.allowedTCPPorts = [ 22 ];
     };
   };

@@ -58,6 +58,7 @@
     group = "vorburger";
     openssh.authorizedKeys.keys = import ./_vorburger-authorizedKeys.nix;
     isNormalUser = true;
+    initialPassword = "x";
     extraGroups = [
       "tss"
       "networkmanager"
@@ -71,6 +72,24 @@
     shell = pkgs.fish;
   };
   programs.fish.enable = true;
+
+  system.activationScripts.expire-vorburger-password =
+    lib.mkIf (!config.services.displayManager.autoLogin.enable)
+      {
+        text = ''
+          if [ ! -e /var/lib/vorburger-password-expired ]; then
+            if id -u vorburger >/dev/null 2>&1; then
+              ${pkgs.shadow}/bin/chage -d 0 vorburger || true
+              mkdir -p /var/lib
+              touch /var/lib/vorburger-password-expired
+            fi
+          fi
+        '';
+        deps = [ "users" ];
+      };
+
+  # Disable initial-secrets for vorburger since we set initialPassword = "x"
+  services.initial-secrets.users = lib.mkForce [ ];
 
   # Required to avoid: "Existing file '/home/vorburger/.config/fish/config.fish' would be clobbered"
   home-manager.backupFileExtension = "home-manager_backup";

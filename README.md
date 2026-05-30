@@ -92,11 +92,14 @@ Or, optionally:
 
     mkdir -p ~/VAULT/$HOSTNEW/extra-files/etc/secrets
     mkdir -p ~/VAULT/$HOSTNEW/extra-files/etc/NetworkManager/system-connections
-    echo "$(mkpasswd -m sha-512)" > ~/VAULT/$HOSTNEW/extra-files/etc/secrets/vorburger-password
     # ... create your .nmconnection file in ~/VAULT/$HOSTNEW/extra-files/etc/NetworkManager/system-connections/ ...
     chmod 600 ~/VAULT/$HOSTNEW/extra-files/etc/NetworkManager/system-connections/*.nmconnection
 
     nixos-anywhere --extra-files ~/VAULT/$HOSTNEW/extra-files --flake .#$HOSTNEW --target-host nixos@$IP
+
+PS: It's similarly possibly to set the initial password, to avoid the current default (which is easier):
+
+    echo "$(mkpasswd -m sha-512)" > ~/VAULT/$HOSTNEW/extra-files/etc/secrets/vorburger-password
 
 ### Maintenance
 
