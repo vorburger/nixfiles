@@ -6,7 +6,7 @@ in
     name = "ssh-tpm-agent";
     description = "SSH TPM agent support";
     content =
-      { pkgs, ... }:
+      { pkgs, config, ... }:
       {
         security.tpm2.enable = true;
 
@@ -31,6 +31,10 @@ in
           serviceConfig = {
             ExecStart = "${pkgs.ssh-tpm-agent}/bin/ssh-tpm-agent --no-load";
             ExecStartPost = "-${pkgs.ssh-tpm-agent}/bin/ssh-tpm-add -c";
+            Environment = [
+              "SSH_ASKPASS=${config.programs.ssh.askPassword}"
+              "SSH_ASKPASS_REQUIRE=prefer"
+            ];
             KeyringMode = "inherit";
             Restart = "always";
           };
