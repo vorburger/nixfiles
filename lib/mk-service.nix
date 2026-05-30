@@ -5,6 +5,7 @@
     {
       name,
       description,
+      imports ? (_: [ ]),
       extraOptions ? (_: { }),
       content,
     }:
@@ -16,9 +17,12 @@
     }@args:
     let
       cfg = config.services.${name};
+      resolvedImports = if builtins.isFunction imports then imports args else imports;
       resolvedExtraOptions = if builtins.isFunction extraOptions then extraOptions args else extraOptions;
     in
     {
+      imports = resolvedImports;
+
       options.services.${name} = {
         enable = lib.mkEnableOption description;
       }

@@ -5,6 +5,7 @@ in
   flake.nixosModules.virt-guest = mkService {
     name = "virt-guest";
     description = "optimized VM guest settings";
+    imports = { modulesPath, ... }: [ "${modulesPath}/profiles/qemu-guest.nix" ];
     extraOptions =
       { lib, ... }:
       {

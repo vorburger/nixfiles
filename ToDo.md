@@ -2,8 +2,6 @@
 
 1. https://2026.nixcon.org ?
 
-1. https://clan.lol/docs/25.11/guides/vars/vars-overview
-
 1. re-install NUC with working `passwd` (as it's useless as-is)
 
 1. Wireguard into NUC
@@ -42,7 +40,7 @@
 
 1. https://wiki.nixos.org/wiki/Secret_Service, consider https://dewaldv.com/posts/2026-03-24-proton-pass-secret-service/ ?
 
-1. transition from my `pass` to [`passage`](https://github.com/FiloSottile/passage); THEN use ~~`sopsnix` or~~ `agenix` for secrets management; best together with https://github.com/Foxboron/age-plugin-tpm ?
+1. Read https://clan.lol/docs/25.11/guides/vars/vars-overview, and transition from my `pass` to [`passage`](https://github.com/FiloSottile/passage); THEN use ~~`sopsnix` or~~ `agenix` for secrets management; best together with https://github.com/Foxboron/age-plugin-tpm ?
 
 1. Backups ... https://www.borgbackup.org ? syncthing
 
