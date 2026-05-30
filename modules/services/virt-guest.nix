@@ -26,18 +26,6 @@ in
         hardware.graphics.enable = true;
         services.xserver.videoDrivers = [ "virtio" ];
 
-        security.sudo.extraRules = [
-          {
-            users = [ "vorburger" ];
-            commands = [
-              {
-                command = "ALL";
-                options = [ "NOPASSWD" ];
-              }
-            ];
-          }
-        ];
-
         virtualisation = {
           vmVariant = {
             virtualisation = {
