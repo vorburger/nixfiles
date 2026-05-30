@@ -20,7 +20,8 @@ in
         systemd.user.services.ssh-tpm-agent = {
           description = "ssh-tpm-agent";
           serviceConfig = {
-            ExecStart = "${pkgs.ssh-tpm-agent}/bin/ssh-tpm-agent";
+            ExecStart = "${pkgs.ssh-tpm-agent}/bin/ssh-tpm-agent --no-load";
+            ExecStartPost = "-${pkgs.ssh-tpm-agent}/bin/ssh-tpm-add -c";
             KeyringMode = "inherit";
             Restart = "always";
           };

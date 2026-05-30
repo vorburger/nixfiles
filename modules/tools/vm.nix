@@ -31,7 +31,7 @@
           # shellcheck disable=SC2016
           result/bin/run-"$MACH"-vm &
 
-          until ssh -F /dev/null -o ConnectTimeout=7 -o StrictHostKeyChecking=no -o "UserKnownHostsFile /dev/null" vorburger@127.0.0.1 -p 2222; do
+          until ssh -A -F /dev/null -o ConnectTimeout=7 -o StrictHostKeyChecking=no -o "UserKnownHostsFile /dev/null" vorburger@127.0.0.1 -p 2222; do
             sleep 1
           done
         '';
