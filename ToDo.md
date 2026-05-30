@@ -2,8 +2,6 @@
 
 1. https://2026.nixcon.org ?
 
-1. `/boot` clean?
-
 1. https://clan.lol/docs/25.11/guides/vars/vars-overview
 
 1. Secrets for `~vorburger` passwd and WiFi - with `age`; transition with [`passage`](https://github.com/FiloSottile/passage); THEN use `sopsnix` or `agenix` for secrets management (instead of `nixos-anywhere --extra-files`). Maybe together with https://github.com/Foxboron/age-plugin-tpm ?
@@ -22,6 +20,8 @@
 
    $ sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+7 /dev/nvme0n1p2
    ```
+
+1. Use systemd instead of grub as bootloader on all hosts, for uniformity
 
 1. `/nix` on separate partition (or LV)
 

@@ -21,6 +21,7 @@ in
         # systemctl status nix-gc.timer && systemctl status nix-gc.service
         # nix-collect-garbage
         nix.gc.automatic = true;
+        nix.gc.options = "--delete-older-than 30d";
 
         # Required, for now; e.g. for Visual Studio Code (VSC)
         nixpkgs.config = lib.mkIf (!options.nixpkgs.pkgs.isDefined) {

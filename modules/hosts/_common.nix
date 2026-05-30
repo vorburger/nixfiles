@@ -16,6 +16,7 @@
     self.nixosModules.openssh-extra
     self.nixosModules.nix-extra
     self.nixosModules.fwupd-extra
+    self.nixosModules.systemd-boot
   ];
 
   services.locale-ch.enable = lib.mkDefault true;
@@ -23,4 +24,5 @@
   services.openssh-extra.enable = lib.mkDefault true;
   services.nix-extra.enable = lib.mkDefault true;
   services.fwupd-extra.enable = lib.mkDefault true;
+  services.systemd-boot.enable = lib.mkDefault true;
 }
