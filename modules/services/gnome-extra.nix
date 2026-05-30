@@ -10,7 +10,7 @@ in
       {
         programs.ssh = {
           enableAskPassword = true;
-          askPassword = pkgs.lib.mkForce "${pkgs.gcr}/libexec/gcr-ssh-askpass";
+          askPassword = pkgs.lib.mkForce "${pkgs.gcr_4}/libexec/gcr4-ssh-askpass";
         };
 
         programs.gnupg.agent = {
