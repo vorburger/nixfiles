@@ -3,7 +3,6 @@
   imports = [
     self.nixosModules.zfs-extra
     self.nixosModules.virt-guest
-    self.nixosModules.initial-secrets
     self.nixosModules.gpg-with-yubikey
     self.nixosModules.ssh-tpm-agent
     self.nixosModules.ssh-agent-mux

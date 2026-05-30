@@ -10,7 +10,6 @@
         inputs.antigravity.packages.${pkgs.stdenv.hostPlatform.system}.google-antigravity-cli # agy (UI is in ui.nix)
       ];
 
-      services.initial-secrets.enable = true;
       services.gpg-with-yubikey.enable = true;
       services.ssh-tpm-agent.enable = true;
       services.ssh-agent-mux.enable = true;

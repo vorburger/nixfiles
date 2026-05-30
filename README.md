@@ -90,16 +90,11 @@ Let's store the IP and name of that new machine, and then do the following, in t
 
 Or, optionally:
 
-    mkdir -p ~/VAULT/$HOSTNEW/extra-files/etc/secrets
     mkdir -p ~/VAULT/$HOSTNEW/extra-files/etc/NetworkManager/system-connections
     # ... create your .nmconnection file in ~/VAULT/$HOSTNEW/extra-files/etc/NetworkManager/system-connections/ ...
     chmod 600 ~/VAULT/$HOSTNEW/extra-files/etc/NetworkManager/system-connections/*.nmconnection
 
     nixos-anywhere --extra-files ~/VAULT/$HOSTNEW/extra-files --flake .#$HOSTNEW --target-host nixos@$IP
-
-PS: It's similarly possibly to set the initial password, to avoid the current default (which is easier):
-
-    echo "$(mkpasswd -m sha-512)" > ~/VAULT/$HOSTNEW/extra-files/etc/secrets/vorburger-password
 
 ### Maintenance
 

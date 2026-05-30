@@ -88,9 +88,6 @@
         deps = [ "users" ];
       };
 
-  # Disable initial-secrets for vorburger since we set initialPassword = "x"
-  services.initial-secrets.users = lib.mkForce [ ];
-
   # Required to avoid: "Existing file '/home/vorburger/.config/fish/config.fish' would be clobbered"
   home-manager.backupFileExtension = "home-manager_backup";
 
