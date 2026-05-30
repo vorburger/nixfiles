@@ -104,7 +104,7 @@ Or, optionally:
 
 Change `*.nix` files for any host on any host, and then just:
 
-    nixos-rebuild switch --flake .#$HOSTNEW --target-host $HOSTNEW --use-remote-sudo --ask-sudo-password
+    nixos-rebuild switch --flake .#$HOSTNEW --target-host $HOSTNEW --sudo --ask-sudo-password
 
 #### Local
 

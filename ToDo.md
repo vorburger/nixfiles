@@ -2,6 +2,8 @@
 
 1. https://2026.nixcon.org ?
 
+1. re-install NUC with `passwd`
+
 1. Backup ~/.gemini to Git; and merge with other machine
 
 1. Configure GNOME Keyboard to "German (Switzerland)" instead of ch+de; this should also fix why locale-ch keyboard layout does not work in GNOME VM ... the Settings Keyboard does show ch-de, but the keys aren't mapped correctly. Perhaps this is more of a QEMU than a GNOME thing?
@@ -14,7 +16,9 @@
 
 1. nix GC automatically
 
-1. [NUC](https://github.com/NixOS/nixos-hardware/blob/c97bc4d15bd3473dd095e8e8ba57330ab1943a77/flake.nix#L215) as `khany`: Permanently on, with Wireguard
+1. [NUC](https://github.com/NixOS/nixos-hardware/blob/c97bc4d15bd3473dd095e8e8ba57330ab1943a77/flake.nix#L215) hardware profile
+
+1. Wireguard
 
 1. Workstation 🖥️ with `pam_u2f.so` for `sudo` with SK
 
@@ -35,11 +39,19 @@
 
 1. Ixo powersaving: powerctl? tlp?
 
+1. `users.mutableUsers` should be false
+
 1. [Impermanence](https://www.youtube.com/watch?v=ZKBSWS7OOb4&t=6s) with [`preservation`](https://github.com/nix-community/preservation), see [vimjoyer](https://www.vimjoyer.com/vid89-impermanent)
 
-1. Secrets with `age`; transition with [`passage`](https://github.com/FiloSottile/passage); THEN use `sopsnix` or `agenix` for secrets management (instead of `nixos-anywhere --extra-files`). Maybe together with https://github.com/Foxboron/age-plugin-tpm ?
+1. https://clan.lol/docs/25.11/guides/vars/vars-overview
+
+1. Secrets for `~vorburger` passwd and WiFi - with `age`; transition with [`passage`](https://github.com/FiloSottile/passage); THEN use `sopsnix` or `agenix` for secrets management (instead of `nixos-anywhere --extra-files`). Maybe together with https://github.com/Foxboron/age-plugin-tpm ?
 
 1. https://wiki.nixos.org/wiki/Secret_Service, consider https://dewaldv.com/posts/2026-03-24-proton-pass-secret-service/ ?
+
+1. Backups ... https://www.borgbackup.org ?  syncthing
+
+1. https://syncthing.net server, for client on Android for Photos
 
 1. Cloud VMs? `imports = [ "${modulesPath}/virtualisation/amazon-image.nix" ]` ? See e.g. [this announcement](https://www.haskellforall.com/2023/01/announcing-nixos-rebuild-new-deployment.html).
 
