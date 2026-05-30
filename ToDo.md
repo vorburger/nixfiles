@@ -2,33 +2,23 @@
 
 1. https://2026.nixcon.org ?
 
-1. re-install NUC with `passwd`
+1. GNOME file-roller
 
-1. Backup ~/.gemini to Git; and merge with other machine
+1. nix GC automatically https://nixos.org/manual/nixos/stable/#sec-nix-gc
 
-1. Configure GNOME Keyboard to "German (Switzerland)" instead of ch+de; this should also fix why locale-ch keyboard layout does not work in GNOME VM ... the Settings Keyboard does show ch-de, but the keys aren't mapped correctly. Perhaps this is more of a QEMU than a GNOME thing?
+1. `/boot` clean?
 
-1. Configure GNOME Power Setttings to Preserve Battery Health
+1. https://clan.lol/docs/25.11/guides/vars/vars-overview
 
-1. Nix lang tutorial
+1. Secrets for `~vorburger` passwd and WiFi - with `age`; transition with [`passage`](https://github.com/FiloSottile/passage); THEN use `sopsnix` or `agenix` for secrets management (instead of `nixos-anywhere --extra-files`). Maybe together with https://github.com/Foxboron/age-plugin-tpm ?
 
-1. Ctrl-R is broken on Console, but works in Kitty on GNOME
-
-1. nix GC automatically
+1. re-install NUC with working `passwd` (as it's useless as-is)
 
 1. [NUC](https://github.com/NixOS/nixos-hardware/blob/c97bc4d15bd3473dd095e8e8ba57330ab1943a77/flake.nix#L215) hardware profile
 
-1. Wireguard
+1. Wireguard into NUC
 
-1. Workstation 🖥️ with `pam_u2f.so` for `sudo` with SK
-
-1. Workstation 0.1 (on separate drive; but first backup ToNAS)
-
-1. ZFS; first in VM, then on BM https://wiki.nixos.org/wiki/ZFS
-
-1. `/nix` on separate partition (or LV)
-
-1. How to do LUKS encryption?
+1. LUKS encryption https://nixos.org/manual/nixos/stable/#sec-luks-file-systems
 
    ```nix
    boot.initrd.systemd.enable = true; # Required for modern systemd-cryptsetup
@@ -37,15 +27,17 @@
    $ sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+7 /dev/nvme0n1p2
    ```
 
-1. Ixo powersaving: powerctl? tlp?
+1. `/nix` on separate partition (or LV)
+
+1. ZFS; first in VM, then on ThinkStation (BM) https://wiki.nixos.org/wiki/ZFS
 
 1. `users.mutableUsers` should be false
 
 1. [Impermanence](https://www.youtube.com/watch?v=ZKBSWS7OOb4&t=6s) with [`preservation`](https://github.com/nix-community/preservation), see [vimjoyer](https://www.vimjoyer.com/vid89-impermanent)
 
-1. https://clan.lol/docs/25.11/guides/vars/vars-overview
+1. ThinkStation as GNOME Workstation 0.1 (on external USB, to first backup ToNAS, the wipe SSD)
 
-1. Secrets for `~vorburger` passwd and WiFi - with `age`; transition with [`passage`](https://github.com/FiloSottile/passage); THEN use `sopsnix` or `agenix` for secrets management (instead of `nixos-anywhere --extra-files`). Maybe together with https://github.com/Foxboron/age-plugin-tpm ?
+1. Ixo powersaving: powerctl? tlp?
 
 1. https://wiki.nixos.org/wiki/Secret_Service, consider https://dewaldv.com/posts/2026-03-24-proton-pass-secret-service/ ?
 
@@ -63,9 +55,17 @@
 
 1. Ixo solve <> key map problem (how?)
 
-1. Blog about my NixOS experience ([similar to this](https://michael.stapelberg.ch/posts/2025-06-01-nixos-installation-declarative/))
-
 ## Workstations & Laptops
+
+1. Configure GNOME Keyboard to "German (Switzerland)" instead of ch+de; this should also fix why locale-ch keyboard layout does not work in GNOME VM ... the Settings Keyboard does show ch-de, but the keys aren't mapped correctly. Perhaps this is more of a QEMU than a GNOME thing?
+
+1. Configure GNOME Power Setttings to Preserve Battery Health
+
+1. Disable the default folders created in home directories. What creates them? GNOME? I don't want a ~/Desktop/ nor a ~/Documents/ nor ~/Music/ nor ~/Pictures/ nor ~/Projects/ nor ~/Templates/ nor ~/Videos/. But ~/Downloads/ and ~/Public/ should be kept. If there is no config knob for this, perhaps just a session start script in dotfiles which rm them IFF they are empty?
+
+1. Ctrl-R is broken on Console, but works in Kitty on GNOME
+
+1. Login and go straight into TMUX
 
 1. https://github.com/vorburger/password-store/pulls for `pass`
 
@@ -84,9 +84,9 @@
 
 ## Nix Common #later
 
-1. Check `systemctl status` and show failures
+1. Nix lang tutorial
 
-1. Login and go straight into TMUX
+1. Check `systemctl status` and show failures
 
 1. `tmux` should remember open tabs over restart
 
@@ -166,7 +166,7 @@
 
 ## Docs
 
-1. Publish e.g. to `nix.vorburger.ch`
+1. Blog about my NixOS experience ([similar to this](https://michael.stapelberg.ch/posts/2025-06-01-nixos-installation-declarative/))
 
 1. Move https://github.com/vorburger/LearningLinux/tree/develop/nix/docs here
 
@@ -195,3 +195,4 @@
 ## Future
 
 1. [Enola.dev](https://docs.enola.dev) AI for https://github.com/NixOS/nixpkgs/pulls ?
+
