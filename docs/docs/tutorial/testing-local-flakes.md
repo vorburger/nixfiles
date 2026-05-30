@@ -22,11 +22,11 @@ Find the module where the external flake input is declared (e.g., `modules/tools
 flake-file.inputs.antigravity.url = "path:/home/username/git/github.com/jacopone/antigravity-nix";
 ```
 
-> [!TIP]
-> **Use `path:` instead of `git+file:`:**
->
-> - `path:/path/to/repo` fetches the directory directly, including any **uncommitted (dirty) changes**.
-> - `git+file:///path/to/repo` only builds files that have been committed to Git. Using `path:` is much faster and cleaner for iterative local testing.
+!!! tip
+**Use `path:` instead of `git+file:`:**
+
+    - `path:/path/to/repo` fetches the directory directly, including any **uncommitted (dirty) changes**.
+    - `git+file:///path/to/repo` only builds files that have been committed to Git. Using `path:` is much faster and cleaner for iterative local testing.
 
 ### 2. Regenerate `flake.nix`
 

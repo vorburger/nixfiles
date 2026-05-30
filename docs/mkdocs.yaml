@@ -35,3 +35,9 @@ theme:
   features:
     - navigation.footer
     - content.action.edit
+
+markdown_extensions:
+  - pymdownx.snippets:
+      check_paths: true
+      base_path: ["docs"]
+  - pymdownx.superfences

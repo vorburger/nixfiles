@@ -7,7 +7,7 @@ _: {
         src = ../../docs;
         nativeBuildInputs = [ pkgs.zensical ];
         buildPhase = ''
-          zensical build -f mkdocs.yaml
+          zensical build -f mkdocs.yaml --strict
         '';
         installPhase = ''
           mkdir -p $out

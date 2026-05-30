@@ -6,4 +6,7 @@
 - When committing files, do not use prefixes like "fix(nixos):". Instead, start the message with the action taken.
 - There is no NixOS `x88_64` "system" (CPU type), it's a LLM-generated typo mistake; use `x86_64-linux` instead.
 - Because this project uses https://github.com/vic/import-tree, the `flake.nix` always has **ALL** `modules/**/*.nix` files.
-  So there is never any need to manually edit `flake.nix` to add or remove any `*.nix` files.
+  So there is never any need to manually edit `fake.nix` to add or remove any `*.nix` files.
+
+- If Nix is missing in the environment, install it using:
+  `curl -L https://raw.github.com/vorburger/aifiles/main/skills/install-nix/scripts/install-nix.sh | sh && . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh`
