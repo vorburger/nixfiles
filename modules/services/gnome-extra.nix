@@ -10,7 +10,14 @@ in
       {
         programs.ssh = {
           enableAskPassword = true;
-          askPassword = pkgs.lib.mkForce "${pkgs.gcr_4}/libexec/gcr4-ssh-askpass";
+          askPassword = pkgs.lib.mkForce "${pkgs.writeShellScript "zenity-ssh-askpass" ''
+            PROMPT="''${1:-SSH prompt}"
+            if echo "$PROMPT" | grep -iqE "passphrase|password|pin"; then
+              exec ${pkgs.zenity}/bin/zenity --password --title="SSH Authentication" --prompt="$PROMPT"
+            else
+              exec ${pkgs.zenity}/bin/zenity --question --title="SSH Confirmation" --text="$PROMPT" --ok-label="Allow" --cancel-label="Deny"
+            fi
+          ''}";
         };
 
         programs.gnupg.agent = {
