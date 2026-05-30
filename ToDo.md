@@ -122,15 +122,6 @@
 
 ## Machines
 
-1. VM vorburger sudo password?! None - but enable this:
-
-   ```nix
-   security.pam.sshAgentAuth.enable = true;
-   security.sudo.extraConfig = ''
-   Defaults env_keep += SSH_AUTH_SOCK
-   '';
-   ```
-
 1. VM with UEFI instead of BIOS, and systemd-boot instead of GRUB
 
 1. `nixos-rebuild ... --specialisation XYZ` for different use cases?
