@@ -12,7 +12,13 @@
         checks.${name} = pkgs.testers.runNixOSTest {
           inherit name;
           nodes.machine = {
-            imports = [ module ];
+            imports = [
+              module
+              {
+                # Workaround to avoid evaluation warning about root password options in VM tests
+                users.users.root.initialHashedPassword = pkgs.lib.mkForce null;
+              }
+            ];
             nixpkgs.pkgs = lib.mkForce pkgs;
           };
           node.specialArgs = { inherit inputs self; };
