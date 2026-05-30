@@ -101,6 +101,8 @@
 1. Try https://github.com/microvm-nix/microvm.nix?
    See https://michael.stapelberg.ch/posts/2026-02-01-coding-agent-microvm-nix/.
 
+1. `nix-store --optimise` how much does it save? How long does it run? Create a systemd timer...
+
 ## Upstream
 
 1. Upstream configurations of any services et al. which ideally shouldn't be here at all

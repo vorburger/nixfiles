@@ -9,9 +9,10 @@ let
 in
 mkHost {
   name = "installer";
-  useCommon = false; # Do not use common desktop configs (openssh-extra disables root logins, which breaks nixos-anywhere)
   useDefaultUser = false;
+  useCommon = false; # Do not use common desktop configs (openssh-extra disables root logins, which breaks nixos-anywhere)
   modules = [
+    self.nixosModules.zfs-extra # Fix build warning
     "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
     (
       { pkgs, ... }:

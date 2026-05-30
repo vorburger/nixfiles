@@ -11,7 +11,9 @@ in
         "flakes"
       ];
 
-      # systemctl status nix-gc.service
+      # https://nixos.org/manual/nixos/stable/#sec-nix-gc
+      # systemctl status nix-gc.timer && systemctl status nix-gc.service
+      # nix-collect-garbage
       nix.gc.automatic = true;
     };
   };
