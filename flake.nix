@@ -5,6 +5,10 @@
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
+  nixConfig = {
+    abort-on-warn = true;
+  };
+
   inputs = {
     aifiles = {
       url = "github:vorburger/aifiles";

@@ -12,7 +12,9 @@
       nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
       import-tree.url = "github:vic/import-tree";
     };
-    nixConfig = { };
+    nixConfig = {
+      abort-on-warn = true;
+    };
     description = "Nix files of https://www.vorburger.ch";
   };
 }
