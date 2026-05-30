@@ -9,6 +9,7 @@ in
       {
         lib,
         options,
+        pkgs,
         ...
       }:
       {
@@ -22,6 +23,13 @@ in
         # nix-collect-garbage
         nix.gc.automatic = true;
         nix.gc.options = "--delete-older-than 30d";
+
+        environment.systemPackages = [
+          pkgs.dix # https://github.com/manic-systems/dix
+          pkgs.nh # https://github.com/nix-community/nh
+          pkgs.nix-output-monitor
+          pkgs.nix-fast-build
+        ];
 
         # Required, for now; e.g. for Visual Studio Code (VSC)
         nixpkgs.config = lib.mkIf (!options.nixpkgs.pkgs.isDefined) {
