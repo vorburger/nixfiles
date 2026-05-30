@@ -9,6 +9,7 @@ let
 in
 mkHost {
   name = "installer";
+  useCommon = false; # Do not use common desktop configs (openssh-extra disables root logins, which breaks nixos-anywhere)
   useDefaultUser = false;
   modules = [
     "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
