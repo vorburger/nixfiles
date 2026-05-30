@@ -18,7 +18,7 @@
     #services.ssh-tpm-agent.enable = config.security.tpm2.enable;
 
     home.sessionVariables = {
-      SSH_AUTH_SOCK = lib.mkOverride 10 "$XDG_RUNTIME_DIR/ssh-agent-mux.sock";
+      SSH_AUTH_SOCK = lib.mkOverride 10 "\${SSH_AUTH_SOCK:-$XDG_RUNTIME_DIR/ssh-agent-mux.sock}";
     };
 
     # Force, because dotfiles also sets this
