@@ -73,20 +73,21 @@
   };
   programs.fish.enable = true;
 
-  system.activationScripts.expire-vorburger-password =
-    lib.mkIf (!config.services.displayManager.autoLogin.enable)
-      {
-        text = ''
-          if [ ! -e /var/lib/vorburger-password-expired ]; then
-            if id -u vorburger >/dev/null 2>&1; then
-              ${pkgs.shadow}/bin/chage -d 0 vorburger || true
-              mkdir -p /var/lib
-              touch /var/lib/vorburger-password-expired
-            fi
+  system.activationScripts.expire-vorburger-password = {
+    text = ''
+      # Skip if running inside a VM/container (to avoid breaking VM autologin and tests)
+      if ! ${pkgs.systemd}/bin/systemd-detect-virt --quiet; then
+        if [ ! -e /var/lib/vorburger-password-expired ]; then
+          if id -u vorburger >/dev/null 2>&1; then
+            ${pkgs.shadow}/bin/chage -d 0 vorburger || true
+            mkdir -p /var/lib
+            touch /var/lib/vorburger-password-expired
           fi
-        '';
-        deps = [ "users" ];
-      };
+        fi
+      fi
+    '';
+    deps = [ "users" ];
+  };
 
   # Required to avoid: "Existing file '/home/vorburger/.config/fish/config.fish' would be clobbered"
   home-manager.backupFileExtension = "home-manager_backup";
