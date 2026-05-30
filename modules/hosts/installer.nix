@@ -23,7 +23,10 @@ mkHost {
         ];
 
         users.users.nixos.openssh.authorizedKeys.keys = import ../users/_vorburger-authorizedKeys.nix;
+        # Work around https://github.com/nix-community/nixos-anywhere/issues/613
         users.users.root.openssh.authorizedKeys.keys = import ../users/_vorburger-authorizedKeys.nix;
+
+        nixpkgs.overlays = lib.mkVMOverride [ ];
 
         console = {
           earlySetup = true;
@@ -35,4 +38,11 @@ mkHost {
       }
     )
   ];
+  testScript = ''
+    machine.wait_for_unit("sshd.service")
+    machine.succeed("ssh-keygen -t ed25519 -N \"\" -f /tmp/test-key")
+    machine.succeed("mkdir -p /root/.ssh && cat /tmp/test-key.pub >> /root/.ssh/authorized_keys")
+    # SSH into root@localhost should succeed if PermitRootLogin is yes/prohibit-password
+    machine.succeed("ssh -i /tmp/test-key -o StrictHostKeyChecking=no -o PasswordAuthentication=no root@localhost 'echo hello'")
+  '';
 }
