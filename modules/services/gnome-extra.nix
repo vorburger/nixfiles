@@ -8,6 +8,19 @@ in
     content =
       { pkgs, ... }:
       {
+        programs.ssh = {
+          enableAskPassword = true;
+          askPassword = pkgs.lib.mkForce "${pkgs.seahorse}/libexec/seahorse/ssh-askpass";
+        };
+
+        programs.gnupg.agent = {
+          pinentryPackage = pkgs.lib.mkForce pkgs.pinentry-gnome3;
+        };
+
+        environment.sessionVariables = {
+          SSH_ASKPASS_REQUIRE = "prefer";
+        };
+
         services = {
           displayManager.gdm.enable = true;
           desktopManager.gnome.enable = true;
