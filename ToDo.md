@@ -36,6 +36,8 @@
 1. ThinkStation as GNOME Workstation 0.1 (on external USB, to first backup ToNAS, the wipe SSD)
 
 1. Ixo powersaving: powerctl? tlp?
+   https://wiki.archlinux.org/title/Powertop, and/or
+   https://wiki.archlinux.org/title/TLP
 
 1. https://wiki.nixos.org/wiki/Secret_Service, consider https://dewaldv.com/posts/2026-03-24-proton-pass-secret-service/ ?
 
@@ -51,9 +53,11 @@
 
 1. https://nixos.org/manual/nixos/stable/#sec-upgrading-automatic
 
-1. Ixo solve <> key map problem (how?)
+1. https://wiki.archlinux.org/title/Intel_NUC#LEDs for activity?
 
 ## Workstations & Laptops
+
+1. Ixo solve <> key map problem (how?)
 
 1. Configure GNOME Keyboard to "German (Switzerland)" instead of ch+de; this should also fix why locale-ch keyboard layout does not work in GNOME VM ... the Settings Keyboard does show ch-de, but the keys aren't mapped correctly. Perhaps this is more of a QEMU than a GNOME thing?
 

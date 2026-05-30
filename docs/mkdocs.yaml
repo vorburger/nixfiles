@@ -27,6 +27,7 @@ nav:
       - reference/nixos-rebuild.md
       - reference/nixos-anywhere.md
       - reference/flake-file.md
+      - reference/fwupd.md
       - reference/wiki.md
       - reference/we.md
       - ToDo.md

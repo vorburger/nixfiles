@@ -9,7 +9,9 @@ in
         (mkService {
           name = "zfs-extra";
           description = "extra ZFS configuration";
-          content = { };
+          content = {
+            boot.supportedFilesystems = [ "zfs" ];
+          };
         })
       ];
 
