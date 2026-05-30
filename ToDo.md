@@ -10,9 +10,9 @@
 
 1. re-install NUC with working `passwd` (as it's useless as-is)
 
-1. [NUC](https://github.com/NixOS/nixos-hardware/blob/c97bc4d15bd3473dd095e8e8ba57330ab1943a77/flake.nix#L215) hardware profile
-
 1. Wireguard into NUC
+
+1. disko stuff should be in each host itself, not their profile
 
 1. LUKS encryption https://nixos.org/manual/nixos/stable/#sec-luks-file-systems
 
@@ -34,6 +34,9 @@
 1. [Impermanence](https://www.youtube.com/watch?v=ZKBSWS7OOb4&t=6s) with [`preservation`](https://github.com/nix-community/preservation), see [vimjoyer](https://www.vimjoyer.com/vid89-impermanent)
 
 1. ThinkStation as GNOME Workstation 0.1 (on external USB, to first backup ToNAS, the wipe SSD)
+
+1. NUC should not have the workstation profile, but a (new) "headless" one;
+   see also https://nixos.org/manual/nixos/stable/#sec-profile-headless
 
 1. Ixo powersaving: powerctl? tlp?
    https://wiki.archlinux.org/title/Powertop, and/or
