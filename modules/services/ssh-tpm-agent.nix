@@ -17,6 +17,15 @@ in
           pkgs.keyutils
         ];
 
+        systemd.user.sockets.ssh-tpm-agent = {
+          description = "ssh-tpm-agent socket";
+          socketConfig = {
+            ListenStream = "%t/ssh-tpm-agent.sock";
+            DirectoryMode = "0700";
+          };
+          wantedBy = [ "sockets.target" ];
+        };
+
         systemd.user.services.ssh-tpm-agent = {
           description = "ssh-tpm-agent";
           serviceConfig = {
@@ -25,7 +34,6 @@ in
             KeyringMode = "inherit";
             Restart = "always";
           };
-          wantedBy = [ "default.target" ];
         };
 
         systemd.services."system-ask-password-wall" = {
