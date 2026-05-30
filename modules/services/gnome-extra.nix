@@ -40,6 +40,9 @@ in
 
             [org.gnome.shell.window-switcher]
             current-workspace-only=false
+
+            [org.gnome.shell]
+            always-show-log-out=true
           '';
         };
 
