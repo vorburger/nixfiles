@@ -15,9 +15,6 @@
 
         (modulesPath + "/hardware/cpu/intel-npu.nix")
         (modulesPath + "/installer/scan/not-detected.nix")
-
-        inputs.disko.nixosModules.disko
-        (import ../../disko/_boot-and-ext4.nix { device = "/dev/nvme0n1"; })
       ];
 
       boot.loader.systemd-boot.enable = true;

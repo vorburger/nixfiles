@@ -9,7 +9,15 @@ let
 in
 mkHost {
   name = "console-vm";
+  diskoDevice = "/dev/vda";
   modules = [
+    # Keep tiny VM image bootable by shrinking the ESP for this host's disk layout.
+    (
+      { lib, ... }:
+      {
+        disko.devices.disk.my-disk.content.partitions.ESP.size = lib.mkForce "64M";
+      }
+    )
     self.nixosModules.target-vm-256M-grub-512M
     self.nixosModules.personality-console
   ];

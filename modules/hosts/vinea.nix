@@ -9,6 +9,7 @@ let
 in
 mkHost {
   name = "vinea";
+  diskoDevice = "/dev/nvme0n1";
   modules = [
     self.nixosModules.target-nuc
     self.nixosModules.personality-workstation

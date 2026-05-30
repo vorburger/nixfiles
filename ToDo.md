@@ -2,8 +2,6 @@
 
 1. https://2026.nixcon.org ?
 
-1. re-install NUC with working `passwd` (as it's useless as-is)
-
 1. Wireguard into NUC
 
 1. disko stuff should be in each host itself, not their profile

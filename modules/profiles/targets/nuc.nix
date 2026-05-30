@@ -11,8 +11,6 @@
       imports = [
         inputs.nixos-hardware.nixosModules.intel-nuc-8i7beh
         (modulesPath + "/installer/scan/not-detected.nix")
-        inputs.disko.nixosModules.disko
-        (import ../../disko/_boot-and-ext4.nix { device = "/dev/nvme0n1"; })
       ];
 
       boot.loader.systemd-boot.enable = true;

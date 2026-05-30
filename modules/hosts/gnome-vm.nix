@@ -9,6 +9,7 @@ let
 in
 mkHost {
   name = "gnome-vm";
+  diskoDevice = "/dev/vda";
   modules = [
     self.nixosModules.target-vm-1G-grub-8G
     self.nixosModules.personality-gnome

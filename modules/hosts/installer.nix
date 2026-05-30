@@ -9,6 +9,7 @@ let
 in
 mkHost {
   name = "installer";
+  diskoDevice = null; # Installer image does not manage target disks itself
   useDefaultUser = false;
   useCommon = false; # Do not use common desktop configs (openssh-extra disables root logins, which breaks nixos-anywhere)
   modules = [

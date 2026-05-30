@@ -9,6 +9,7 @@ let
 in
 mkHost {
   name = "ixo";
+  diskoDevice = "/dev/nvme0n1";
   modules = [
     self.nixosModules.target-x1_12
     self.nixosModules.personality-workstation
