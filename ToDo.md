@@ -4,8 +4,6 @@
 
 1. https://clan.lol/docs/25.11/guides/vars/vars-overview
 
-1. Secrets for `~vorburger` passwd and WiFi - with `age`; transition with [`passage`](https://github.com/FiloSottile/passage); THEN use `sopsnix` or `agenix` for secrets management (instead of `nixos-anywhere --extra-files`). Maybe together with https://github.com/Foxboron/age-plugin-tpm ?
-
 1. re-install NUC with working `passwd` (as it's useless as-is)
 
 1. Wireguard into NUC
@@ -44,6 +42,8 @@
 
 1. https://wiki.nixos.org/wiki/Secret_Service, consider https://dewaldv.com/posts/2026-03-24-proton-pass-secret-service/ ?
 
+1. transition from my `pass` to [`passage`](https://github.com/FiloSottile/passage); THEN use ~~`sopsnix` or~~ `agenix` for secrets management; best together with https://github.com/Foxboron/age-plugin-tpm ?
+
 1. Backups ... https://www.borgbackup.org ? syncthing
 
 1. https://syncthing.net server, for client on Android for Photos
@@ -66,7 +66,7 @@
 
 1. Configure GNOME Power Setttings to Preserve Battery Health
 
-1. Disable the default folders created in home directories. What creates them? GNOME? I don't want a ~/Desktop/ nor a ~/Documents/ nor ~/Music/ nor ~/Pictures/ nor ~/Projects/ nor ~/Templates/ nor ~/Videos/. But ~/Downloads/ and ~/Public/ should be kept. If there is no config knob for this, perhaps just a session start script in dotfiles which rm them IFF they are empty?
+1. Disable the default folders created in home directories. And their bookmark shortcuts in the file chooser. What creates them? GNOME? I don't want a ~/Desktop/ nor a ~/Documents/ nor ~/Music/ nor ~/Pictures/ nor ~/Projects/ nor ~/Templates/ nor ~/Videos/. But ~/Downloads/ and ~/Public/ should be kept. If there is no config knob for this, perhaps just a session start script in dotfiles which rm them IFF they are empty?
 
 1. Ctrl-R is broken on Console, but works in Kitty on GNOME
 
