@@ -5,16 +5,27 @@ in
   flake.nixosModules.nix-extra = mkService {
     name = "nix-extra";
     description = "extra Nix configuration (flakes, etc.)";
-    content = {
-      nix.settings.experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
+    content =
+      {
+        lib,
+        options,
+        ...
+      }:
+      {
+        nix.settings.experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
 
-      # https://nixos.org/manual/nixos/stable/#sec-nix-gc
-      # systemctl status nix-gc.timer && systemctl status nix-gc.service
-      # nix-collect-garbage
-      nix.gc.automatic = true;
-    };
+        # https://nixos.org/manual/nixos/stable/#sec-nix-gc
+        # systemctl status nix-gc.timer && systemctl status nix-gc.service
+        # nix-collect-garbage
+        nix.gc.automatic = true;
+
+        # Required, for now; e.g. for Visual Studio Code (VSC)
+        nixpkgs.config = lib.mkIf (!options.nixpkgs.pkgs.isDefined) {
+          allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) (import ../../lib/unfree-packages.nix);
+        };
+      };
   };
 }

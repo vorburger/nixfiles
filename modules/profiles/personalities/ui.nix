@@ -14,6 +14,7 @@
         (wrapFlags pkgs.kitty "kitty" "--start-as=fullscreen")
         pkgs.brave
         pkgs.prismlauncher # Minecraft! https://wiki.nixos.org/wiki/Prism_Launcher
+        pkgs.vscode
         self.packages.${pkgs.stdenv.hostPlatform.system}.antigravity
       ];
     };

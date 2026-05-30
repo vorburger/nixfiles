@@ -1,6 +1,7 @@
 {
   inputs,
   self,
+  lib,
   ...
 }:
 {
@@ -12,6 +13,7 @@
           inherit name;
           nodes.machine = {
             imports = [ module ];
+            nixpkgs.pkgs = lib.mkForce pkgs;
           };
           node.specialArgs = { inherit inputs self; };
           testScript =
