@@ -18,7 +18,9 @@
     #services.ssh-tpm-agent.enable = config.security.tpm2.enable;
 
     home.sessionVariables = {
-      SSH_AUTH_SOCK = lib.mkOverride 10 "\${SSH_AUTH_SOCK:-$XDG_RUNTIME_DIR/ssh-agent-mux.sock}";
+      # Use ssh-agent-mux locally to support ssh-tpm-agent and other agents,
+      # but preserve the forwarded agent ($SSH_AUTH_SOCK) when inside an SSH session.
+      SSH_AUTH_SOCK = lib.mkOverride 10 "$(if [ -n \"$SSH_CLIENT\" ]; then echo \"$SSH_AUTH_SOCK\"; else echo \"$XDG_RUNTIME_DIR/ssh-agent-mux.sock\"; fi)";
     };
 
     # Force, because dotfiles also sets this
