@@ -147,8 +147,6 @@
 
 ## Tools
 
-1. Formatters are a mess; `tools/git-hooks.nix` _pre-commit_ and `fmt.nix` for `nix fmt` don't share .treefmt.toml config?
-
 1. Run `nix flake check` in pre-commit hook
 
 1. Replace [`devshells`](https://github.com/numtide/devshell) with `devShells` (Nix), after all?
