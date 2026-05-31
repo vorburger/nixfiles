@@ -13,6 +13,7 @@
       main = {
         inherit device;
         type = "disk";
+        imageSize = "500G";
         content = {
           type = "gpt";
           partitions = {
@@ -31,19 +32,19 @@
             zfs1 = {
               name = "zfs1";
               type = "BF01";
-              size = "100G";
+              size = "10G";
             };
 
             zfs2 = {
               name = "zfs2";
               type = "BF01";
-              size = "100G";
+              size = "10G";
             };
 
             zfs3 = {
               name = "zfs3";
               type = "BF01";
-              size = "100G";
+              size = "10G";
             };
 
             lvm = {
@@ -82,10 +83,11 @@
           };
 
           home = {
-            size = "200G";
+            size = "100%FREE";
             content = {
               type = "luks";
               name = "crypt-home";
+              passwordFile = "/tmp/secret.key";
               settings = {
                 allowDiscards = true;
               };
@@ -102,7 +104,7 @@
           };
 
           varlib = {
-            size = "100%FREE";
+            size = "50G";
             content = {
               type = "filesystem";
               format = "xfs";

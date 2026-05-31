@@ -31,9 +31,9 @@ That layout is intentionally opinionated and more advanced:
 - Logical volumes:
   - / as ext4 (50G)
   - /nix as ext4 (100G)
-  - /home as LUKS-encrypted btrfs (200G)
-  - /var/lib as XFS (remaining free space)
-- Three GPT partitions typed for ZFS (zfs1, zfs2, zfs3), intentionally left empty.
+  - /var/lib as XFS (50G)
+  - /home as LUKS-encrypted btrfs (remaining ~270G on the 500G disk)
+- Three GPT partitions typed for ZFS (zfs1, zfs2, zfs3; 10G each), intentionally left empty.
 
 ## Initializing Reserved ZFS Partitions Manually
 
