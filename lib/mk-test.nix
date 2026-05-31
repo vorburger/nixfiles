@@ -8,6 +8,12 @@
   mkTest = name: module: testScript: {
     perSystem =
       { pkgs, ... }:
+      let
+        hostName = lib.removeSuffix "-boot" name;
+        forwardPorts =
+          self.nixosConfigurations.${hostName}.config.virtualisation.vmVariant.virtualisation.forwardPorts;
+        hasSshForward = lib.any (fp: fp.host.port == 2222 && fp.guest.port == 22) forwardPorts;
+      in
       {
         checks.${name} = pkgs.testers.runNixOSTest {
           inherit name;
@@ -39,6 +45,13 @@
             else
               bootCheck;
         };
+
+        checks."${hostName}-vm-port-forward" =
+          if hostName == "installer" || hasSshForward then
+            pkgs.runCommand "${hostName}-vm-port-forward-check" { } "touch $out"
+          else
+            throw "Host '${hostName}' is missing VM port 2222 -> 22 forwarding in its virtualisation.vmVariant config!";
+
       };
   };
 }
