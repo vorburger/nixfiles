@@ -1,5 +1,8 @@
 # VMs
 *.qcow2
+*.raw
+*.img
+*.drv
 
 # Nix
 .agents
