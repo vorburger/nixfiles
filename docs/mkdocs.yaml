@@ -14,6 +14,7 @@ nav:
       # TODO - tutorial/direnv.md
       - tutorial/home-manager.md
       - tutorial/testing-local-flakes.md
+      - tutorial/vm.md
       # TODO - tutorial/flake-parts.md
       - NixOS:
           # TODO - tutorial/first-nixos-graphical-install

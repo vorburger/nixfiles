@@ -5,9 +5,7 @@
 1. NUC should not have the workstation profile, but a (new) "headless" one, e.g. without Sound and most (or any at all?) things from workstation.nix;
    see also https://nixos.org/manual/nixos/stable/#sec-profile-headless
 
-1. Try out the new `_learn-zfs.nix`layout on Vinea... but it's probably too big?
-
-1. LUKS encryption https://nixos.org/manual/nixos/stable/#sec-luks-file-systems
+1. LUKS **with TPM** https://nixos.org/manual/nixos/stable/#sec-luks-file-systems
 
    ```nix
    boot.initrd.systemd.enable = true; # Required for modern systemd-cryptsetup
@@ -16,21 +14,21 @@
    $ sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+7 /dev/nvme0n1p2
    ```
 
-1. Use systemd instead of grub as bootloader on all hosts, for uniformity
+1. Try out the new `_learn-zfs.nix`layout on Vinea...
 
-1. `/nix` on separate partition (or LV)
+1. ZFS; first in Vinea's VM and/or BM, then on ThinkStation (BM) https://wiki.nixos.org/wiki/ZFS
 
-1. Wireguard into NUC
-
-1. ZFS; first in VM, then on ThinkStation (BM) https://wiki.nixos.org/wiki/ZFS
-
-1. https://status.nixos.org Stable NixOS instead of -unstable for production machines hosts with ZFS
+1. Have both unstable and fixed nix pkgs - for different hosts; https://status.nixos.org Stable NixOS instead of -unstable for production machines hosts with ZFS
 
 1. `users.mutableUsers` should be false
 
 1. [Impermanence](https://www.youtube.com/watch?v=ZKBSWS7OOb4&t=6s) with [`preservation`](https://github.com/nix-community/preservation), see [vimjoyer](https://www.vimjoyer.com/vid89-impermanent)
 
+1. Wireguard into NUC
+
 1. ThinkStation as GNOME Workstation 0.1 (on external USB, to first backup ToNAS, the wipe SSD)
+
+1. Use systemd instead of grub as bootloader on all hosts, for uniformity
 
 1. Ixo powersaving: powerctl? tlp?
    https://wiki.archlinux.org/title/Powertop, and/or
@@ -51,8 +49,6 @@
    - Does `ssh-tpm-agent` still work?!
 
 1. https://nixos.org/manual/nixos/stable/#sec-upgrading-automatic
-
-1. https://wiki.archlinux.org/title/Intel_NUC#LEDs for activity?
 
 ## Workstations & Laptops
 
@@ -106,6 +102,8 @@
 
 1. `nix-store --optimise` how much does it save? How long does it run? Create a systemd timer...
 
+1. https://wiki.archlinux.org/title/Intel_NUC#LEDs for activity?
+
 ## Upstream
 
 1. Upstream configurations of any services et al. which ideally shouldn't be here at all
@@ -118,8 +116,6 @@
 
 ## Machines
 
-1. VM with UEFI instead of BIOS, and systemd-boot instead of GRUB
-
 1. `nixos-rebuild ... --specialisation XYZ` for different use cases?
 
 1. Clan!
@@ -129,27 +125,17 @@
 
 1. Replace `hostfwd=tcp::2222-:22` with proper bridged networking to get real IP address?
 
-1. Replace StrictHostKeyChecking=no with fixed hostkey from secret vault
-
-1. Have both unstable and fixed nix pkgs - for different hosts
+1. Replace `StrictHostKeyChecking=no` with fixed hostkey from secret vault
 
 1. Try https://nixcademy.com/posts/auto-growing-nixos-appliance-images-with-systemd-repart/
 
 ## Tools
-
-1. https://github.com/maralorn/nix-output-monitor
-
-1. https://github.com/ners/nix-monitored
 
 1. Formatters are a mess; `tools/git-hooks.nix` _pre-commit_ and `fmt.nix` for `nix fmt` don't share .treefmt.toml config?
 
 1. Run `nix flake check` in pre-commit hook
 
 1. Replace [`devshells`](https://github.com/numtide/devshell) with `devShells` (Nix), after all?
-
-1. https://github.com/nix-community/nh ?
-
-1. https://github.com/evanlhatch/ng ?
 
 1. https://github.com/vic/flake-aspects ?
 
@@ -177,8 +163,6 @@
 1. Automagically extract TODO list to MD
 
 ## Low Priority / Nice to Have
-
-1. How to make `nix` faster? Try alt. impls?
 
 1. https://snowfall.org ?
 

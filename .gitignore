@@ -3,6 +3,7 @@
 *.raw
 *.img
 *.drv
+*-efivars.fd
 
 # Nix
 .agents

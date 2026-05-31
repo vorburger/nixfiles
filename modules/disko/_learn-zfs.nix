@@ -87,7 +87,7 @@
             content = {
               type = "luks";
               name = "crypt-home";
-              passwordFile = "/tmp/secret.key";
+              passwordFile = "/tmp/luks.secret";
               settings = {
                 allowDiscards = true;
               };

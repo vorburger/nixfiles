@@ -13,21 +13,7 @@ and the [`dotfiles/NixOS`](https://github.com/vorburger/dotfiles/tree/main/NixOS
 
 ### Test VM
 
-Install [Nix](https://nixos.org/download) and [direnv](https://direnv.net/docs/installation.html),
-and clone this repo, then `cd` (which will automagically put `nixos-rebuild` on your PATH) and run:
-
-    vm console-vm clean
-    vm gnome-vm keep
-
-It should `ssh` into the VM. The `vorburger` user is auto-logged in for `gnome-vm`. For `console-vm` you can also (logout and) login as `tester` with password `x`.
-
-This does not (need to install) use any bootloader, as `qemu` directly boots the kernel.
-
-Note that `vm` requires a mandatory second argument to specify the disk state:
-
-- `clean` deletes the `$MACH.qcow2` persistent disk image before the run. This ensures the VM starts in a "pure" state, which is required to apply certain configuration changes like `initialPassword` or disk partitioning.
-
-- `keep` preserves the existing `$MACH.qcow2` file. This "keeps" any stateful changes made inside the VM, such as files created in home directories, installed non-declarative packages, or system logs.
+To run local virtual machines for testing your host configurations, please refer to the [Testing in Virtual Machines tutorial](docs/docs/tutorial/vm.md).
 
 ### Installer ISO
 
@@ -54,19 +40,7 @@ Boot this ISO; you'll be auto logged on the console as `nixos` (without password
 
 #### VM
 
-Type `ip addr` to find out the IP address assigned via DHCP.
-
-Then SSH into it with the baked-in SSH public key as user `nixos`, for a VM probably use:
-
-    ssh -o StrictHostKeyChecking=no -o "UserKnownHostsFile /dev/null" nixos@192.168.122.3
-
-And now we can use [NixOS Anywhere](docs/docs/reference/nixos-anywhere.md) to install NixOS:
-
-    nixos-anywhere --flake .#gnome-vm --target-host nixos@192.168.122.3
-
-If it works and completes successfully, you can then `ssh` into the installed VM as user `vorburger`:
-
-    ssh -A vorburger@192.168.122.3
+For step-by-step instructions on installing NixOS into a VM using `nixos-anywhere` and the Installer ISO, please refer to the [Testing Installation via nixos-anywhere in a VM section of the Testing in Virtual Machines tutorial](docs/docs/tutorial/vm.md#testing-installation-via-nixos-anywhere-in-a-vm).
 
 #### BM
 
