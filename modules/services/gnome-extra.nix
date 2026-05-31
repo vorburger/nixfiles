@@ -7,17 +7,27 @@ in
     description = "extra GNOME configuration";
     content =
       { pkgs, ... }:
+      let
+        zenity-ssh-askpass = pkgs.writeShellScriptBin "zenity-ssh-askpass" ''
+          PROMPT="''${1:-SSH prompt}"
+          if echo "$PROMPT" | grep -iqE "passphrase|password|pin"; then
+            exec ${pkgs.zenity}/bin/zenity --password --title="SSH Authentication" --prompt="$PROMPT"
+          elif echo "$PROMPT" | grep -iqE "yes/no"; then
+            if ${pkgs.zenity}/bin/zenity --question --title="SSH Confirmation" --text="$PROMPT" --ok-label="Allow" --cancel-label="Deny"; then
+              echo "yes"
+            else
+              echo "no"
+              exit 1
+            fi
+          else
+            exec ${pkgs.zenity}/bin/zenity --entry --title="SSH" --text="$PROMPT"
+          fi
+        '';
+      in
       {
         programs.ssh = {
           enableAskPassword = true;
-          askPassword = pkgs.lib.mkForce "${pkgs.writeShellScript "zenity-ssh-askpass" ''
-            PROMPT="''${1:-SSH prompt}"
-            if echo "$PROMPT" | grep -iqE "passphrase|password|pin"; then
-              exec ${pkgs.zenity}/bin/zenity --password --title="SSH Authentication" --prompt="$PROMPT"
-            else
-              exec ${pkgs.zenity}/bin/zenity --question --title="SSH Confirmation" --text="$PROMPT" --ok-label="Allow" --cancel-label="Deny"
-            fi
-          ''}";
+          askPassword = pkgs.lib.mkForce "/run/current-system/sw/bin/zenity-ssh-askpass";
         };
 
         programs.gnupg.agent = {
@@ -66,6 +76,7 @@ in
         ];
 
         environment.systemPackages = with pkgs; [
+          zenity-ssh-askpass
           file-roller
           gnome-boxes
         ];
