@@ -2,6 +2,8 @@
 
 1. https://2026.nixcon.org ?
 
+1. Why does the `vinea` host not include the vorburger user dotfiles?
+
 1. NUC should not have the workstation profile, but a (new) "headless" one, e.g. without Sound and most (or any at all?) things from workstation.nix;
    see also https://nixos.org/manual/nixos/stable/#sec-profile-headless
 
