@@ -1,6 +1,10 @@
 _: {
   perSystem =
     { pkgs, self', ... }:
+    let
+      watchCommand = "cd docs && ${pkgs.zensical}/bin/zensical serve -f mkdocs.yaml";
+      watchDescription = "Watch documentation with live-rebuilds";
+    in
     {
       packages.documentation = pkgs.stdenvNoCC.mkDerivation {
         name = "documentation";
@@ -19,18 +23,16 @@ _: {
 
       apps.watch-documentation = {
         type = "app";
-        program = pkgs.writeShellScriptBin "watch-documentation" ''
-          cd docs && ${pkgs.zensical}/bin/zensical serve -f mkdocs.yaml
-        '';
-        meta.description = "Watch documentation with live-rebuilds";
+        program = pkgs.writeShellScriptBin "watch-documentation" watchCommand;
+        meta.description = watchDescription;
       };
 
       devshells.default = {
         commands = [
           {
             name = "watch-documentation";
-            help = "Run zensical in dev mode (live update)";
-            command = "cd docs && ${pkgs.zensical}/bin/zensical serve -f mkdocs.yaml";
+            help = watchDescription;
+            command = watchCommand;
           }
         ];
       };
