@@ -1,4 +1,4 @@
-{ inputs, lib, ... }:
+{ inputs, ... }:
 {
   flake-file.inputs.git-hooks.url = "github:cachix/git-hooks.nix";
   flake-file.inputs.git-hooks.inputs.nixpkgs.follows = "nixpkgs";
@@ -16,9 +16,9 @@
     }:
     {
       # Alternative: https://github.com/j178/prek instead of https://pre-commit.com
-      pre-commit.settings.hooks.nixfmt = {
+      pre-commit.settings.hooks.treefmt = {
         enable = true;
-        entry = lib.getExe self'.formatter;
+        package = self'.formatter;
       };
 
       devshells.default = {
