@@ -22,26 +22,28 @@ Find the module where the external flake input is declared (e.g., `modules/tools
 flake-file.inputs.antigravity.url = "path:/home/username/git/github.com/jacopone/antigravity-nix";
 ```
 
+<!-- prettier-ignore-start -->
 !!! tip
-**Use `path:` instead of `git+file:`:**
+    **Use `path:` instead of `git+file:`:**
 
     - `path:/path/to/repo` fetches the directory directly, including any **uncommitted (dirty) changes**.
     - `git+file:///path/to/repo` only builds files that have been committed to Git. Using `path:` is much faster and cleaner for iterative local testing.
 
 !!! warning
-**Nix's `path:` fetcher does not support `?dir=...` query parameters!**
+    **Nix's `path:` fetcher does not support `?dir=...` query parameters!**
 
     - If the input URL uses a subdirectory selector (e.g. `?dir=dotfiles/home-manager`), changing it to `path:` will drop the `dir` parameter and lock the root directory instead.
     - Because the root of the input changes, any paths importing from that input (e.g., `"${inputs.vorburger-dotfiles}/home.nix"`) will break unless they are adjusted to import via the relative subdirectory (e.g., `"${inputs.vorburger-dotfiles}/dotfiles/home-manager/home.nix"`).
     - Additionally, if files in the subdirectory access parent files (e.g. `../../git-clone.sh`), it will throw a sandbox/pure mode evaluation error because the parent directories are not part of the copied path store.
 
 !!! tip
-**Recommended Alternative (Push Upstream):**
-For flakes that use subdirectories, using local path overrides can be complex due to the path structure changes described above. It is **easier and highly recommended** to:
+    **Recommended Alternative (Push Upstream):**
+    For flakes that use subdirectories, using local path overrides can be complex due to the path structure changes described above. It is **easier and highly recommended** to:
 
-1. Push your changes to the upstream Git repository (or a temporary branch).
-2. Run `nix flake update <input-name>` to pull and test the changes.
-   This avoids having to modify import paths in your Nix configuration.
+    1. Push your changes to the upstream Git repository (or a temporary branch).
+    2. Run `nix flake update <input-name>` to pull and test the changes.
+       This avoids having to modify import paths in your Nix configuration.
+<!-- prettier-ignore-end -->
 
 ### 2. Regenerate `flake.nix`
 

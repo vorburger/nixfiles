@@ -40,6 +40,8 @@ theme:
     - content.action.edit
 
 markdown_extensions:
+  - admonition
+  - pymdownx.details
   - pymdownx.snippets:
       check_paths: true
       base_path: ["docs"]
