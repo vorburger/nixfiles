@@ -27,5 +27,19 @@
   services.fwupd-extra.enable = lib.mkDefault true;
   services.systemd-boot.enable = lib.mkDefault true;
 
-  virtualisation.vmVariant.services.virt-guest.enable = lib.mkDefault true;
+  virtualisation.vmVariant = {
+    services.virt-guest.enable = lib.mkDefault true;
+    virtualisation.forwardPorts = [
+      {
+        from = "host";
+        host.port = 2222;
+        guest.port = 22;
+      }
+    ];
+    virtualisation.qemu.options = [
+      "-vga none"
+      "-device virtio-vga-gl"
+      "-display gtk,gl=on"
+    ];
+  };
 }
