@@ -20,7 +20,7 @@ _: {
       apps.watch-documentation = {
         type = "app";
         program = pkgs.writeShellScriptBin "watch-documentation" ''
-          ${pkgs.zensical}/bin/zensical serve -f docs/mkdocs.yaml
+          cd docs && ${pkgs.zensical}/bin/zensical serve -f mkdocs.yaml
         '';
         meta.description = "Watch documentation with live-rebuilds";
       };
@@ -30,7 +30,7 @@ _: {
           {
             name = "watch-documentation";
             help = "Run zensical in dev mode (live update)";
-            command = "${pkgs.zensical}/bin/zensical serve -f docs/mkdocs.yaml";
+            command = "cd docs && ${pkgs.zensical}/bin/zensical serve -f mkdocs.yaml";
           }
         ];
       };

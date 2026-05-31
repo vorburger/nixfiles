@@ -58,6 +58,12 @@
 
 1. [`nix-ipfs-cdns`](https://github.com/vorburger/Notes/tree/master/ToDo/nix-ipfs-cdns)
 
+## Monitoring
+
+1. Ask others about their monitoring setup; but probably just use `prometheus` and `grafana` for now, and maybe `node-exporter` and/or `telegraf` for collecting metrics on the hosts?
+
+1. Monitor temperature of CPU and disks, and fan speed, on all hosts; alert if above certain threshold; log to Grafana
+
 ## Workstations & Laptops
 
 1. [Console & Graphical](https://gemini.google.com/app/9f5bc52b2379e178)
