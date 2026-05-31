@@ -60,6 +60,9 @@ in
 
             [org.gnome.shell]
             always-show-log-out=true
+
+            [org.gnome.settings-daemon.plugins.color]
+            night-light-enabled=true
           '';
         };
 
