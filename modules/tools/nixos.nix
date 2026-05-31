@@ -7,6 +7,7 @@
           pkgs.nixos-anywhere
           pkgs.nixos-install-tools
           pkgs.nixos-rebuild
+          pkgs.iotop
         ];
       };
     };

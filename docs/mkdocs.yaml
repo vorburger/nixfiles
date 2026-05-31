@@ -23,6 +23,7 @@ nav:
     # TODO - Nix Lang:
   - References:
       - reference/disko-layouts.md
+      - reference/rescue-usb.md
       - reference/nix-cli.md
       - reference/determinate.md
       - reference/nixos-generate-config.md

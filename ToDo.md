@@ -2,8 +2,8 @@
 
 1. https://2026.nixcon.org ?
 
-1. Create a `titan-rescue` USB, to set-up ZFS drives on `titan` without needing to install
-   Try out the new `_learn-zfs.nix` layout on Titan, or Vinea...
+1. Use the `titan-rescue` on a USB, to set-up ZFS drives on `titan` without needing to install!
+   ~~Try out the new `_learn-zfs.nix` layout on Titan, or Vinea...~~
 
 1. ZFS crypted, with TPM?
 
