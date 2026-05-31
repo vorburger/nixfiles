@@ -9,6 +9,7 @@ let
 in
 mkHost {
   name = "titan";
+  nixpkgs = inputs.nixpkgs-stable;
   diskoDevice = null; # TODO set real disk once hardware target is defined
   modules = [
     # TODO self.nixosModules.target-thinkstation

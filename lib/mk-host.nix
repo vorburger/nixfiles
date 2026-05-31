@@ -9,6 +9,7 @@
   mkHost =
     {
       name,
+      nixpkgs ? inputs.nixpkgs,
       system ? "x86_64-linux",
       diskoDevice ? null,
       diskoModule ? ../modules/disko/_boot-and-ext4.nix,
@@ -37,14 +38,17 @@
           ++ modules;
       };
 
-      flake.nixosConfigurations.${name} = inputs.nixpkgs.lib.nixosSystem {
+      flake.nixosConfigurations.${name} = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = { inherit inputs self; };
         modules = [ self.nixosModules.${name} ];
       };
 
-      imports = lib.optional (testScript != null || name != "installer") (
-        mkTest "${name}-boot" self.nixosModules.${name} testScript
-      );
+      imports = lib.optional (testScript != null || name != "installer") (mkTest {
+        name = "${name}-boot";
+        module = self.nixosModules.${name};
+        inherit testScript;
+        inherit nixpkgs;
+      });
     };
 }

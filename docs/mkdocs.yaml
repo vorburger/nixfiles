@@ -33,6 +33,8 @@ nav:
       - reference/wiki.md
       - reference/we.md
       - ToDo.md
+  - Contributing:
+      - contributing/channels.md
 
 theme:
   features:

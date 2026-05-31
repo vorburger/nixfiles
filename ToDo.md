@@ -2,11 +2,10 @@
 
 1. https://2026.nixcon.org ?
 
-1. Have both unstable and fixed nix pkgs - for different hosts; https://status.nixos.org Stable NixOS instead of -unstable for production machines hosts with ZFS
+1. Create a `titan-rescue` USB, to set-up ZFS drives on `titan` without needing to install
+   Try out the new `_learn-zfs.nix` layout on Titan, or Vinea...
 
 1. ZFS crypted, with TPM?
-
-1. Create a `titan-rescue` USB, to set-up ZFS drives on `titan` without needing to install
 
 1. LUKS **with TPM** https://nixos.org/manual/nixos/stable/#sec-luks-file-systems
 
@@ -16,8 +15,6 @@
 
    $ sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+7 /dev/nvme0n1p2
    ```
-
-1. Try out the new `_learn-zfs.nix`layout on Vinea...
 
 1. [Make the `/home`](https://gemini.google.com/app/3b7155acedd7082c) on `vinea` (and later all) a ZFS dataset, for better backup and snapshotting
 
