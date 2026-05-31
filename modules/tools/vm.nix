@@ -5,7 +5,8 @@
       packages.vm = pkgs.writeShellApplication {
         name = "vm";
         runtimeInputs = [
-          pkgs.nixos-rebuild
+          pkgs.nh
+          pkgs.nix-output-monitor
           pkgs.openssh
         ];
         text = ''
@@ -26,7 +27,7 @@
             exit 1
           fi
 
-          nixos-rebuild build-vm --flake .#"$MACH"
+          nh os build-vm .#"$MACH" -o result
 
           # shellcheck disable=SC2016
           result/bin/run-"$MACH"-vm &
