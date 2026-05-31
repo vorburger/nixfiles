@@ -11,6 +11,7 @@
       name,
       system ? "x86_64-linux",
       diskoDevice ? null,
+      diskoModule ? ../modules/disko/_boot-and-ext4.nix,
       useCommon ? true,
       useDefaultUser ? true,
       modules ? [ ],
@@ -24,9 +25,9 @@
         imports =
           (lib.optional useCommon ../modules/hosts/_common.nix)
           ++ (lib.optional useDefaultUser ../modules/users/_vorburger.nix)
-          ++ (lib.optional (diskoDevice != null) inputs.disko.nixosModules.disko)
-          ++ (lib.optional (diskoDevice != null) (
-            import ../modules/disko/_boot-and-ext4.nix { device = diskoDevice; }
+          ++ (lib.optional (diskoDevice != null && diskoModule != null) inputs.disko.nixosModules.disko)
+          ++ (lib.optional (diskoDevice != null && diskoModule != null) (
+            import diskoModule { device = diskoDevice; }
           ))
           ++ [
             (_: {

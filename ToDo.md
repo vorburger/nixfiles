@@ -2,9 +2,10 @@
 
 1. https://2026.nixcon.org ?
 
-1. Wireguard into NUC
+1. NUC should not have the workstation profile, but a (new) "headless" one, e.g. without Sound and most (or any at all?) things from workstation.nix;
+   see also https://nixos.org/manual/nixos/stable/#sec-profile-headless
 
-1. disko stuff should be in each host itself, not their profile
+1. Try out the new `_learn-zfs.nix`layout on Vinea... but it's probably too big?
 
 1. LUKS encryption https://nixos.org/manual/nixos/stable/#sec-luks-file-systems
 
@@ -19,18 +20,17 @@
 
 1. `/nix` on separate partition (or LV)
 
-1. https://status.nixos.org Stable NixOS instead of -unstable for hosts machines with ZFS
+1. Wireguard into NUC
 
 1. ZFS; first in VM, then on ThinkStation (BM) https://wiki.nixos.org/wiki/ZFS
+
+1. https://status.nixos.org Stable NixOS instead of -unstable for production machines hosts with ZFS
 
 1. `users.mutableUsers` should be false
 
 1. [Impermanence](https://www.youtube.com/watch?v=ZKBSWS7OOb4&t=6s) with [`preservation`](https://github.com/nix-community/preservation), see [vimjoyer](https://www.vimjoyer.com/vid89-impermanent)
 
 1. ThinkStation as GNOME Workstation 0.1 (on external USB, to first backup ToNAS, the wipe SSD)
-
-1. NUC should not have the workstation profile, but a (new) "headless" one;
-   see also https://nixos.org/manual/nixos/stable/#sec-profile-headless
 
 1. Ixo powersaving: powerctl? tlp?
    https://wiki.archlinux.org/title/Powertop, and/or
