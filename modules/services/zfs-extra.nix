@@ -11,6 +11,8 @@ in
           description = "extra ZFS configuration";
           content = {
             boot.supportedFilesystems = [ "zfs" ];
+            services.zfs.autoScrub.enable = true;
+            services.zfs.trim.enable = true;
           };
         })
       ];

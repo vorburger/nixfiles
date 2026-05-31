@@ -5,6 +5,8 @@
 1. NUC should not have the workstation profile, but a (new) "headless" one, e.g. without Sound and most (or any at all?) things from workstation.nix;
    see also https://nixos.org/manual/nixos/stable/#sec-profile-headless
 
+1. remind me what that stateVersion was for? Should this be set for each host, instead of in profiles?
+
 1. LUKS **with TPM** https://nixos.org/manual/nixos/stable/#sec-luks-file-systems
 
    ```nix

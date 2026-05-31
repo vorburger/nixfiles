@@ -14,5 +14,9 @@ mkHost {
   modules = [
     self.nixosModules.target-nuc
     self.nixosModules.personality-workstation
+    (_: {
+      services.zfs-extra.enable = true;
+      networking.hostId = "56417937";
+    })
   ];
 }
