@@ -4,10 +4,11 @@
 
 1. Why does the `vinea` host not include the vorburger user dotfiles?
 
-1. NUC should not have the workstation profile, but a (new) "headless" one, e.g. without Sound and most (or any at all?) things from workstation.nix;
-   see also https://nixos.org/manual/nixos/stable/#sec-profile-headless
+1. Have both unstable and fixed nix pkgs - for different hosts; https://status.nixos.org Stable NixOS instead of -unstable for production machines hosts with ZFS
 
-1. remind me what that stateVersion was for? Should this be set for each host, instead of in profiles?
+1. ZFS crypted, with TPM?
+
+1. Create a `titan-rescue` USB, to set-up ZFS drives on `titan` without needing to install
 
 1. LUKS **with TPM** https://nixos.org/manual/nixos/stable/#sec-luks-file-systems
 
@@ -20,9 +21,12 @@
 
 1. Try out the new `_learn-zfs.nix`layout on Vinea...
 
-1. ZFS; first in Vinea's VM and/or BM, then on ThinkStation (BM) https://wiki.nixos.org/wiki/ZFS
+1. [Make the `/home`](https://gemini.google.com/app/3b7155acedd7082c) on `vinea` (and later all) a ZFS dataset, for better backup and snapshotting
 
-1. Have both unstable and fixed nix pkgs - for different hosts; https://status.nixos.org Stable NixOS instead of -unstable for production machines hosts with ZFS
+1. NUC should not have the workstation profile, but a (new) "headless" one, e.g. without Sound and most (or any at all?) things from workstation.nix;
+   see also https://nixos.org/manual/nixos/stable/#sec-profile-headless
+
+1. remind me what that stateVersion was for? Should this be set for each host, instead of in profiles?
 
 1. `users.mutableUsers` should be false
 
@@ -34,6 +38,8 @@
 
 1. Use systemd instead of grub as bootloader on all hosts, for uniformity
 
+1. Backups ... just with ZFS!! Or https://www.borgbackup.org? Not syncthing.
+
 1. Ixo powersaving: powerctl? tlp?
    https://wiki.archlinux.org/title/Powertop, and/or
    https://wiki.archlinux.org/title/TLP
@@ -41,8 +47,6 @@
 1. https://wiki.nixos.org/wiki/Secret_Service, consider https://dewaldv.com/posts/2026-03-24-proton-pass-secret-service/ ?
 
 1. Read https://clan.lol/docs/25.11/guides/vars/vars-overview, and transition from my `pass` to [`passage`](https://github.com/FiloSottile/passage); THEN use ~~`sopsnix` or~~ `agenix` for secrets management; best together with https://github.com/Foxboron/age-plugin-tpm ?
-
-1. Backups ... https://www.borgbackup.org ? syncthing
 
 1. https://syncthing.net server, for client on Android for Photos
 
@@ -52,9 +56,13 @@
    - Not possible to still dual boot Fedora?
    - Does `ssh-tpm-agent` still work?!
 
-1. https://nixos.org/manual/nixos/stable/#sec-upgrading-automatic
+1. https://nixos.org/manual/nixos/stable/#sec-upgrading-automatic ?
+
+1. [`nix-ipfs-cdns`](https://github.com/vorburger/Notes/tree/master/ToDo/nix-ipfs-cdns)
 
 ## Workstations & Laptops
+
+1. [Console & Graphical](https://gemini.google.com/app/9f5bc52b2379e178)
 
 1. Ixo solve <> key map problem (how?)
 
