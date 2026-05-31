@@ -13,5 +13,6 @@ mkHost {
   modules = [
     self.nixosModules.target-vm-1G-grub-8G
     self.nixosModules.personality-workstation
+    self.nixosModules.personality-gnome
   ];
 }
