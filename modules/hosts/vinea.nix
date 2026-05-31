@@ -10,7 +10,7 @@ in
 mkHost {
   name = "vinea";
   diskoDevice = "/dev/nvme0n1";
-  diskoModule = ../disko/_learn-zfs.nix;
+  diskoModule = ../disko/_boot-and-ext4.nix;
   modules = [
     self.nixosModules.target-nuc
     self.nixosModules.personality-workstation

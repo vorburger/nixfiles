@@ -107,6 +107,59 @@ When installing on physical hardware (e.g., using `nixos-anywhere` or the manual
 
 ---
 
+## Updating or Changing Disko Layouts on Existing Hosts
+
+> [!WARNING]
+> Running `nixos-rebuild switch --flake .#<host> --target-host <host> --sudo --ask-sudo-password` (or similar) after modifying a host's Disko partition layout will completely break the target system.
+>
+> NixOS's `nixos-rebuild` tries to mount new systems according to `/etc/fstab` and reload system services. However, it cannot dynamically re-partition or format mounted, active drives on a running system. Disko does not detect active layout mismatches to fail gracefully, which causes the rebuild process to crash, leaving filesystems unmounted and rendering the host unbootable.
+
+### Why is there no "force format" flag or option?
+
+You might wonder if you can pass a flag to `nixos-rebuild` or add an option in Nix to force formatting. This is not supported due to two core constraints:
+
+- **Safety**: Automatically formatting/partitioning during a rebuild would risk wiping your running system's data on a simple typo or configuration update.
+- **Kernel Limitations**: The active operating system has `/` and `/nix` mounted and in use. The Linux kernel will refuse to delete or re-partition active, mounted disk blocks.
+
+### Let Disko Wipe and Recreate
+
+Because the disk layout cannot be changed on a running OS, the layout must be rewritten from outside the active system:
+
+#### 💻 For Virtual Machines (tested via `vmb` or QEMU)
+
+If the host is a virtual machine, you do not need a live installer:
+
+1. Stop the VM.
+2. Delete the virtual disk image file (e.g., `vinea.qcow2` or similar) on the host machine.
+3. Re-run your VM boot/build command (`vmb` or `nix run .#vm`). This will automatically trigger Disko to partition, format, and build a fresh disk image from scratch.
+
+#### 🖥️ For Physical Hosts / Bare-Metal
+
+1. **Boot into an Installer**:
+   Boot the target host from a NixOS installer environment (e.g. NixOS installation USB/ISO, or a netboot image).
+
+2. **Retrieve the Flake**:
+   Clone or pull your `nixfiles` repository onto the installer environment.
+
+3. **Run the Disko Script**:
+   Each host configuration in this repository builds a custom `diskoScript` that contains the layout, filesystem options, and disk overrides (e.g., `diskoDevice`) configured for that specific host in the flake.
+
+   Build and execute the script directly from the flake:
+
+   ```bash
+   # Build the diskoScript derivation for the target host (e.g., vinea)
+   script=$(nix build --print-out-paths --no-link .#nixosConfigurations.vinea.config.system.build.diskoScript)
+
+   # Execute the script to wipe partition tables, format disks, and mount everything
+   # WARNING: This will destroy all existing data on the configured disks!
+   sudo "$script"
+   ```
+
+4. **Proceed with Clean Install**:
+   Once the script finishes, the new layout filesystems are mounted under `/mnt`. You can then proceed with `nixos-install` or your standard provisioning flow.
+
+---
+
 ## Notes
 
 - This layout assumes a reasonably large disk; adjust LV and partition sizes if needed.

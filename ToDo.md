@@ -2,8 +2,6 @@
 
 1. https://2026.nixcon.org ?
 
-1. Why does the `vinea` host not include the vorburger user dotfiles?
-
 1. Have both unstable and fixed nix pkgs - for different hosts; https://status.nixos.org Stable NixOS instead of -unstable for production machines hosts with ZFS
 
 1. ZFS crypted, with TPM?
