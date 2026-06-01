@@ -12,12 +12,13 @@ mkHost {
   nixpkgs = inputs.nixpkgs-stable;
   diskoDevice = null; # TODO set real disk once hardware target is defined
   modules = [
-    # TODO self.nixosModules.target-thinkstation
     self.nixosModules.personality-workstation
     self.nixosModules.personality-gnome
     (_: {
       services.zfs-extra.enable = true;
       networking.hostId = "8425e349";
+
+      hardware.amdgpu.initrd.enable = true; # sets boot.initrd.kernelModules = ["amdgpu"];
 
       # Dummy file systems and boot loader because HW target is TBD
       fileSystems."/" = {

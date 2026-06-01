@@ -21,6 +21,8 @@ mkHost {
       services.zfs-extra.enable = true;
       networking.hostId = "8425e349";
 
+      hardware.amdgpu.initrd.enable = true; # sets boot.initrd.kernelModules = ["amdgpu"];
+
       # Override the hostName so the USB identifies itself distinctly
       networking.hostName = lib.mkForce "titan-rescue";
     })
