@@ -39,7 +39,6 @@ mkHost {
       boot.loader.efi.canTouchEfiVariables = true;
       # Dummy file systems because HW target is TBD
       fileSystems."/" = {
-        device = "/dev/disk/by-label/nixos";
         fsType = "ext4";
       };
     })
