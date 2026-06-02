@@ -19,6 +19,8 @@
 
 1. Backup $HOME to ZFS, as [discussed with Gemini](https://gemini.google.com/app/8e54cb881caec7f8) with `services.sanoid` or `syncoid`
 
+1. Local AI
+
 1. NUC should not have the workstation profile, but a (new) "headless" one, e.g. without Sound and most (or any at all?) things from workstation.nix;
    see also https://nixos.org/manual/nixos/stable/#sec-profile-headless
 

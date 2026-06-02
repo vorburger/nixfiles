@@ -42,6 +42,8 @@ mkHost {
       fileSystems."/" = {
         fsType = "ext4";
       };
+
+      services.zram.enable = true;
     })
   ];
 }
