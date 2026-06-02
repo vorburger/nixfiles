@@ -2,10 +2,13 @@
 
 1. https://2026.nixcon.org ?
 
-1. Use the `titan-rescue` on a USB, to set-up ZFS drives on `titan` without needing to install!
-   ~~Try out the new `_learn-zfs.nix` layout on Titan, or Vinea...~~
+1. `users.mutableUsers` should be false
 
-1. ZFS crypted, with TPM?
+1. remind me what that stateVersion was for? Should this be set for each host, instead of in profiles?
+
+1. [Make the `/home`](https://gemini.google.com/app/3b7155acedd7082c) on `titan` a ZFS dataset, for better backup and snapshotting
+
+1. How to do ZFS crypted, with TPM?
 
 1. LUKS **with TPM** https://nixos.org/manual/nixos/stable/#sec-luks-file-systems
 
@@ -16,24 +19,14 @@
    $ sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+7 /dev/nvme0n1p2
    ```
 
-1. [Make the `/home`](https://gemini.google.com/app/3b7155acedd7082c) on `vinea` (and later all) a ZFS dataset, for better backup and snapshotting
+1. [Impermanence](https://www.youtube.com/watch?v=ZKBSWS7OOb4&t=6s) with [`preservation`](https://github.com/nix-community/preservation), see [vimjoyer](https://www.vimjoyer.com/vid89-impermanent)
+
+1. Backup $HOME to ZFS, as [discussed with Gemini](https://gemini.google.com/app/8e54cb881caec7f8) with `services.sanoid` or `syncoid`
 
 1. NUC should not have the workstation profile, but a (new) "headless" one, e.g. without Sound and most (or any at all?) things from workstation.nix;
    see also https://nixos.org/manual/nixos/stable/#sec-profile-headless
 
-1. remind me what that stateVersion was for? Should this be set for each host, instead of in profiles?
-
-1. `users.mutableUsers` should be false
-
-1. [Impermanence](https://www.youtube.com/watch?v=ZKBSWS7OOb4&t=6s) with [`preservation`](https://github.com/nix-community/preservation), see [vimjoyer](https://www.vimjoyer.com/vid89-impermanent)
-
 1. Wireguard into NUC
-
-1. ThinkStation as GNOME Workstation 0.1 (on external USB, to first backup ToNAS, the wipe SSD)
-
-1. Use systemd instead of grub as bootloader on all hosts, for uniformity
-
-1. Backups ... just with ZFS!! Or https://www.borgbackup.org? Not syncthing.
 
 1. Ixo powersaving: powerctl? tlp?
    https://wiki.archlinux.org/title/Powertop, and/or

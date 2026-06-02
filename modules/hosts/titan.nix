@@ -10,7 +10,7 @@ in
 mkHost {
   name = "titan";
   nixpkgs = inputs.nixpkgs-stable;
-  diskoDevice = null; # TODO set real disk once hardware target is defined
+  diskoDevice = "/dev/disk/by-id/nvme-SAMSUNG_MZVKW512HMJP-000L7_S35BNX0K809192";
   modules = [
     self.nixosModules.personality-workstation
     self.nixosModules.personality-gnome
@@ -20,13 +20,28 @@ mkHost {
 
       hardware.amdgpu.initrd.enable = true; # sets boot.initrd.kernelModules = ["amdgpu"];
 
-      # Dummy file systems and boot loader because HW target is TBD
+      boot.initrd.availableKernelModules = [
+        "xhci_pci"
+        "ahci"
+        "nvme"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+        "sr_mod"
+        "rtsx_usb_sdmmc"
+      ];
+      boot.initrd.kernelModules = [ ];
+      boot.kernelModules = [ "kvm-intel" ];
+      boot.extraModulePackages = [ ];
+
+      boot.loader.grub.enable = false;
+      boot.loader.systemd-boot.enable = true;
+      boot.loader.efi.canTouchEfiVariables = true;
+      # Dummy file systems because HW target is TBD
       fileSystems."/" = {
         device = "/dev/disk/by-label/nixos";
         fsType = "ext4";
       };
-      boot.loader.grub.enable = true;
-      boot.loader.grub.device = "nodev";
     })
   ];
 }
