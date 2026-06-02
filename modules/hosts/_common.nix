@@ -32,6 +32,7 @@
   services.fwupd-extra.enable = lib.mkDefault true;
   services.systemd-boot.enable = lib.mkDefault true;
 
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   virtualisation.vmVariant = {
