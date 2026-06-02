@@ -1,4 +1,9 @@
-{ self, lib, ... }:
+{
+  self,
+  lib,
+  config,
+  ...
+}:
 {
   imports = [
     self.nixosModules.zfs-extra
@@ -26,6 +31,8 @@
   services.nix-extra.enable = lib.mkDefault true;
   services.fwupd-extra.enable = lib.mkDefault true;
   services.systemd-boot.enable = lib.mkDefault true;
+
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   virtualisation.vmVariant = {
     services.virt-guest.enable = lib.mkDefault true;

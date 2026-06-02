@@ -31,8 +31,6 @@
       boot.kernelModules = [ "kvm-intel" ];
       boot.extraModulePackages = [ ];
 
-      hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-
       hardware.cpu.intel.npu.enable = false;
       # Workaround for shutdown/poweroff hang caused by the Intel NPU driver:
       # If the NPU is disabled, blacklist the kernel module to prevent it from loading and hanging the system.

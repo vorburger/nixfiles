@@ -2,8 +2,6 @@
 {
   flake.nixosModules.target-nuc =
     {
-      config,
-      lib,
       modulesPath,
       ...
     }:
@@ -28,7 +26,5 @@
       boot.initrd.kernelModules = [ ];
       boot.kernelModules = [ "kvm-intel" ];
       boot.extraModulePackages = [ ];
-
-      hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     };
 }
