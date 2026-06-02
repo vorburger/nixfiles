@@ -15,9 +15,10 @@ mkHost {
     self.nixosModules.personality-workstation
     self.nixosModules.personality-gnome
     (_: {
-      services.zfs-extra.enable = true;
+      system.stateVersion = "26.05";
       networking.hostId = "8425e349";
 
+      services.zfs-extra.enable = true;
       hardware.amdgpu.initrd.enable = true; # sets boot.initrd.kernelModules = ["amdgpu"];
 
       boot.initrd.availableKernelModules = [

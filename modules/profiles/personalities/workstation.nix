@@ -2,8 +2,6 @@
   flake.nixosModules.personality-workstation =
     { pkgs, inputs, ... }:
     {
-      system.stateVersion = "26.05";
-
       environment.systemPackages = [
         # TODO Move to dotfiles repo?
         pkgs.pass

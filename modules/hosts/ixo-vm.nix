@@ -11,6 +11,12 @@ mkHost {
   name = "ixo-vm";
   diskoDevice = "/dev/vda";
   modules = [
+    (
+      { config, ... }:
+      {
+        system.stateVersion = config.system.nixos.release;
+      }
+    )
     self.nixosModules.target-vm-1G-grub-8G
     self.nixosModules.personality-workstation
     self.nixosModules.personality-gnome

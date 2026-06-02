@@ -2,10 +2,6 @@
 
 1. https://2026.nixcon.org ?
 
-1. `users.mutableUsers` should be false
-
-1. remind me what that stateVersion was for? Should this be set for each host, instead of in profiles?
-
 1. [Make the `/home`](https://gemini.google.com/app/3b7155acedd7082c) on `titan` a ZFS dataset, for better backup and snapshotting
 
 1. How to do ZFS crypted, with TPM?

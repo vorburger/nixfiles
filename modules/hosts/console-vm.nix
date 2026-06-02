@@ -13,8 +13,9 @@ mkHost {
   modules = [
     # Keep tiny VM image bootable by shrinking the ESP for this host's disk layout.
     (
-      { lib, ... }:
+      { lib, config, ... }:
       {
+        system.stateVersion = config.system.nixos.release;
         disko.devices.disk.my-disk.content.partitions.ESP.size = lib.mkForce "64M";
       }
     )

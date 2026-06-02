@@ -18,6 +18,8 @@ mkHost {
     self.nixosModules.personality-workstation
     self.nixosModules.personality-gnome
     (_: {
+      # TODO Read from titan.nix
+      system.stateVersion = "26.05";
       services.zfs-extra.enable = true;
       networking.hostId = "8425e349";
 
