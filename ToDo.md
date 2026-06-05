@@ -10,13 +10,9 @@
 
 1. `smart.nix` only install gsmartcontrol IFF on UI host
 
-1. Do not mount root filesystem
-
 1. Enabled Email Sending, for zfs-extra.nix
 
 1. [Make the `/home`](https://gemini.google.com/app/3b7155acedd7082c) on `titan` a ZFS dataset, for better backup and snapshotting
-
-1. How to do ZFS crypted, with TPM?
 
 1. LUKS **with TPM** https://nixos.org/manual/nixos/stable/#sec-luks-file-systems
 
