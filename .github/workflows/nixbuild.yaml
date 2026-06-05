@@ -1,0 +1,10 @@
+# https://nixbuild.net
+# https://github.com/marketplace/actions/nixbuild-net
+name: Examples
+on: push
+jobs:
+  checks:
+    uses: nixbuild/nixbuild-action/.github/workflows/ci-workflow.yml@v24
+    secrets:
+      nixbuild_token: ${{ secrets.nixbuild_token }}
+      generate_summary_for: 'workflow'
