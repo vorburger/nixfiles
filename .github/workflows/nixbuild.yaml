@@ -1,6 +1,6 @@
 # https://nixbuild.net
 # https://github.com/marketplace/actions/nixbuild-net
-name: Examples
+name: nixbuild.net
 on: push
 jobs:
   checks:
