@@ -2,13 +2,25 @@
 
 1. https://2026.nixcon.org ?
 
+1. ZFS? _"data partitions that are mounted noexec / nosuid / nodev which provides an additional level of safety against sophisticated attacks."_ (https://www.rsync.net/resources/faq.html)
+
+1. ZFS `zpool set autotrim=on hddpool`, for L2ARC ssd?
+
 1. Snapshots with `services.zfs.autoSnapshot.enable` and/or with `sanoid` ?
 
-1. Enable `smartd`
+1. Enable `smartd` in `services/smart.nix` with https://github.com/AnalogJ/scrutiny see https://search.nixos.org/options?channel=unstable&query=services.scrutiny.#show=option%253Aservices.scrutiny.collector.enable
 
 1. `smart.nix` only install gsmartcontrol IFF on UI host
 
 1. Enabled Email Sending, for zfs-extra.nix
+
+1. ToDo alert-me either wall or notify-send.. test over SSH with tmux.
+
+1. NUC should not have the workstation profile, but a (new) "headless" one, e.g. without Sound and most (or any at all?) things from workstation.nix; see also https://nixos.org/manual/nixos/stable/#sec-profile-headless
+
+1. Wireguard into NUC
+
+1. Samba on NixOS (e.g. for for `/nas/public`)
 
 1. [Make the `/home`](https://gemini.google.com/app/3b7155acedd7082c) on `titan` a ZFS dataset, for better backup and snapshotting
 
@@ -21,16 +33,15 @@
    $ sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+7 /dev/nvme0n1p2
    ```
 
+1. Local AI
+
+1. Backup Antigravity Config and Conversations; share between Workstation & Latpop
+
+1. replace Antigravity with https://github.com/BohdanTkachenko/nix-home/blob/main/flake.nix#L26-L40
+
 1. [Impermanence](https://www.youtube.com/watch?v=ZKBSWS7OOb4&t=6s) with [`preservation`](https://github.com/nix-community/preservation), see [vimjoyer](https://www.vimjoyer.com/vid89-impermanent)
 
 1. Backup $HOME to ZFS, as [discussed with Gemini](https://gemini.google.com/app/8e54cb881caec7f8) with `services.sanoid` or `syncoid`
-
-1. Local AI
-
-1. NUC should not have the workstation profile, but a (new) "headless" one, e.g. without Sound and most (or any at all?) things from workstation.nix;
-   see also https://nixos.org/manual/nixos/stable/#sec-profile-headless
-
-1. Wireguard into NUC
 
 1. Ixo powersaving: powerctl? tlp?
    https://wiki.archlinux.org/title/Powertop, and/or
@@ -44,8 +55,6 @@
 
 1. https://syncthing.net server, for client on Android for Photos
 
-1. Cloud VMs? `imports = [ "${modulesPath}/virtualisation/amazon-image.nix" ]` ? See e.g. [this announcement](https://www.haskellforall.com/2023/01/announcing-nixos-rebuild-new-deployment.html).
-
 1. Secure Boot!!
    - Not possible to still dual boot Fedora?
    - Does `ssh-tpm-agent` still work?!
@@ -58,7 +67,13 @@
 
 1. Ask others about their monitoring setup; but probably just use `prometheus` and `grafana` for now, and maybe `node-exporter` and/or `telegraf` for collecting metrics on the hosts?
 
+1. https://nixos.org/manual/nixos/stable/#module-services-prometheus-exporters
+
+1. `services.prometheus.exporters.smartctl.devices` for SMART monitoring
+
 1. Monitor temperature of CPU and disks, and fan speed, on all hosts; alert if above certain threshold; log to Grafana
+
+1. https://github.com/pdf/zfs_exporter
 
 ## Workstations & Laptops
 
@@ -175,6 +190,8 @@
 1. Automagically extract TODO list to MD
 
 ## Low Priority / Nice to Have
+
+1. Cloud VMs? `imports = [ "${modulesPath}/virtualisation/amazon-image.nix" ]` ? See e.g. [this announcement](https://www.haskellforall.com/2023/01/announcing-nixos-rebuild-new-deployment.html).
 
 1. ZFS UIs? docs/docs/reference/zfs.md#ui
 

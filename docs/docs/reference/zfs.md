@@ -28,6 +28,10 @@ TODO https://github.com/AnalogJ/scrutiny
 
     sudo zfs create -o mountpoint=/nas pool8/nas
 
+    sudo mkdir /nas/vorburger
+    sudo chown vorburger:vorburger /nas/vorburger
+    echo "hello, world" >/nas/vorburger/hello.txt
+
 ## Pools
 
 For `ashift`, just always keep `ashift=12`; do NOT run `lsblk -t` to adjust for PHY-SEC of 4096 with `ashift=12` (2^12 = 4096) on HDDs, and for 512 use `ashift=9` (2^9 = 512); see [the ZFS documentation for more details about why doing that would be is wrong](https://openzfs.github.io/openzfs-docs/Performance%20and%20Tuning/Hardware.html#flash-pages).
@@ -79,6 +83,35 @@ It's instantaneous, and does not need to rewrite or re-encrypt any of your data.
 ## Snapshots
 
 ## Backup
+
+### rsync
+
+    rsync -aHAXx --info=progress2 --inplace /mnt/source/ /nas/...
+
+- `-aHAXx` The Bulletproof Archive Mode:
+  - `-a` (archive) copies recursively and preserves symlinks, devices, permissions, and modification times.
+
+  - `-H` preserves hard links.
+
+  - `-A` preserves ACLs (important since you set up posixacl).
+
+  - `-X` preserves extended attributes (xattr=sa).
+
+  - `-x` stays on a single filesystem (prevents rsync from accidentally backing up virtual dirs like /proc or crossing into other mounts).
+
+  - `--inplace` (Crucial for ZFS performance): By default, rsync creates a hidden temporary file, copies the data, and then moves it into place. --inplace forces rsync to write directly to the target file. On ZFS, this avoids massive write amplification, bypasses unnecessary fragmentation, and reduces transactional overhead.
+
+  - `--info=progress2`: Instead of scrolling a wall of text for every single tiny file (which slows down the terminal emulator), this gives you a single, modern, live-updating progress bar for the entire transfer size.
+
+Optionally, depending on the use case, you may also want to add:
+
+- `--numeric-ids`: Tells rsync to map user/group IDs by their raw numbers rather than trying to resolve usernames. This is much cleaner when moving data between different OS installations or environments.
+
+### Replication
+
+TODO syncoid
+
+### Google Drive
 
 TODO How to backup to Google Drive? https://github.com/someone1/zfsbackup-go,
 
