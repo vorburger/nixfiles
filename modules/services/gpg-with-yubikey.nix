@@ -8,7 +8,7 @@ in
     content =
       { pkgs, ... }:
       let
-        ssh = false; # No need anymore, as we use ssh-tpm-agent
+        ssh = false; # Not needed IFF we use ssh-tpm-agent
       in
       {
         # Enable the PC/SC Smart Card Daemon, required for GnuPG to communicate with YubiKeys

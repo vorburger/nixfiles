@@ -46,6 +46,8 @@
 
 1. Read https://clan.lol/docs/25.11/guides/vars/vars-overview, and transition from my `pass` to [`passage`](https://github.com/FiloSottile/passage); THEN use ~~`sopsnix` or~~ `agenix` for secrets management; best together with https://github.com/Foxboron/age-plugin-tpm ?
 
+1. Remove ModemManager `systemctl status ModemManager` .. what pulls it along? GNOME?
+
 1. https://syncthing.net server, for client on Android for Photos
 
 1. Cloud VMs? `imports = [ "${modulesPath}/virtualisation/amazon-image.nix" ]` ? See e.g. [this announcement](https://www.haskellforall.com/2023/01/announcing-nixos-rebuild-new-deployment.html).

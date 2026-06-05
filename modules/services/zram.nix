@@ -3,7 +3,7 @@ let
   inherit (import ../../lib/mk-service.nix) mkService;
 in
 {
-  #  zramctl shows if this is activated
+  # zramctl shows if this is activated
   flake.nixosModules.zram = mkService {
     name = "zram";
     description = "Zram Swap";

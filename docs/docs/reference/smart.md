@@ -16,9 +16,9 @@ TODO
 
 https://www.smartmontools.org:
 
-    sudo smartctl --scan-open
-    /dev/sda -d sat # /dev/sda [SAT], ATA device
-    /dev/sdb -d sat # /dev/sdb [SAT], ATA device
+    $ sudo smartctl --scan-open
+    /dev/sda -d sat # /dev/sda, ATA device
+    /dev/sdb -d sat # /dev/sdb, ATA device
     /dev/nvme0 -d nvme # /dev/nvme0, NVMe device
     /dev/nvme1 -d nvme # /dev/nvme1, NVMe device
 
