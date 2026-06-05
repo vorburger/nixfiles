@@ -11,9 +11,20 @@ in
           description = "extra ZFS configuration";
           content = {
             boot.supportedFilesystems = [ "zfs" ];
-            services.zfs.autoScrub.enable = true;
-            services.zfs.autoSnapshot.enable = true;
-            services.zfs.trim.enable = true;
+            services.zfs = {
+              autoScrub.enable = true;
+              autoSnapshot.enable = true; # TODO or sanoid?
+              trim.enable = true;
+
+              zed.settings = {
+                # TODO Enable Mail service...
+                ZED_EMAIL_ADDR = [ "root" ];
+                ZED_NOTIFY_VERBOSE = true;
+
+                # NAS only: ZED_USE_ENCLOSURE_LEDS = true;
+                ZED_SCRUB_AFTER_RESILVER = true;
+              };
+            };
           };
         })
       ];

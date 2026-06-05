@@ -18,6 +18,7 @@ mkHost {
       system.stateVersion = "26.05";
       networking.hostId = "8425e349";
 
+      services.smart.enable = true;
       services.zfs-extra.enable = true;
       hardware.amdgpu.initrd.enable = true; # sets boot.initrd.kernelModules = ["amdgpu"];
 
