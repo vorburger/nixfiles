@@ -12,8 +12,6 @@
 
 1. Do not mount root filesystem
 
-1. Bump `nix-fast-build` for https://github.com/Mic92/nix-fast-build/issues/341, remove https://github.com/vorburger/dotfiles/blob/main/dotfiles/fish/functions/t.fish
-
 1. Enabled Email Sending, for zfs-extra.nix
 
 1. [Make the `/home`](https://gemini.google.com/app/3b7155acedd7082c) on `titan` a ZFS dataset, for better backup and snapshotting

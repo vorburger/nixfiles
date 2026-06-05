@@ -7,6 +7,7 @@ in
     description = "extra Nix configuration (flakes, etc.)";
     content =
       {
+        inputs,
         lib,
         options,
         pkgs,
@@ -28,7 +29,7 @@ in
           pkgs.dix # https://github.com/manic-systems/dix
           pkgs.nh # https://github.com/nix-community/nh
           pkgs.nix-output-monitor
-          pkgs.nix-fast-build
+          inputs.nix-fast-build.packages.${pkgs.stdenv.hostPlatform.system}.nix-fast-build
         ];
 
         # Required, for now; e.g. for Visual Studio Code (VSC)
