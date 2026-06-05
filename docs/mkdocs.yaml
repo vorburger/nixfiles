@@ -47,6 +47,7 @@ theme:
 markdown_extensions:
   - admonition
   - pymdownx.details
+  - pymdownx.magiclink
   - pymdownx.snippets:
       check_paths: true
       base_path: ["docs"]

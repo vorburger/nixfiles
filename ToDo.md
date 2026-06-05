@@ -2,8 +2,6 @@
 
 1. https://2026.nixcon.org ?
 
-1. GSmartControl check for bad disks
-
 1. Snapshots with `services.zfs.autoSnapshot.enable` and/or with `sanoid` ?
 
 1. Enable `smartd`
@@ -177,6 +175,8 @@
 1. Automagically extract TODO list to MD
 
 ## Low Priority / Nice to Have
+
+1. ZFS UIs? docs/docs/reference/zfs.md#ui
 
 1. https://snowfall.org ?
 
