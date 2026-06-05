@@ -6,13 +6,17 @@ in
     name = "smart";
     description = "SMART stuff";
     content =
-      { pkgs, ... }:
+      {
+        pkgs,
+        lib,
+        config,
+        ...
+      }:
       {
         environment.systemPackages = [
           pkgs.smartmontools
-          # TODO Only install gsmartcontrol IFF on UI host...
-          pkgs.gsmartcontrol
-        ];
+        ]
+        ++ lib.optional config.hardware.graphics.enable pkgs.gsmartcontrol;
       };
   };
 }

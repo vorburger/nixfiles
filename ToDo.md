@@ -10,8 +10,6 @@
 
 1. Enable `smartd` in `services/smart.nix` with https://github.com/AnalogJ/scrutiny see https://search.nixos.org/options?channel=unstable&query=services.scrutiny.#show=option%253Aservices.scrutiny.collector.enable
 
-1. `smart.nix` only install gsmartcontrol IFF on UI host
-
 1. Enabled Email Sending, for zfs-extra.nix
 
 1. ToDo alert-me either wall or notify-send.. test over SSH with tmux.
