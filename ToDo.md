@@ -14,6 +14,8 @@
 
 1. ToDo alert-me either wall or notify-send.. test over SSH with tmux.
 
+1. Backup `/nas` ZFS to Google Drive
+
 1. NUC should not have the workstation profile, but a (new) "headless" one, e.g. without Sound and most (or any at all?) things from workstation.nix; see also https://nixos.org/manual/nixos/stable/#sec-profile-headless
 
 1. Wireguard into NUC

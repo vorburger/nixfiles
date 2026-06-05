@@ -35,8 +35,7 @@ in
         services.udev = {
           packages = with pkgs; [
             yubikey-personalization
-            libfido2 # Recommended for newer FIDO2/FIDO layers
-            libu2f-host
+            libfido2
           ];
         };
 
