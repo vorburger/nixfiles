@@ -116,6 +116,8 @@
 
 1. [Add a system service for ssh-tpm-agent](https://github.com/NixOS/nixpkgs/issues/353096)
 
+1. Split personal nixfiles hosts from re-usable nix modules into a separate repo; use [Modular Services](https://nixos.org/manual/nixos/unstable/#modular-services)
+
 ## Machines
 
 1. `nixos-rebuild ... --specialisation XYZ` for different use cases?
