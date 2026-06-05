@@ -1,7 +1,19 @@
 # https://nixbuild.net
 # https://github.com/marketplace/actions/nixbuild-net
 name: nixbuild.net
-on: push
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [main]
+
+# Cancel any in-progress job or run if there is a newer commit
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   checks:
     uses: nixbuild/nixbuild-action/.github/workflows/ci-workflow.yml@v24
