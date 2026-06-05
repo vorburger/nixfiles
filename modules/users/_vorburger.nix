@@ -64,6 +64,8 @@
     extraGroups = [
       "tss"
       "networkmanager"
+      "plugdev"
+      "video"
       "wheel"
     ];
     packages = with pkgs; [

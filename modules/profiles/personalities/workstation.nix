@@ -5,6 +5,7 @@
       environment.systemPackages = [
         # TODO Move to dotfiles repo?
         pkgs.pass
+        pkgs.usbutils
         pkgs.starship
         pkgs.shellcheck
         inputs.antigravity.packages.${pkgs.stdenv.hostPlatform.system}.google-antigravity-cli # agy (UI is in ui.nix)

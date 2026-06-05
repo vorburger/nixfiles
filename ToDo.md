@@ -4,11 +4,11 @@
 
 1. GSmartControl check for bad disks
 
-1. Snapshots with `autoSnapshot` and/or with sanoid?
+1. Snapshots with `services.zfs.autoSnapshot.enable` and/or with `sanoid` ?
 
 1. Enable `smartd`
 
-1. `sanoid` (vs. services.zfs.autoSnapshot.enable ?)
+1. `smart.nix` only install gsmartcontrol IFF on UI host
 
 1. Do not mount root filesystem
 
@@ -189,6 +189,8 @@
 1. [`nixos-rebuild` alternatives?](docs/docs/reference/nixos-rebuild.md)
 
 1. Suppress (quiet) devshell menu
+
+1. Show Git rev (SHA) in bootloader menu
 
 ## Future
 

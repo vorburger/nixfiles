@@ -18,8 +18,10 @@ mkHost {
       system.stateVersion = "26.05";
       networking.hostId = "8425e349";
 
+      services.gpg-with-yubikey.ssh = true;
       services.smart.enable = true;
       services.zfs-extra.enable = true;
+      services.zram.enable = true;
       hardware.amdgpu.initrd.enable = true; # sets boot.initrd.kernelModules = ["amdgpu"];
 
       boot.initrd.availableKernelModules = [
@@ -39,12 +41,9 @@ mkHost {
       boot.loader.grub.enable = false;
       boot.loader.systemd-boot.enable = true;
       boot.loader.efi.canTouchEfiVariables = true;
-      # Dummy file systems because HW target is TBD
       fileSystems."/" = {
         fsType = "ext4";
       };
-
-      services.zram.enable = true;
     })
   ];
 }
