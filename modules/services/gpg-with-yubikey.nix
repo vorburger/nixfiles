@@ -38,11 +38,6 @@ in
             libfido2 # Recommended for newer FIDO2/FIDO layers
             libu2f-host
           ];
-          extraRules = ''
-            # Yubico Yubikey 4/5 U2F+CCID
-            SUBSYSTEM=="usb", ATTR{idVendor}=="1050", ATTR{idProduct}=="0406", MODE="0666", GROUP="plugdev", TAG+="uaccess"
-            KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1050", ATTRS{idProduct}=="0406", MODE="0666", GROUP="plugdev", TAG+="uaccess"
-          '';
         };
 
         # Enable the GnuPG agent

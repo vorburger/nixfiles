@@ -64,7 +64,6 @@
     extraGroups = [
       "tss"
       "networkmanager"
-      "plugdev"
       "video"
       "wheel"
     ];
