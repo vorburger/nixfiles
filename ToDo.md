@@ -2,6 +2,18 @@
 
 1. https://2026.nixcon.org ?
 
+1. GSmartControl check for bad disks
+
+1. Snapshots with `autoSnapshot` and/or with sanoid?
+
+1. Enable `smartd`
+
+1. `sanoid` (vs. services.zfs.autoSnapshot.enable ?)
+
+1. Do not mount root filesystem
+
+1. Enabled Email Sending, for zfs-extra.nix
+
 1. [Make the `/home`](https://gemini.google.com/app/3b7155acedd7082c) on `titan` a ZFS dataset, for better backup and snapshotting
 
 1. How to do ZFS crypted, with TPM?

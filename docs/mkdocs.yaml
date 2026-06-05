@@ -22,6 +22,8 @@ nav:
           # TODO - tutorial/nixos-desktop-workstation/index.md
     # TODO - Nix Lang:
   - References:
+      - reference/smart.md
+      - reference/zfs.md
       - reference/disko-layouts.md
       - reference/rescue-usb.md
       - reference/nix-cli.md
