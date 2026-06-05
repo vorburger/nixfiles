@@ -12,9 +12,17 @@ in
           content = {
             boot.supportedFilesystems = [ "zfs" ];
             services.zfs = {
-              autoScrub.enable = true;
+              autoScrub = {
+                enable = true;
+                interval = "*-*-01 23:00";
+                randomizedDelaySec = "1min";
+              };
               autoSnapshot.enable = true; # TODO or sanoid?
-              trim.enable = true;
+              trim = {
+                enable = true;
+                interval = "Fri 22:00";
+                randomizedDelaySec = "1min";
+              };
 
               zed.settings = {
                 # TODO Enable Mail service...
