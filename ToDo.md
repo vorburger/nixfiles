@@ -2,11 +2,13 @@
 
 1. https://2026.nixcon.org ?
 
+1. disko for NUC & Ixo, inspired by [how `_learn-zfs.nix` was](https://github.com/vorburger/nixfiles/commit/c10355184ebc1d9cc4b1c3b8664b0a981a39e78d), but with `/home` on an encrypted ZFS partition - figure out how to pass? But consider putting `/home/vorburger/git` on ext4 - for speed. Or maybe do this only after Impermanence?
+
+1. Snapshots with `services.zfs.autoSnapshot.enable` and/or with `sanoid` ?
+
 1. ZFS? _"data partitions that are mounted noexec / nosuid / nodev which provides an additional level of safety against sophisticated attacks."_ (https://www.rsync.net/resources/faq.html)
 
 1. ZFS `zpool set autotrim=on hddpool`, for L2ARC ssd?
-
-1. Snapshots with `services.zfs.autoSnapshot.enable` and/or with `sanoid` ?
 
 1. Enable `smartd` in `services/smart.nix` with https://github.com/AnalogJ/scrutiny see https://search.nixos.org/options?channel=unstable&query=services.scrutiny.#show=option%253Aservices.scrutiny.collector.enable
 
@@ -59,7 +61,9 @@
    - Not possible to still dual boot Fedora?
    - Does `ssh-tpm-agent` still work?!
 
-1. https://nixos.org/manual/nixos/stable/#sec-upgrading-automatic ?
+1. ZFS send/receive from NUC + Laptop to NAS `/zfs/michi/backup/vinea`? But then NUC + Laptop need to have HOME on ZFS..
+
+1. https://nixos.org/manual/nixos/stable/#sec-upgrading-automatic ? No need, as I have Dependabot - right?
 
 1. [`nix-ipfs-cdns`](https://github.com/vorburger/Notes/tree/master/ToDo/nix-ipfs-cdns)
 

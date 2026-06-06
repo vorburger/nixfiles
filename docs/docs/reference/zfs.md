@@ -78,9 +78,24 @@ TODO How to mount encrypted datasets at boot, with `keylocation=prompt` - withou
 
 It's instantaneous, and does not need to rewrite or re-encrypt any of your data.
 
+## Snapshots
+
+With `autoSnapshot.enable = true;` you get automatic snapshots
+such as `/nas/.zfs/snapshot/zfs-auto-snap_frequent-2026-06-06-12h30/`
+IFF you also do:
+
+    $ sudo zfs set com.sun:auto-snapshot=true pool8
+
+    $ zfs get com.sun:auto-snapshot
+    NAME       PROPERTY               VALUE                  SOURCE
+    pool8      com.sun:auto-snapshot  true                   local
+    pool8/nas  com.sun:auto-snapshot  true                   inherited from pool8
+
+TODO What is the value and difference of using NixOS `services.sanoid` instead of `autoSnapshot.enable = true` ?
+
 ## Cache
 
-## Snapshots
+TODO L2ARC with an SSD, for read caching? Or will it trash the SSD with too much writes if it's an old one?
 
 ## Backup
 
