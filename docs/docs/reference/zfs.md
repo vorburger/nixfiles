@@ -64,6 +64,8 @@ BTW: The name `tank` often seen in examples is just a convention, nothing more!
 
     errors: No known data errors
 
+Note that `READ`, `WRITE`, and `CKSUM` represent the count of I/O errors for read operations, write operations, and checksum validation failures, respectively. Ideally, these should all be zero, indicating that the pool is healthy and there are no issues with the underlying storage devices. If you see non-zero values, it may indicate potential problems with the pool or the disks, and further investigation would be warranted to identify and resolve any issues.
+
 ### zpool history
 
     sudo zpool history pool8
@@ -80,9 +82,26 @@ It's instantaneous, and does not need to rewrite or re-encrypt any of your data.
 
 ## Snapshots
 
-With `autoSnapshot.enable = true;` you get automatic snapshots
-such as `/nas/.zfs/snapshot/zfs-auto-snap_frequent-2026-06-06-12h30/`
-IFF you also do:
+We recommend using [`sanoid`](https://github.com/jimsalterjrs/sanoid),
+because it's more flexible, and integrates with [`syncoid`](https://github.com/jimsalterjrs/sanoid#syncoid) for replication:
+
+    services.sanoid = {
+        enable = true;
+        interval = "*:0/15"; # For "frequently" snapshots.
+        templates = {
+        "default" = {
+            frequently = 8; # Keep this many snapshots @15min frequency.
+            hourly = 48;
+            daily = 90;
+            weekly = 30;
+            monthly = 24;
+            yearly = 100;
+        };
+        };
+    };
+
+Alternatively, use the simpler `autoSnapshot.enable = true;` to get automatic snapshots
+such as `/nas/.zfs/snapshot/zfs-auto-snap_frequent-2026-06-06-12h30/` IFF you also do:
 
     $ sudo zfs set com.sun:auto-snapshot=true pool8
 

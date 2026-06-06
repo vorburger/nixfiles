@@ -17,7 +17,6 @@ in
                 interval = "*-*-01 23:00";
                 randomizedDelaySec = "1min";
               };
-              autoSnapshot.enable = true; # TODO or sanoid?
               trim = {
                 enable = true;
                 interval = "Fri 22:00";
@@ -31,6 +30,20 @@ in
 
                 # NAS only: ZED_USE_ENCLOSURE_LEDS = true;
                 ZED_SCRUB_AFTER_RESILVER = true;
+              };
+            };
+            services.sanoid = {
+              enable = true;
+              interval = "*:0/15"; # For "frequently" snapshots.
+              templates = {
+                "default" = {
+                  frequently = 8; # Keep this many snapshots @15min frequency.
+                  hourly = 48;
+                  daily = 90;
+                  weekly = 30;
+                  monthly = 24;
+                  yearly = 100;
+                };
               };
             };
           };
