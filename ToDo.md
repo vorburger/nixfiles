@@ -2,9 +2,24 @@
 
 1. https://2026.nixcon.org ?
 
+1. Snapshots with `services.zfs.autoSnapshot.enable` and/or with `sanoid` ?
+
+1. Bump blocked nixpkgs, see https://github.com/vorburger/nixfiles/pull/13: `services.kmscon.extraConfig` is removed. Add your configurations to the new `services.kmscon.config` instead.
+
+1. [Impermanence](https://www.youtube.com/watch?v=ZKBSWS7OOb4&t=6s) with [`preservation`](https://github.com/nix-community/preservation), see [vimjoyer](https://www.vimjoyer.com/vid89-impermanent)
+
 1. disko for NUC & Ixo, inspired by [how `_learn-zfs.nix` was](https://github.com/vorburger/nixfiles/commit/c10355184ebc1d9cc4b1c3b8664b0a981a39e78d), but with `/home` on an encrypted ZFS partition - figure out how to pass? But consider putting `/home/vorburger/git` on ext4 - for speed. Or maybe do this only after Impermanence?
 
-1. Snapshots with `services.zfs.autoSnapshot.enable` and/or with `sanoid` ?
+1. [Make the `/home`](https://gemini.google.com/app/3b7155acedd7082c) on `titan` a ZFS dataset, for better backup and snapshotting
+
+1. LUKS **with TPM** https://nixos.org/manual/nixos/stable/#sec-luks-file-systems
+
+   ```nix
+   boot.initrd.systemd.enable = true; # Required for modern systemd-cryptsetup
+   security.tpm2.enable = true;
+
+   $ sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+7 /dev/nvme0n1p2
+   ```
 
 1. ZFS? _"data partitions that are mounted noexec / nosuid / nodev which provides an additional level of safety against sophisticated attacks."_ (https://www.rsync.net/resources/faq.html)
 
@@ -24,24 +39,11 @@
 
 1. Samba on NixOS (e.g. for for `/nas/public`)
 
-1. [Make the `/home`](https://gemini.google.com/app/3b7155acedd7082c) on `titan` a ZFS dataset, for better backup and snapshotting
-
-1. LUKS **with TPM** https://nixos.org/manual/nixos/stable/#sec-luks-file-systems
-
-   ```nix
-   boot.initrd.systemd.enable = true; # Required for modern systemd-cryptsetup
-   security.tpm2.enable = true;
-
-   $ sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+7 /dev/nvme0n1p2
-   ```
-
 1. Local AI
 
 1. Backup Antigravity Config and Conversations; share between Workstation & Latpop
 
 1. replace Antigravity with https://github.com/BohdanTkachenko/nix-home/blob/main/flake.nix#L26-L40
-
-1. [Impermanence](https://www.youtube.com/watch?v=ZKBSWS7OOb4&t=6s) with [`preservation`](https://github.com/nix-community/preservation), see [vimjoyer](https://www.vimjoyer.com/vid89-impermanent)
 
 1. Backup $HOME to ZFS, as [discussed with Gemini](https://gemini.google.com/app/8e54cb881caec7f8) with `services.sanoid` or `syncoid`
 
