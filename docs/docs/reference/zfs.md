@@ -26,6 +26,7 @@ TODO https://github.com/AnalogJ/scrutiny
       /dev/disk/by-id/ata-WDC_WD80PUZX-64NEAY0_VK0GUMLY \
       /dev/disk/by-id/ata-ST8000AS0002-1NA17Z_Z840N805
 
+    sudo bash -c 'chattr +i /nas'
     sudo zfs create -o mountpoint=/nas pool8/nas
 
     sudo mkdir /nas/vorburger
@@ -39,6 +40,25 @@ For `ashift`, just always keep `ashift=12`; do NOT run `lsblk -t` to adjust for 
 BTW: The name `tank` often seen in examples is just a convention, nothing more!
 
 ## Datasets
+
+Create datasets in a pool with `zfs create` as in the TL;DR above.
+
+## Import
+
+    $ zpool status
+    no pools available
+
+    $ sudo zpool import
+    $ sudo zpool import pool8
+
+    $ sudo zfs mount -l pool8/nas
+
+This (with `-l`) will ask for the passphrase.
+
+[`ZFS-8000-4J`](https://openzfs.github.io/openzfs-docs/msg/ZFS-8000-4J/)
+documents how it handles if a device is missing (it still works - that's the point).
+
+TODO How to automatically have to the pool imported at boot, with passphrase?
 
 ## Status
 

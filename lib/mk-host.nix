@@ -40,7 +40,10 @@
 
       flake.nixosConfigurations.${name} = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs self; };
+        specialArgs = {
+          inherit inputs self;
+          vmTest = false;
+        };
         modules = [ self.nixosModules.${name} ];
       };
 

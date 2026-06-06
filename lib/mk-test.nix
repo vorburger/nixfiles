@@ -41,7 +41,10 @@
               ];
               nixpkgs.pkgs = lib.mkForce pkgs;
             };
-            node.specialArgs = { inherit inputs self; };
+            node.specialArgs = {
+              inherit inputs self;
+              vmTest = true;
+            };
             testScript =
               let
                 bootCheck = ''

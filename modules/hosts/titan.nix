@@ -14,36 +14,49 @@ mkHost {
   modules = [
     self.nixosModules.personality-workstation
     self.nixosModules.personality-gnome
-    (_: {
-      system.stateVersion = "26.05";
-      networking.hostId = "8425e349";
+    (
+      {
+        vmTest ? false,
+        ...
+      }:
+      {
+        system.stateVersion = "26.05";
+        networking.hostId = "8425e349";
 
-      services.gpg-with-yubikey.ssh = true;
-      services.smart.enable = true;
-      services.zfs-extra.enable = true;
-      services.zram.enable = true;
-      hardware.amdgpu.initrd.enable = true; # sets boot.initrd.kernelModules = ["amdgpu"];
+        services.gpg-with-yubikey.ssh = true;
+        services.smart.enable = true;
+        services.zfs-extra.enable = true;
+        services.zram.enable = true;
+        hardware.amdgpu.initrd.enable = true; # sets boot.initrd.kernelModules = ["amdgpu"];
 
-      boot.initrd.availableKernelModules = [
-        "xhci_pci"
-        "ahci"
-        "nvme"
-        "usbhid"
-        "usb_storage"
-        "sd_mod"
-        "sr_mod"
-        "rtsx_usb_sdmmc"
-      ];
-      boot.initrd.kernelModules = [ ];
-      boot.kernelModules = [ "kvm-intel" ];
-      boot.extraModulePackages = [ ];
+        boot.initrd.availableKernelModules = [
+          "xhci_pci"
+          "ahci"
+          "nvme"
+          "usbhid"
+          "usb_storage"
+          "sd_mod"
+          "sr_mod"
+          "rtsx_usb_sdmmc"
+        ];
+        boot.initrd.kernelModules = [ ];
+        boot.kernelModules = [ "kvm-intel" ];
+        boot.extraModulePackages = [ ];
 
-      boot.loader.grub.enable = false;
-      boot.loader.systemd-boot.enable = true;
-      boot.loader.efi.canTouchEfiVariables = true;
-      fileSystems."/" = {
-        fsType = "ext4";
-      };
-    })
+        boot.loader.grub.enable = false;
+        boot.loader.systemd-boot.enable = true;
+        boot.loader.efi.canTouchEfiVariables = true;
+        fileSystems."/" = {
+          fsType = "ext4";
+        };
+        # pool8 only exists on the physical bare metal machine, not in VM tests
+        boot.zfs.extraPools = lib.mkIf (!vmTest) [ "pool8" ];
+        fileSystems."/nas" = lib.mkIf (!vmTest) {
+          device = "pool8/nas";
+          fsType = "zfs";
+          neededForBoot = false; # set to true if system services depend on this data
+        };
+      }
+    )
   ];
 }

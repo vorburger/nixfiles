@@ -11,6 +11,8 @@ in
           description = "extra ZFS configuration";
           content = {
             boot.supportedFilesystems = [ "zfs" ];
+            boot.initrd.supportedFilesystems = [ "zfs" ];
+            boot.zfs.requestEncryptionCredentials = true;
             services.zfs = {
               autoScrub = {
                 enable = true;
