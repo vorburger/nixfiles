@@ -100,7 +100,8 @@ because it's more flexible, and integrates with [`syncoid`](https://github.com/j
         };
     };
 
-Alternatively, use the simpler `autoSnapshot.enable = true;` to get automatic snapshots
+Alternatively, use the simpler `autoSnapshot.enable = true;`
+from [zfstools](https://github.com/bdrewery/zfstools) to get automatic snapshots
 such as `/nas/.zfs/snapshot/zfs-auto-snap_frequent-2026-06-06-12h30/` IFF you also do:
 
     $ sudo zfs set com.sun:auto-snapshot=true pool8
