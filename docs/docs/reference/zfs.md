@@ -222,6 +222,22 @@ Automatic [scrubbing](https://openzfs.github.io/openzfs-docs/man/master/8/zpool-
 
     errors: No known data errors
 
+and later, hopefully:
+
+    zpool status
+      pool: pool8
+     state: ONLINE
+      scan: scrub repaired 0B in 03:14:43 with 0 errors on Sat Jun  6 20:11:06 2026
+    config:
+
+    	NAME                                   STATE     READ WRITE CKSUM
+    	pool8                                  ONLINE       0     0     0
+    	  mirror-0                             ONLINE       0     0     0
+    	    ata-WDC_WD80PUZX-64NEAY0_VK0GUMLY  ONLINE       0     0     0
+    	    ata-ST8000AS0002-1NA17Z_Z840N805   ONLINE       0     0     0
+
+    errors: No known data errors
+
 ## UI
 
 - https://github.com/webzfs/webzfs with https://github.com/webzfs/webzfs/issues/162
