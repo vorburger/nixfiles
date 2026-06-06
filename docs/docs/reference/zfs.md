@@ -1,5 +1,19 @@
 # ZFS
 
+## Drives
+
+Disk Drives are not all created as equals - by far not.
+
+For example, mixing a (typically cheaper) Shingled Magnetic Recording (SMR) drive
+into a ZFS mirror with a Shingled Magnetic Recording (SMR) drive is a massive anti-pattern;
+this can cause writes at expected roughly ~200MB/s-ish to drop 10x down to ~20MB/s!
+
+And putting a 5400-RPM and a 7200-RPM drive next to each other in a chassis creates an asynchronous vibration pattern.
+
+Instead of buying different brands so they don't all fail at the exact same time, buy drives of similar-ish NAS drive
+models from the same brand but from a few (or even years) months apart to break up the "same batch curse", while keeping
+the underlying drive controllers, RPMs, firmware behavior, and physical geometry identical.
+
 ## SMART
 
 First, [check your disks's health](smart.md)!

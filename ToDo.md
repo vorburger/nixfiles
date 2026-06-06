@@ -2,6 +2,8 @@
 
 1. https://2026.nixcon.org ?
 
+1. `pkgs.hdparm` for `hdparm`
+
 1. Bump blocked nixpkgs, see https://github.com/vorburger/nixfiles/pull/13: `services.kmscon.extraConfig` is removed. Add your configurations to the new `services.kmscon.config` instead.
 
 1. [Impermanence](https://www.youtube.com/watch?v=ZKBSWS7OOb4&t=6s) with [`preservation`](https://github.com/nix-community/preservation), see [vimjoyer](https://www.vimjoyer.com/vid89-impermanent)
