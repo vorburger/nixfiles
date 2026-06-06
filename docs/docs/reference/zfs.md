@@ -37,7 +37,16 @@ TODO https://github.com/AnalogJ/scrutiny
 
 For `ashift`, just always keep `ashift=12`; do NOT run `lsblk -t` to adjust for PHY-SEC of 4096 with `ashift=12` (2^12 = 4096) on HDDs, and for 512 use `ashift=9` (2^9 = 512); see [the ZFS documentation for more details about why doing that would be is wrong](https://openzfs.github.io/openzfs-docs/Performance%20and%20Tuning/Hardware.html#flash-pages).
 
-BTW: The name `tank` often seen in examples is just a convention, nothing more!
+It's highly recommended to create a reservation to prevent performance deterioration when space gets real tight, but it doesn't have to be 20% anymore; for a 8 TB mirror just 100 GB is good enough (which would allow you to `zfs destroy pool/reserved`, to temporarily unblock a tight spot to figure out a longer term solution; if it were ever needed), like so:
+
+    sudo zfs create \
+      -o encryption=off \
+      -o refreservation=100G \
+      -o mountpoint=none \
+      -o canmount=off \
+      "pool8/reserved"
+
+BTW: The ZFS pool name `tank` often seen in other examples is just a convention, nothing more!
 
 ## Datasets
 
@@ -56,9 +65,10 @@ Create datasets in a pool with `zfs create` as in the TL;DR above.
 This (with `-l`) will ask for the passphrase.
 
 [`ZFS-8000-4J`](https://openzfs.github.io/openzfs-docs/msg/ZFS-8000-4J/)
-documents how it handles if a device is missing (it still works - that's the point).
+documents how it handles if a device is missing; hint: it still works - that's the point!
+(On reconnecting the missing drive it will have to [scrub](#scrub) for a few hours.)
 
-TODO How to automatically have to the pool imported at boot, with passphrase?
+[See here how to automatically have the pool imported at boot, with passphrase](https://github.com/vorburger/nixfiles/commit/5fb545dae24cd7d7b68dfe6223b89d43bcf752c2).
 
 ## Status
 
@@ -92,7 +102,7 @@ Note that `READ`, `WRITE`, and `CKSUM` represent the count of I/O errors for rea
 
 ## Encryption
 
-TODO How to mount encrypted datasets at boot, with `keylocation=prompt` - without storing the passphrase in plain text in public Git repo? Check NixOS, and see also https://wiki.archlinux.org/title/ZFS#Native_encryption.
+Encryption is enabled in the TL;DR above; the key can be changed like this:
 
     zfs change-key pool8
 
@@ -177,6 +187,26 @@ TODO https://github.com/pdf/zfs_exporter
 ## Deduplication
 
 TODO With https://github.com/openzfs/zfs/discussions/15896, is it still very slow?
+
+## Scrub
+
+Automatic [scrubbing](https://openzfs.github.io/openzfs-docs/man/master/8/zpool-scrub.8.html) is enabled, note:
+
+    $ zpool status
+      pool: pool8
+     state: ONLINE
+      scan: scrub in progress since Sat Jun  6 16:56:23 2026
+    	852G / 852G scanned, 28.7G / 852G issued at 70.3M/s
+    	0B repaired, 3.37% done, 03:20:02 to go
+    config:
+
+    	NAME                                   STATE     READ WRITE CKSUM
+    	pool8                                  ONLINE       0     0     0
+    	  mirror-0                             ONLINE       0     0     0
+    	    ata-WDC_WD80PUZX-64NEAY0_VK0GUMLY  ONLINE       0     0     0
+    	    ata-ST8000AS0002-1NA17Z_Z840N805   ONLINE       0     0     0
+
+    errors: No known data errors
 
 ## UI
 
