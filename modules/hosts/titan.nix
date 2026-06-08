@@ -68,6 +68,9 @@ mkHost {
           enable = true;
           package = unstable-pkgs.ollama-rocm;
         };
+        environment.systemPackages = with unstable-pkgs; [
+          nvtopPackages.amd
+        ];
       }
     )
   ];
