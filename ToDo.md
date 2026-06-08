@@ -39,8 +39,6 @@
 
 1. Samba on NixOS (e.g. for for `/nas/public`)
 
-1. Local AI
-
 1. Backup Antigravity Config and Conversations; share between Workstation & Latpop
 
 1. replace Antigravity with https://github.com/BohdanTkachenko/nix-home/blob/main/flake.nix#L26-L40
@@ -212,3 +210,5 @@
 ## Future
 
 1. [Enola.dev](https://docs.enola.dev) AI for https://github.com/NixOS/nixpkgs/pulls ?
+
+1. NixOS/AI Manager: _"Because NixOS is cool - but Nix is too hard..."_

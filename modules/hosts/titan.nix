@@ -19,7 +19,13 @@ mkHost {
         vmTest ? false,
         pkgs,
         ...
-      }:
+      }@args:
+      let
+        unstable-pkgs = import args.inputs.nixpkgs {
+          system = pkgs.stdenv.hostPlatform.system;
+          inherit (pkgs) config;
+        };
+      in
       {
         system.stateVersion = "26.05";
         networking.hostId = "8425e349";
@@ -58,9 +64,10 @@ mkHost {
           neededForBoot = false; # set to true if system services depend on this data
         };
 
-        environment.systemPackages = with pkgs; [
-          ollama-rocm
-        ];
+        services.ollama = {
+          enable = true;
+          package = unstable-pkgs.ollama-rocm;
+        };
       }
     )
   ];
