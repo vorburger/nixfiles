@@ -17,6 +17,7 @@ mkHost {
     (
       {
         vmTest ? false,
+        pkgs,
         ...
       }:
       {
@@ -56,6 +57,10 @@ mkHost {
           fsType = "zfs";
           neededForBoot = false; # set to true if system services depend on this data
         };
+
+        environment.systemPackages = with pkgs; [
+          ollama-rocm
+        ];
       }
     )
   ];
