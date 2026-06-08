@@ -3,10 +3,11 @@
   pkgs,
   config,
   lib,
+  home-manager-module,
   ...
 }:
 {
-  imports = [ inputs.home-manager.nixosModules.home-manager ];
+  imports = [ home-manager-module ];
 
   home-manager.users.vorburger = {
     imports = [

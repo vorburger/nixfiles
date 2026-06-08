@@ -43,6 +43,11 @@
         specialArgs = {
           inherit inputs self;
           vmTest = false;
+          home-manager-module =
+            if nixpkgs == inputs.nixpkgs-stable then
+              inputs.home-manager-stable.nixosModules.home-manager
+            else
+              inputs.home-manager.nixosModules.home-manager;
         };
         modules = [ self.nixosModules.${name} ];
       };

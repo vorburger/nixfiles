@@ -44,6 +44,7 @@
             node.specialArgs = {
               inherit inputs self;
               vmTest = true;
+              home-manager-module = inputs.home-manager.nixosModules.home-manager;
             };
             testScript =
               let
