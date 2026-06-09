@@ -52,8 +52,8 @@ in
                 "xkb-variant" = "de";
                 "grab-scroll-up" = "<Alt>Up";
                 "grab-scroll-down" = "<Alt>Down";
-                "grab-page-up" = "<Alt>PageUp";
-                "grab-page-down" = "<Alt>PageDown";
+                "grab-page-up" = "<Alt>Prior";
+                "grab-page-down" = "<Alt>Next";
               };
             }
           else
@@ -72,8 +72,8 @@ in
                 xkb-variant=de
                 grab-scroll-up=<Alt>Up
                 grab-scroll-down=<Alt>Down
-                grab-page-up=<Alt>PageUp
-                grab-page-down=<Alt>PageDown
+                grab-page-up=<Alt>Prior
+                grab-page-down=<Alt>Next
               '';
             };
       };
