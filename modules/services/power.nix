@@ -50,6 +50,9 @@ in
         powerManagement.powertop.enable = true;
         services.power-profiles-daemon.enable = lib.mkDefault true;
 
+        # TODO Huh, why is this not automagic, with: powerManagement.powertop.enable
+        environment.systemPackages = [ pkgs.powertop ];
+
         services.udev.extraRules = ''
           SUBSYSTEM=="power_supply", ACTION=="change", RUN+="${pkgs.systemd}/bin/systemctl start power-profile-switcher.service"
         '';
