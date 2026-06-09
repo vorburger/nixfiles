@@ -27,9 +27,12 @@ mkHost {
             OLLAMA_IGPU_ENABLE = "1";
           };
         };
-        environment.systemPackages = with pkgs; [
-          nvtopPackages.intel
-        ];
+        security.wrappers.nvtop = {
+          owner = "root";
+          group = "root";
+          capabilities = "cap_perfmon=ep";
+          source = "${pkgs.nvtopPackages.intel}/bin/nvtop";
+        };
 
         services.power.enable = true;
       }
