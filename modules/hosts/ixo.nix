@@ -27,6 +27,9 @@ mkHost {
             OLLAMA_IGPU_ENABLE = "1";
           };
         };
+        environment.systemPackages = with pkgs; [
+          nvtopPackages.intel
+        ];
 
         services.power.enable = true;
       }
