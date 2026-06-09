@@ -22,6 +22,10 @@ mkHost {
         services.ollama = {
           enable = true;
           package = pkgs.ollama-vulkan;
+          environmentVariables = {
+            OLLAMA_VULKAN = "1";
+            OLLAMA_IGPU_ENABLE = "1";
+          };
         };
 
         services.power.enable = true;
