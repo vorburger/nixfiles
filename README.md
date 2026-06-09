@@ -60,6 +60,9 @@ Let's store the IP and name of that new machine, and then do the following, in t
 
     cp modules/hosts/ixo(-vm).nix modules/hosts/$HOSTNEW.nix
     # edit modules/hosts/$HOSTNEW.nix: Change the hostname & device=/dev/...
+    # Note on system.stateVersion: This defines the NixOS release version when the machine was first installed.
+    # Do NOT change it when upgrading. However, if you wipe and re-install (not just upgrade) the machine,
+    # update `system.stateVersion` in its host file to the new version you are installing.
     nix flake check
 
     nixos-anywhere --flake .#$HOSTNEW --target-host nixos@$IP
