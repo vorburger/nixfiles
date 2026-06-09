@@ -65,6 +65,7 @@
     extraGroups = [
       "tss"
       "networkmanager"
+      "render" # for ollama-vulkan on ixo Intel Arc iGPU
       "video"
       "wheel"
     ];

@@ -11,9 +11,20 @@ mkHost {
   name = "ixo";
   diskoDevice = "/dev/nvme0n1";
   modules = [
-    (_: {
-      system.stateVersion = "26.05";
-    })
+    (
+      {
+        pkgs,
+        ...
+      }:
+      {
+        system.stateVersion = "26.05";
+
+        services.ollama = {
+          enable = true;
+          package = pkgs.ollama-vulkan;
+        };
+      }
+    )
     self.nixosModules.target-x1_12
     self.nixosModules.personality-workstation
     self.nixosModules.personality-gnome
