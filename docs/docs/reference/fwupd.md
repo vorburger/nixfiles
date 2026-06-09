@@ -7,7 +7,7 @@ The `fwupd` service is enabled on this system via `nixfiles/modules/services/fwu
 You do not need to manually refresh the firmware metadata or constantly poll for updates:
 
 1. The systemd service `fwupd-refresh.timer` automatically runs `fwupdmgr refresh` in the background to keep the local firmware database updated.
-2. A Fish shell startup hook runs once a day when you open an interactive terminal. It checks the local cached database and prints a warning if updates are available. See [dotfiles commit 2b468fa](https://github.com/vorburger/dotfiles/commit/2b468faadca2ccee819a8a3fee3990aa299537de).
+2. A Fish shell startup hook runs once a day when you open an interactive terminal. It checks the local cached database and prints a warning if updates are available. See [`dotfiles`](https://github.com/vorburger/dotfiles/commit/a6af1c9b067063b64214228e973dc25fa2c7be20).
 
 ## Usage
 
