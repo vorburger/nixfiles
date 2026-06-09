@@ -24,6 +24,7 @@
     self.nixosModules.fwupd-extra
     self.nixosModules.systemd-boot
     self.nixosModules.zram
+    self.nixosModules.power
   ];
 
   services.locale-ch.enable = lib.mkDefault true;

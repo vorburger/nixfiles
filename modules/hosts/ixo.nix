@@ -23,6 +23,8 @@ mkHost {
           enable = true;
           package = pkgs.ollama-vulkan;
         };
+
+        services.power.enable = true;
       }
     )
     self.nixosModules.target-x1_12

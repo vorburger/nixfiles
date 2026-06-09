@@ -45,10 +45,6 @@
 
 1. Backup $HOME to ZFS, as [discussed with Gemini](https://gemini.google.com/app/8e54cb881caec7f8) with `services.sanoid` or `syncoid`
 
-1. Ixo powersaving: powerctl? tlp?
-   https://wiki.archlinux.org/title/Powertop, and/or
-   https://wiki.archlinux.org/title/TLP
-
 1. https://wiki.nixos.org/wiki/Secret_Service, consider https://dewaldv.com/posts/2026-03-24-proton-pass-secret-service/ ?
 
 1. Read https://clan.lol/docs/25.11/guides/vars/vars-overview, and transition from my `pass` to [`passage`](https://github.com/FiloSottile/passage); THEN use ~~`sopsnix` or~~ `agenix` for secrets management; best together with https://github.com/Foxboron/age-plugin-tpm ?

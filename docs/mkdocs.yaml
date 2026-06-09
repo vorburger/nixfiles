@@ -14,14 +14,16 @@ nav:
       # TODO - tutorial/direnv.md
       - tutorial/home-manager.md
       - tutorial/testing-local-flakes.md
-      - tutorial/vm.md
       # TODO - tutorial/flake-parts.md
       - NixOS:
-          # TODO - tutorial/first-nixos-graphical-install
           - tutorial/first-nixos-graphical-install/index.md
+          - tutorial/vm.md
+          - reference/bare-metal.md
+          # TODO - tutorial/first-nixos-graphical-install
           # TODO - tutorial/nixos-desktop-workstation/index.md
     # TODO - Nix Lang:
   - References:
+      - reference/power.md
       - reference/smart.md
       - reference/zfs.md
       - reference/disko-layouts.md
