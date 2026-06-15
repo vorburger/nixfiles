@@ -17,6 +17,7 @@
       useDefaultUser ? true,
       modules ? [ ],
       testScript ? null,
+      enableVMTest ? (testScript != null),
     }:
     let
       inherit (import ./mk-test.nix { inherit inputs self lib; }) mkTest;
@@ -52,7 +53,7 @@
         modules = [ self.nixosModules.${name} ];
       };
 
-      imports = lib.optional (testScript != null || name != "installer") (mkTest {
+      imports = lib.optional enableVMTest (mkTest {
         name = "${name}-boot";
         module = self.nixosModules.${name};
         inherit testScript;
