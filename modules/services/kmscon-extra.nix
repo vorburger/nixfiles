@@ -14,8 +14,27 @@ in
       }:
       let
         isNewKmscon = options.services.kmscon ? config;
+
+        kmsconTerminfo =
+          pkgs.runCommand "kmscon-terminfo"
+            {
+              nativeBuildInputs = [ pkgs.ncurses ];
+            }
+            ''
+              mkdir -p $out/share/terminfo
+              cat <<EOF >kmscon.src
+              xterm-256color-kmscon|xterm-256color with Shift-Up/Down mapped to kUP/kDN for kmscon,
+                use=xterm-256color,
+                kUP=\\E[1;2A,
+                kDN=\\E[1;2B,
+                kri@,
+                kind@,
+              EOF
+              tic -x -o $out/share/terminfo kmscon.src
+            '';
       in
       {
+        environment.systemPackages = [ kmsconTerminfo ];
         # This is a fallback for very early boot before kmscon starts.
         console = {
           font = "ter-v24n";
@@ -50,6 +69,7 @@ in
                 "hwaccel" = true;
                 "xkb-layout" = "ch";
                 "xkb-variant" = "de";
+                "term" = "xterm-256color-kmscon";
                 "grab-scroll-up" = "<Alt>Up";
                 "grab-scroll-down" = "<Alt>Down";
                 "grab-page-up" = "<Alt>Prior";
@@ -60,6 +80,7 @@ in
             {
               enable = true;
               hwRender = true;
+              term = "xterm-256color-kmscon";
               fonts = [
                 {
                   name = "FiraCode Nerd Font Mono";
