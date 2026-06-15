@@ -4,8 +4,6 @@
 
 1. `pkgs.hdparm` for `hdparm`
 
-1. Bump blocked nixpkgs, see https://github.com/vorburger/nixfiles/pull/13: `services.kmscon.extraConfig` is removed. Add your configurations to the new `services.kmscon.config` instead.
-
 1. [Impermanence](https://www.youtube.com/watch?v=ZKBSWS7OOb4&t=6s) with [`preservation`](https://github.com/nix-community/preservation), see [vimjoyer](https://www.vimjoyer.com/vid89-impermanent)
 
 1. disko for NUC & Ixo, inspired by [how `_learn-zfs.nix` was](https://github.com/vorburger/nixfiles/commit/c10355184ebc1d9cc4b1c3b8664b0a981a39e78d), but with `/home` on an encrypted ZFS partition - figure out how to pass? But consider putting `/home/vorburger/git` on ext4 - for speed. Or maybe do this only after Impermanence?
@@ -52,6 +50,10 @@
 1. Remove ModemManager `systemctl status ModemManager` .. what pulls it along? GNOME?
 
 1. https://syncthing.net server, for client on Android for Photos
+
+1. Replace `ssh-tpm-agent`, incl. its complex customization, with YK nano (after all); see also https://gemini.google.com/app/93e7b72c119c82e6
+
+1. `ssh-tpm-agent` with PIN; see https://github.com/Foxboron/ssh-tpm-agent/pull/129/changes
 
 1. Secure Boot!!
    - Not possible to still dual boot Fedora?
