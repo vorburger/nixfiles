@@ -31,16 +31,29 @@ in
           };
         };
 
-        # Set SSH_AUTH_SOCK to the multiplexer socket
+        # Set SSH_AUTH_SOCK to the multiplexer socket locally
         environment.interactiveShellInit = ''
-          if [ -z "$SSH_AUTH_SOCK" ]; then
-            export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent-mux.sock
+          if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+            # Preserve forwarded agent in remote SSH sessions
+            :
+          else
+            if [ -n "$XDG_RUNTIME_DIR" ]; then
+              export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent-mux.sock
+            else
+              export SSH_AUTH_SOCK=/run/user/$(id -u)/ssh-agent-mux.sock
+            fi
           fi
         '';
 
         programs.fish.interactiveShellInit = ''
-          if not set -q SSH_AUTH_SOCK
-            set -gx SSH_AUTH_SOCK $XDG_RUNTIME_DIR/ssh-agent-mux.sock
+          if set -q SSH_CLIENT; or set -q SSH_TTY
+            # Preserve forwarded agent in remote SSH sessions
+          else
+            if set -q XDG_RUNTIME_DIR
+              set -gx SSH_AUTH_SOCK $XDG_RUNTIME_DIR/ssh-agent-mux.sock
+            else
+              set -gx SSH_AUTH_SOCK /run/user/(id -u)/ssh-agent-mux.sock
+            end
           end
         '';
       };

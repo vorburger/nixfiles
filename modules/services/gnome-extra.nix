@@ -10,17 +10,45 @@ in
       let
         zenity-ssh-askpass = pkgs.writeShellScriptBin "zenity-ssh-askpass" ''
           PROMPT="''${1:-SSH prompt}"
-          if echo "$PROMPT" | grep -iqE "passphrase|password|pin"; then
-            exec ${pkgs.zenity}/bin/zenity --password --title="SSH Authentication" --prompt="$PROMPT"
-          elif echo "$PROMPT" | grep -iqE "yes/no"; then
-            if ${pkgs.zenity}/bin/zenity --question --title="SSH Confirmation" --text="$PROMPT" --ok-label="Allow" --cancel-label="Deny"; then
-              echo "yes"
+
+          # Detect if the physically active Virtual Terminal (VT) matches a graphical session's VT
+          ACTIVE_TTY=$(cat /sys/class/tty/tty0/active 2>/dev/null || echo "none")
+          GRAPHICAL_TTYS=$(loginctl list-sessions --no-legend | sed -e 's/^[[:space:]]*//' | cut -d' ' -f1 | xargs -I {} loginctl show-session {} -p Type -p TTY 2>/dev/null | grep -B1 -E 'Type=(wayland|x11)' | grep 'TTY=' | cut -d= -f2)
+
+          IS_GRAPHICAL=false
+          for gtty in $GRAPHICAL_TTYS; do
+            if [ "$ACTIVE_TTY" = "$gtty" ]; then
+              IS_GRAPHICAL=true
+              break
+            fi
+          done
+
+          if [ "$IS_GRAPHICAL" = "true" ] && { [ -n "$DISPLAY" ] || [ -n "$WAYLAND_DISPLAY" ]; }; then
+            if echo "$PROMPT" | grep -iqE "passphrase|password|pin"; then
+              exec ${pkgs.zenity}/bin/zenity --password --title="SSH Authentication" --prompt="$PROMPT"
+            elif echo "$PROMPT" | grep -iqE "yes/no"; then
+              if ${pkgs.zenity}/bin/zenity --question --title="SSH Confirmation" --text="$PROMPT" --ok-label="Allow" --cancel-label="Deny"; then
+                echo "yes"
+              else
+                echo "no"
+                exit 1
+              fi
             else
-              echo "no"
-              exit 1
+              exec ${pkgs.zenity}/bin/zenity --entry --title="SSH" --text="$PROMPT"
             fi
           else
-            exec ${pkgs.zenity}/bin/zenity --entry --title="SSH" --text="$PROMPT"
+            # Console fallback using systemd-ask-password with a timeout to prevent hanging
+            if echo "$PROMPT" | grep -iqE "yes/no"; then
+              RESPONSE=$(${pkgs.systemd}/bin/systemd-ask-password --timeout=5 "$PROMPT (type 'yes' or 'y' to confirm): ")
+              if echo "$RESPONSE" | grep -iqE "^(yes|y)$"; then
+                echo "yes"
+              else
+                echo "no"
+                exit 1
+              fi
+            else
+              exec ${pkgs.systemd}/bin/systemd-ask-password --timeout=5 "$PROMPT: "
+            fi
           fi
         '';
       in
