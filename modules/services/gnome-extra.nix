@@ -70,6 +70,9 @@ in
           displayManager.gdm.enable = true;
           desktopManager.gnome.enable = true;
 
+          colord.enable = pkgs.lib.mkForce false;
+          gnome.evolution-data-server.enable = pkgs.lib.mkForce false;
+          gnome.gnome-online-accounts.enable = pkgs.lib.mkForce false;
           gnome.localsearch.enable = false;
           gnome.tinysparql.enable = false;
 
