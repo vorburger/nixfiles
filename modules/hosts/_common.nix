@@ -14,6 +14,7 @@
     self.nixosModules.ssh-agent-mux
     self.nixosModules.pipewire-extra
     self.nixosModules.gnome-extra
+    self.nixosModules.hyprland-extra
     self.nixosModules.fprintd-extra
     self.nixosModules.kmscon-extra
     self.nixosModules.locale-ch

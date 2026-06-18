@@ -35,6 +35,8 @@ mkHost {
         };
 
         services.power.enable = true;
+
+        services.hyprland-extra.enable = true;
       }
     )
     self.nixosModules.target-x1_12
