@@ -12,7 +12,6 @@ in
       };
 
       home-manager.users.vorburger = {
-        programs.kitty.enable = true;
         wayland.windowManager.hyprland = {
           enable = true;
           package = null;
