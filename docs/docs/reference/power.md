@@ -91,3 +91,11 @@ To minimize suspend drain, `services.power.enable` installs a systemd service (`
    ```bash
    systemctl status disable-wakeup-triggers.service
    ```
+
+### Recommended BIOS/UEFI Settings
+
+To ensure the hardware is fully entering deep power-saving states during suspend, verify these settings in your ThinkPad's UEFI/BIOS (press **F1** during startup):
+
+- **Config > Power > Always On USB:** Disable this (or disable _Charge in Battery Mode_). When enabled, USB ports remain powered while suspended, which causes continuous battery drain.
+- **Config > Network > Wake On LAN / Wake on WLAN:** Disable these options so the network cards do not listen for magic packets or scan for networks during sleep.
+- **Security > Intel AMT (or Intel ME):** If you do not require remote enterprise management, disable Intel Active Management Technology (AMT) to allow the processor core to power down completely.
