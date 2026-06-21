@@ -5,7 +5,7 @@
       environment.systemPackages = [
         # TODO Move to dotfiles repo?
         pkgs.pass
-        pkgs.lspci
+        pkgs.pciutils
         pkgs.unzip
         pkgs.usbutils
         pkgs.starship
