@@ -9,6 +9,7 @@
   mkHost =
     {
       name,
+      domain ? "home.vorburger.ch",
       nixpkgs ? inputs.nixpkgs,
       system ? "x86_64-linux",
       diskoDevice ? null,
@@ -34,6 +35,11 @@
           ++ [
             (_: {
               networking.hostName = name;
+              networking.domain = domain;
+              networking.extraHosts = ''
+                127.0.0.1 ${name}.${domain} ${name}
+                ::1       ${name}.${domain} ${name}
+              '';
             })
           ]
           ++ modules;
