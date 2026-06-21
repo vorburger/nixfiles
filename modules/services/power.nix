@@ -57,6 +57,23 @@ in
           SUBSYSTEM=="power_supply", ACTION=="change", RUN+="${pkgs.systemd}/bin/systemctl start power-profile-switcher.service"
         '';
 
+        systemd.services.disable-wakeup-triggers = {
+          description = "Disable sleep wakeup triggers for USB (XHCI) and Thunderbolt (TXHC)";
+          wantedBy = [ "multi-user.target" ];
+          serviceConfig = {
+            Type = "oneshot";
+            ExecStart = pkgs.writeShellScript "disable-wakeups" ''
+              # Toggle off wakeup for XHCI and TXHC if they are currently enabled
+              for device in XHCI TXHC; do
+                if ${pkgs.gnugrep}/bin/grep -q "$device.*\*enabled" /proc/acpi/wakeup; then
+                  echo "$device" > /proc/acpi/wakeup
+                fi
+              done
+            '';
+            RemainAfterExit = true;
+          };
+        };
+
         systemd.services.power-profile-switcher = {
           description = "Switch power profiles based on power source and battery level";
           serviceConfig = {

@@ -62,3 +62,32 @@ You can view the systemd logs for the switcher service to verify that it is trig
 ```bash
 sudo journalctl -u power-profile-switcher.service
 ```
+
+---
+
+## Suspend Power Optimization (s2idle / Modern Standby)
+
+Modern Intel processors (such as the Meteor Lake CPU on `ixo`) do not support traditional S3 "deep" sleep. Instead, they use `s2idle` (Suspend-to-Idle / Modern Standby). This can lead to noticeable battery drain (e.g., 10% over several hours or overnight) if peripherals keep waking the CPU or preventing the SoC from entering its deepest package power-saving states (like C10).
+
+To minimize suspend drain, `services.power.enable` installs a systemd service (`disable-wakeup-triggers.service`) that automatically disables sleep wakeup triggers for USB controllers (`XHCI`) and Thunderbolt controllers (`TXHC`) on system boot.
+
+### Diagnostics & Troubleshooting
+
+1. **Check active sleep states:**
+
+   ```bash
+   cat /sys/power/mem_sleep
+   # Output should show `[s2idle]`
+   ```
+
+2. **Check enabled wakeup devices:**
+
+   ```bash
+   cat /proc/acpi/wakeup
+   # Devices with `*enabled` status can wake the system or keep it from entering deep sleep.
+   ```
+
+3. **Check the status of the wakeup-trigger disabler:**
+   ```bash
+   systemctl status disable-wakeup-triggers.service
+   ```
