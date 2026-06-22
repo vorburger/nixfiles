@@ -26,6 +26,7 @@
     self.nixosModules.systemd-boot
     self.nixosModules.zram
     self.nixosModules.power
+    self.nixosModules.printing-extra
   ];
 
   services.locale-ch.enable = lib.mkDefault true;
