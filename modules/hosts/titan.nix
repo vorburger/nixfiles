@@ -64,6 +64,15 @@ mkHost {
           neededForBoot = false; # set to true if system services depend on this data
         };
 
+        hardware.graphics = {
+          enable = true;
+          enable32Bit = true;
+          extraPackages = with pkgs; [
+            libva
+            libva-vdpau-driver
+            libvdpau-va-gl
+          ];
+        };
         services.ollama = {
           enable = true;
           package = unstable-pkgs.ollama-rocm;
