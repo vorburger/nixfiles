@@ -32,6 +32,7 @@ mkHost {
 
         services.gpg-with-yubikey.ssh = true;
         services.smart.enable = true;
+        services.samba-extra.enable = true;
         services.zfs-extra.enable = true;
         services.zram.enable = true;
         hardware.amdgpu.initrd.enable = true; # sets boot.initrd.kernelModules = ["amdgpu"];

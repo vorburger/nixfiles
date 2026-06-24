@@ -26,6 +26,7 @@
     self.nixosModules.systemd-boot
     self.nixosModules.zram
     self.nixosModules.power
+    self.nixosModules.samba-extra
     self.nixosModules.printing-extra
   ];
 
