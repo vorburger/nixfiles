@@ -63,6 +63,8 @@
 
 1. https://nixos.org/manual/nixos/stable/#sec-upgrading-automatic ? No need, as I have Dependabot - right?
 
+1. Single Boot Password/Passphrase, which unlocks encrypted boot disk, and `/nas` ZFS, and auto logs in, but also unlocks Seahorse, and unlocks the YK
+
 1. [`nix-ipfs-cdns`](https://github.com/vorburger/Notes/tree/master/ToDo/nix-ipfs-cdns)
 
 ## Monitoring
