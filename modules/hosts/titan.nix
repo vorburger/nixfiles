@@ -62,6 +62,7 @@ mkHost {
         fileSystems."/nas" = lib.mkIf (!vmTest) {
           device = "pool8/nas";
           fsType = "zfs";
+          options = [ "nofail" ];
           neededForBoot = false; # set to true if system services depend on this data
         };
 
