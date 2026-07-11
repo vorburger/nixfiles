@@ -13,6 +13,8 @@ in
             boot.supportedFilesystems = [ "zfs" ];
             boot.initrd.supportedFilesystems = [ "zfs" ];
             boot.zfs.requestEncryptionCredentials = true;
+            systemd.services.zfs-import-cache.serviceConfig.TimeoutStartSec = "30s";
+            systemd.services.zfs-import-scan.serviceConfig.TimeoutStartSec = "30s";
             services.zfs = {
               autoScrub = {
                 enable = true;
