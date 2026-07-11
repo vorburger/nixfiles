@@ -9,48 +9,55 @@ in
         (mkService {
           name = "zfs-extra";
           description = "extra ZFS configuration";
-          content = {
-            boot.supportedFilesystems = [ "zfs" ];
-            boot.initrd.supportedFilesystems = [ "zfs" ];
-            boot.zfs.requestEncryptionCredentials = true;
-            systemd.services.zfs-import-cache.serviceConfig.TimeoutStartSec = "30s";
-            systemd.services.zfs-import-scan.serviceConfig.TimeoutStartSec = "30s";
-            services.zfs = {
-              autoScrub = {
-                enable = true;
-                interval = "*-*-01 23:00";
-                randomizedDelaySec = "1min";
-              };
-              trim = {
-                enable = true;
-                interval = "Fri 22:00";
-                randomizedDelaySec = "1min";
-              };
+          content =
+            { config, lib, ... }:
+            {
+              boot.supportedFilesystems = [ "zfs" ];
+              boot.initrd.supportedFilesystems = [ "zfs" ];
+              boot.zfs.requestEncryptionCredentials = true;
+              systemd.services = {
+                zfs-import-cache.serviceConfig.TimeoutStartSec = "30s";
+                zfs-import-scan.serviceConfig.TimeoutStartSec = "30s";
+              }
+              // lib.genAttrs (map (pool: "zfs-import-${pool}") config.boot.zfs.extraPools) (_name: {
+                serviceConfig.TimeoutStartSec = "30s";
+              });
+              services.zfs = {
+                autoScrub = {
+                  enable = true;
+                  interval = "*-*-01 23:00";
+                  randomizedDelaySec = "1min";
+                };
+                trim = {
+                  enable = true;
+                  interval = "Fri 22:00";
+                  randomizedDelaySec = "1min";
+                };
 
-              zed.settings = {
-                # TODO Enable Mail service...
-                ZED_EMAIL_ADDR = [ "root" ];
-                ZED_NOTIFY_VERBOSE = true;
+                zed.settings = {
+                  # TODO Enable Mail service...
+                  ZED_EMAIL_ADDR = [ "root" ];
+                  ZED_NOTIFY_VERBOSE = true;
 
-                # NAS only: ZED_USE_ENCLOSURE_LEDS = true;
-                ZED_SCRUB_AFTER_RESILVER = true;
+                  # NAS only: ZED_USE_ENCLOSURE_LEDS = true;
+                  ZED_SCRUB_AFTER_RESILVER = true;
+                };
               };
-            };
-            services.sanoid = {
-              enable = true;
-              interval = "*:0/15"; # For "frequently" snapshots.
-              templates = {
-                "default" = {
-                  frequently = 8; # Keep this many snapshots @15min frequency.
-                  hourly = 48;
-                  daily = 90;
-                  weekly = 30;
-                  monthly = 24;
-                  yearly = 100;
+              services.sanoid = {
+                enable = true;
+                interval = "*:0/15"; # For "frequently" snapshots.
+                templates = {
+                  "default" = {
+                    frequently = 8; # Keep this many snapshots @15min frequency.
+                    hourly = 48;
+                    daily = 90;
+                    weekly = 30;
+                    monthly = 24;
+                    yearly = 100;
+                  };
                 };
               };
             };
-          };
         })
       ];
 
