@@ -19,7 +19,5 @@
         pkgs.vscode
         self.packages.${pkgs.stdenv.hostPlatform.system}.antigravity
       ];
-
-      services.printing-extra.enable = true;
     };
 }

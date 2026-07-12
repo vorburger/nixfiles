@@ -30,6 +30,7 @@ mkHost {
         system.stateVersion = "26.05";
         networking.hostId = "8425e349";
 
+        services.printing-extra.enable = false; # true for CUPS (but generally NOT required); see http://localhost:631
         services.gpg-with-yubikey.ssh = true;
         services.smart.enable = true;
         services.samba-extra.enable = true;
