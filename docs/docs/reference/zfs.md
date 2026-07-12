@@ -66,6 +66,18 @@ BTW: The ZFS pool name `tank` often seen in other examples is just a convention,
 
 Create datasets in a pool with `zfs create` as in the TL;DR above.
 
+### NixOS Declarative Mounts
+
+To manage ZFS mount points declaratively in NixOS (e.g. in your `fileSystems` configuration), follow these recommendations:
+
+1. **`mountpoint=legacy`**: By default, ZFS manages dataset mounting itself using the dataset's `mountpoint` property. However, the NixOS systemd-based mounting generator requires standard mount commands. To allow NixOS to mount datasets via `fileSystems` entries, set the ZFS dataset mountpoint to `legacy`:
+
+   ```bash
+   sudo zfs set mountpoint=legacy pool8/nas
+   ```
+
+2. **`options = [ "nofail" ];`**: When mounting optional datasets (like data disks or backup targets that might be missing or disconnected), always include `options = [ "nofail" ];` in your NixOS `fileSystems` definition. Without `nofail`, systemd treats the mount as a critical boot dependency, causing the system to crash or enter an infinite emergency mode loop if the ZFS pool/disk is unavailable. With `nofail`, systemd will gracefully skip the mount if the pool import fails or times out.
+
 ## Import
 
     $ zpool status
