@@ -4,8 +4,8 @@
 
 Disk Drives are not all created as equals - by far not.
 
-For example, mixing a (typically cheaper) Shingled Magnetic Recording (SMR) drive
-into a ZFS mirror with a Shingled Magnetic Recording (SMR) drive is a massive anti-pattern;
+For example, mixing a (typically cheaper) _[Shingled Magnetic Recording](https://en.wikipedia.org/wiki/Shingled_Magnetic_Recording)_ (SMR) drive
+into a ZFS mirror with a (better) _[Conventional Magnetic Recording](https://en.wikipedia.org/wiki/Perpendicular_recording)_ (CMR) drive is a massive anti-pattern;
 this can cause writes at expected roughly ~200MB/s-ish to drop 10x down to ~20MB/s!
 
 And putting a 5400-RPM and a 7200-RPM drive next to each other in a chassis creates an asynchronous vibration pattern.
