@@ -6,7 +6,9 @@ Run _GSmartControl_ via the GNOME Apps launcher, or if that doesn't start, then 
 
     sudo WAYLAND_DISPLAY=$WAYLAND_DISPLAY XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR gsmartcontrol
 
-GNOME Disk (`gnome-disks`) also shows some of this - but GSmartControl is much more comprehensive.
+GNOME Disks (`gnome-disks`) also shows some of this - but GSmartControl is much more comprehensive.
+(GNOME Disks may also have _"SMART Data & Self-Tests"_ greyed out when a SATA HDD is connected over
+some USB adapters, whereas GSmartControl works even then.)
 
 ## `smartd`
 
