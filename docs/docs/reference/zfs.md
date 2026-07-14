@@ -18,8 +18,6 @@ the underlying drive controllers, RPMs, firmware behavior, and physical geometry
 
 First, [check your disks's health](smart.md)!
 
-TODO https://github.com/AnalogJ/scrutiny
-
 ## TL;DR
 
     sudo zpool create \
