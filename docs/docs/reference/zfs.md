@@ -10,9 +10,9 @@ this can cause writes at expected roughly ~200MB/s-ish to drop 10x down to ~20MB
 
 And putting a 5400-RPM and a 7200-RPM drive next to each other in a chassis creates an asynchronous vibration pattern.
 
-Instead of buying different brands so they don't all fail at the exact same time, buy drives of similar-ish NAS drive
-models from the same brand but from a few (or even years) months apart to break up the "same batch curse", while keeping
-the underlying drive controllers, RPMs, firmware behavior, and physical geometry identical.
+Instead of buying different brands so they don't all fail at the exact same time, buy drives of similar-ish NAS drive models from the same brand.
+To break up the "same batch curse", while keeping the underlying drive controllers, RPMs, firmware behavior, and physical geometry identical,
+you could buy them from different vendors to get a few months variation; when buying 2nd hand, perhaps even some years apart.
 
 ## SMART
 
@@ -41,9 +41,11 @@ First, [check your disks's health](smart.md)!
     sudo bash -c 'chattr +i /nas'
     sudo zfs create -o mountpoint=/nas pool8/nas
 
-    sudo mkdir /nas/vorburger
-    sudo chown vorburger:vorburger /nas/vorburger
-    echo "hello, world" >/nas/vorburger/hello.txt
+    sudo mkdir /nas/test
+    sudo chown $USER: /nas/test
+    echo "hello, world" >/nas/test/hello.txt
+
+PS: The ZFS pool name `tank` often seen in other examples is just a convention, nothing more!
 
 ## Pools
 
@@ -57,8 +59,6 @@ It's highly recommended to create a reservation to prevent performance deteriora
       -o mountpoint=none \
       -o canmount=off \
       "pool8/reserved"
-
-BTW: The ZFS pool name `tank` often seen in other examples is just a convention, nothing more!
 
 ## Datasets
 
