@@ -136,36 +136,41 @@ It's instantaneous, and does not need to rewrite or re-encrypt any of your data.
 
 ## Snapshots
 
-We recommend using [`sanoid`](https://github.com/jimsalterjrs/sanoid),
-because it's more flexible, and integrates with [`syncoid`](https://github.com/jimsalterjrs/sanoid#syncoid) for replication:
+We recommend using _[Sanoid](https://github.com/jimsalterjrs/sanoid)_ for Snapshots, like this:
 
+```nix
     services.sanoid = {
-        enable = true;
-        interval = "*:0/15"; # For "frequently" snapshots.
-        templates = {
+      enable = true;
+      interval = "*:0/15"; # For "frequently" snapshots.
+      datasets = lib.genAttrs (
+        map (fs: fs.device) (
+          lib.filter (fs: fs.fsType == "zfs") (lib.attrValues config.fileSystems)
+        )
+      ) (_name: {
+        useTemplate = [ "default" ];
+        recursive = true;
+      });
+      templates = {
         "default" = {
-            frequently = 8; # Keep this many snapshots @15min frequency.
-            hourly = 48;
-            daily = 90;
-            weekly = 30;
-            monthly = 24;
-            yearly = 100;
+          frequently = 8; # Keep this many snapshots @15min frequency.
+          hourly = 48;
+          daily = 90;
+          weekly = 30;
+          monthly = 24;
+          yearly = 100;
         };
-        };
+      };
     };
+```
 
-Alternatively, use the simpler `autoSnapshot.enable = true;`
-from [zfstools](https://github.com/bdrewery/zfstools) to get automatic snapshots
-such as `/nas/.zfs/snapshot/zfs-auto-snap_frequent-2026-06-06-12h30/` IFF you also do:
+### Difference between NixOS `services.sanoid` and `autoSnapshot.enable` (zfstools)
 
-    $ sudo zfs set com.sun:auto-snapshot=true pool8
+We recommend [`sanoid`](https://github.com/jimsalterjrs/sanoid) over [`zfstools`](https://github.com/bdrewery/zfstools) because:
 
-    $ zfs get com.sun:auto-snapshot
-    NAME       PROPERTY               VALUE                  SOURCE
-    pool8      com.sun:auto-snapshot  true                   local
-    pool8/nas  com.sun:auto-snapshot  true                   inherited from pool8
-
-TODO What is the value and difference of using NixOS `services.sanoid` instead of `autoSnapshot.enable = true` ?
+1. **Integration**: `sanoid` integrates cleanly with [`syncoid`](https://github.com/jimsalterjrs/sanoid#syncoid) for ZFS [replication](#replication).
+1. **Configuration**: `sanoid` is configured purely declaratively in the Nix configuration via `services.sanoid.datasets` (or dynamically mapped from `config.fileSystems`, as shown above). `zfstools` relies on setting ZFS properties on datasets and requires you to imperatively run `zfs set com.sun:auto-snapshot=true <dataset>` on the CLI.
+1. **Policy Flexibility**: `sanoid` supports customizable templates, retention policies (e.g. keeping varying numbers of hourly, daily, monthly snapshots), and pre/post-snapshot scripts. `zfstools` has hardcoded retention defaults that are harder to customize.
+1. **Maintenance**: `sanoid` (written in Perl) is actively maintained and the industry standard for ZFS snapshot management. `zfstools` is an older, relatively inactive Ruby-based tool.
 
 ## Cache
 

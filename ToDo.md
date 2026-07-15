@@ -8,7 +8,7 @@
 
 1. disko for NUC & Ixo, inspired by [how `_learn-zfs.nix` was](https://github.com/vorburger/nixfiles/commit/c10355184ebc1d9cc4b1c3b8664b0a981a39e78d), but with `/home` on an encrypted ZFS partition - figure out how to pass? But consider putting `/home/vorburger/git` on ext4 - for speed. Or maybe do this only after Impermanence?
 
-1. [Make the `/home`](https://gemini.google.com/app/3b7155acedd7082c) on `titan` a ZFS dataset, for better backup and snapshotting
+1. [Make the `/home`](https://gemini.google.com/app/3b7155acedd7082c) on `titan` a ZFS dataset, for backup and snapshotting
 
 1. LUKS **with TPM** https://nixos.org/manual/nixos/stable/#sec-luks-file-systems
 
@@ -41,7 +41,7 @@
 
 1. replace Antigravity with https://github.com/BohdanTkachenko/nix-home/blob/main/flake.nix#L26-L40
 
-1. Backup $HOME to ZFS, as [discussed with Gemini](https://gemini.google.com/app/8e54cb881caec7f8) with `services.sanoid` or `syncoid`
+1. Backup $HOME to ZFS, as [discussed with Gemini](https://gemini.google.com/app/8e54cb881caec7f8) with `syncoid`
 
 1. https://wiki.nixos.org/wiki/Secret_Service, consider https://dewaldv.com/posts/2026-03-24-proton-pass-secret-service/ ?
 

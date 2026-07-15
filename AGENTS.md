@@ -8,5 +8,7 @@
 - Because this project uses https://github.com/vic/import-tree, the `flake.nix` always has **ALL** `modules/**/*.nix` files.
   So there is never any need to manually edit `fake.nix` to add or remove any `*.nix` files.
 
+- Whenever making changes to `*.nix` files, check if there is any related documentation under `docs/` that needs to be updated to match the changes.
+
 - If Nix is missing in the environment, install it using:
   `curl -L https://raw.github.com/vorburger/aifiles/main/skills/install-nix/scripts/install-nix.sh | sh && . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh`

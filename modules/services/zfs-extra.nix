@@ -46,6 +46,13 @@ in
               services.sanoid = {
                 enable = true;
                 interval = "*:0/15"; # For "frequently" snapshots.
+                datasets =
+                  lib.genAttrs
+                    (map (fs: fs.device) (lib.filter (fs: fs.fsType == "zfs") (lib.attrValues config.fileSystems)))
+                    (_name: {
+                      useTemplate = [ "default" ];
+                      recursive = true;
+                    });
                 templates = {
                   "default" = {
                     frequently = 8; # Keep this many snapshots @15min frequency.
