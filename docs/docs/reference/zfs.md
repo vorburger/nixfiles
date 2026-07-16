@@ -215,7 +215,9 @@ TODO https://github.com/pdf/zfs_exporter
 
 ## Deduplication
 
-TODO With https://github.com/openzfs/zfs/discussions/15896, is it still very slow?
+[Permanent ZFS block-level deduplication](https://www.truenas.com/docs/references/zfsdeduplication/) is very resource intensive. Unless you really know what you're doing, you most likely don't want it.
+
+You may however occasionally wish to manually use a (not ZFS specific) [file-level deduplication tool](https://search.brave.com/search?q=linux+file+deduplication)?
 
 ## Scrub
 
