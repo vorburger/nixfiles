@@ -239,7 +239,7 @@ Automatic [scrubbing](https://openzfs.github.io/openzfs-docs/man/master/8/zpool-
 
 and later, hopefully:
 
-    zpool status
+    $ zpool status
       pool: pool8
      state: ONLINE
       scan: scrub repaired 0B in 03:14:43 with 0 errors on Sat Jun  6 20:11:06 2026
@@ -252,6 +252,9 @@ and later, hopefully:
     	    ata-ST8000AS0002-1NA17Z_Z840N805   ONLINE       0     0     0
 
     errors: No known data errors
+
+You can also manually trigger scrubbing with `zpool scrub -a -w`.
+This is recommended after _"resilvering"_ completes when you replace a drive.
 
 ## UI
 
