@@ -68,7 +68,7 @@ sudo zfs create -o mountpoint=/var/lib/postgresql data/postgresql
 
 ## LUKS Encryption & Passphrase Flows
 
-The `/home` partition layout on `vinea` (configured in [\_learn-zfs.nix](../../../modules/disko/_learn-zfs.nix)) uses LUKS encryption (`type = "luks"`) with Btrfs.
+The `/home` partition layout on `vinea` (configured in [\_learn-zfs.nix](https://github.com/vorburger/nixfiles/blob/main/modules/disko/_learn-zfs.nix)) uses LUKS encryption (`type = "luks"`) with Btrfs.
 
 To enable automated formatting and installations, the layout declares:
 

@@ -52,5 +52,5 @@ markdown_extensions:
   - pymdownx.magiclink
   - pymdownx.snippets:
       check_paths: true
-      base_path: ["docs"]
+      base_path: ["docs", ".."]
   - pymdownx.superfences

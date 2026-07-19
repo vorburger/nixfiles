@@ -27,10 +27,10 @@ those changes survive reboots. It is ideal for:
 This repository models the rescue USB as a separate host that **reuses** the
 target host's NixOS modules:
 
-- [`modules/hosts/titan-rescue.nix`](../../../modules/hosts/titan-rescue.nix) —
+- [`modules/hosts/titan-rescue.nix`](https://github.com/vorburger/nixfiles/blob/main/modules/hosts/titan-rescue.nix) —
   imports all `titan` personality modules; only `diskoDevice` and `diskoModule`
   differ.
-- [`modules/disko/_usb-rescue.nix`](../../../modules/disko/_usb-rescue.nix) —
+- [`modules/disko/_usb-rescue.nix`](https://github.com/vorburger/nixfiles/blob/main/modules/disko/_usb-rescue.nix) —
   simple USB-safe disko layout (ESP + ext4, systemd-boot, no EFI var writes).
 
 ## Step 1 — Find the USB Device by-id
@@ -56,7 +56,7 @@ Copy the full name (everything before `->`):
 
 ## Step 2 — Update titan-rescue.nix
 
-Edit [`modules/hosts/titan-rescue.nix`](../../../modules/hosts/titan-rescue.nix)
+Edit [`modules/hosts/titan-rescue.nix`](https://github.com/vorburger/nixfiles/blob/main/modules/hosts/titan-rescue.nix)
 and replace the placeholder:
 
 ```nix

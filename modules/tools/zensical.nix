@@ -9,9 +9,13 @@ _: {
       packages.documentation = pkgs.stdenvNoCC.mkDerivation {
         name = "documentation";
         src = ../../docs;
-        nativeBuildInputs = [ pkgs.zensical ];
+        nativeBuildInputs = [
+          pkgs.zensical
+          pkgs.lychee
+        ];
         buildPhase = ''
           zensical build -f mkdocs.yaml --strict
+          lychee --offline --no-progress site
         '';
         installPhase = ''
           mkdir -p $out
