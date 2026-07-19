@@ -3,6 +3,7 @@
     { pkgs, inputs, ... }:
     {
       environment.systemPackages = [
+        pkgs.lsof
         pkgs.pass
         pkgs.pciutils
         pkgs.shellcheck
