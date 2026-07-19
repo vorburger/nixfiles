@@ -58,7 +58,7 @@ mkHost {
         fileSystems."/" = {
           fsType = "ext4";
         };
-        # pool8 only exists on the physical bare metal machine, not in VM tests
+        # ZFS pool only exists on the physical bare metal machine, not in VM tests
         boot.zfs.extraPools = lib.mkIf (!vmTest) [ "pool8" ];
         fileSystems."/nas" = lib.mkIf (!vmTest) {
           device = "pool8/nas";

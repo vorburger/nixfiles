@@ -19,6 +19,10 @@ in
           "flakes"
         ];
 
+        # Save at least several GiB of space in /nix via hard-link using /nix/store/.links/
+        # Worth it on a reasonably recent fast enough system with a /nix on a non-huge (e.g. 500 GiB) disk.
+        nix.settings.auto-optimise-store = true;
+
         # https://nixos.org/manual/nixos/stable/#sec-nix-gc
         # systemctl status nix-gc.timer && systemctl status nix-gc.service
         # nix-collect-garbage
