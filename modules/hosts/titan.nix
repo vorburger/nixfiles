@@ -66,6 +66,12 @@ mkHost {
           options = [ "nofail" ];
           neededForBoot = false; # set to true if system services depend on this data
         };
+        fileSystems."/bardioc/public" = lib.mkIf (!vmTest) {
+          device = "pool8/public";
+          fsType = "zfs";
+          options = [ "nofail" ];
+          neededForBoot = false;
+        };
 
         hardware.graphics = {
           enable = true;

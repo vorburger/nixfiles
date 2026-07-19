@@ -4,7 +4,7 @@ in
 {
   flake.nixosModules.samba-extra = mkService {
     name = "samba-extra";
-    description = "Samba extra configuration for /nas/public";
+    description = "Samba extra configuration for /bardioc/public";
     content = {
       services.samba = {
         enable = true;
@@ -19,7 +19,7 @@ in
             "map to guest" = "bad user";
           };
           public = {
-            "path" = "/nas/public";
+            "path" = "/bardioc/public";
             "public" = "yes";
             "only guest" = "yes";
             "writable" = "yes";
