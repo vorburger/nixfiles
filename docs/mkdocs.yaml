@@ -35,6 +35,9 @@ nav:
       - reference/nixos-anywhere.md
       - reference/flake-file.md
       - reference/fwupd.md
+      - reference/fprintd.md
+      - reference/ssh-tpm-keygen.md
+      - reference/yubikey.md
       - reference/wiki.md
       - reference/we.md
       - ToDo.md
