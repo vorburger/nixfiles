@@ -16,6 +16,6 @@ concurrency:
 
 jobs:
   checks:
-    uses: nixbuild/nixbuild-action/.github/workflows/ci-workflow.yml@v25
+    uses: nixbuild/nixbuild-action/.github/workflows/ci-workflow.yml@edba7779b0a251b622d4250d263540f50c0f1a0b # v25
     secrets:
       nixbuild_token: ${{ secrets.nixbuild_token }}
