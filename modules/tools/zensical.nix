@@ -11,11 +11,12 @@ _: {
         src = ../../docs;
         nativeBuildInputs = [
           pkgs.zensical
-          pkgs.lychee
+          self'.packages.lychee-offline
+          pkgs.cacert
         ];
         buildPhase = ''
           zensical build -f mkdocs.yaml --strict
-          lychee --offline --no-progress site
+          lychee-offline --no-progress site
         '';
         installPhase = ''
           mkdir -p $out
