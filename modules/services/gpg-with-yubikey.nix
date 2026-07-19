@@ -93,6 +93,20 @@ in
             '';
           };
         };
+
+        # Restart pcscd and kill scdaemon on resume from suspend to prevent "gpg: selecting card failed: No such device"
+        systemd.services.restart-pcscd-on-resume = {
+          description = "Restart pcscd and kill scdaemon after resume from suspend";
+          wantedBy = [ "post-resume.target" ];
+          after = [ "post-resume.target" ];
+          serviceConfig = {
+            Type = "oneshot";
+            ExecStart = pkgs.writeShellScript "restart-pcscd-on-resume" ''
+              ${pkgs.systemd}/bin/systemctl restart pcscd.service
+              ${pkgs.procps}/bin/pkill scdaemon || true
+            '';
+          };
+        };
       };
   };
 }
