@@ -20,7 +20,7 @@
     self.nixosModules.locale-ch
     self.nixosModules.networking-extra
     self.nixosModules.openssh-extra
-    self.nixosModules.sudo-ssh-agent-auth
+    self.nixosModules.pam-u2f
     self.nixosModules.nix-extra
     self.nixosModules.unfree
     self.nixosModules.fwupd-extra
@@ -34,7 +34,7 @@
   services.locale-ch.enable = lib.mkDefault true;
   services.networking-extra.enable = lib.mkDefault true;
   services.openssh-extra.enable = lib.mkDefault true;
-  services.sudo-ssh-agent-auth.enable = lib.mkDefault true;
+  services.pam-u2f.enable = lib.mkDefault true;
   services.nix-extra.enable = lib.mkDefault true;
   services.fwupd-extra.enable = lib.mkDefault true;
   services.systemd-boot.enable = lib.mkDefault true;
