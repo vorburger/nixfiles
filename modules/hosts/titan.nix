@@ -89,6 +89,37 @@ mkHost {
         environment.systemPackages = with unstable-pkgs; [
           nvtopPackages.amd
         ];
+
+        services.jellyfin = {
+          enable = true;
+          openFirewall = true;
+          hardwareAcceleration = {
+            enable = true;
+            type = "vaapi";
+            device = "/dev/dri/renderD128";
+          };
+          transcoding = {
+            enableHardwareEncoding = true;
+            hardwareDecodingCodecs = {
+              h264 = true;
+              hevc = true;
+              hevc10bit = true;
+              vp9 = true;
+              av1 = true;
+              mpeg2 = true;
+              vc1 = true;
+            };
+            hardwareEncodingCodecs = {
+              hevc = true;
+              av1 = true;
+            };
+          };
+        };
+
+        users.users.jellyfin.extraGroups = [
+          "video"
+          "render"
+        ];
       }
     )
   ];
