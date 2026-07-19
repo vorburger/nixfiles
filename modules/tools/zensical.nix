@@ -16,7 +16,7 @@ _: {
         ];
         buildPhase = ''
           zensical build -f mkdocs.yaml --strict
-          lychee-offline --no-progress site
+          lychee-offline --no-progress --root-dir "$PWD/site" site
         '';
         installPhase = ''
           mkdir -p $out
