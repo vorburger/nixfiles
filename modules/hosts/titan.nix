@@ -59,15 +59,15 @@ mkHost {
           fsType = "ext4";
         };
         # ZFS pool only exists on the physical bare metal machine, not in VM tests
-        boot.zfs.extraPools = lib.mkIf (!vmTest) [ "pool8" ];
+        boot.zfs.extraPools = lib.mkIf (!vmTest) [ "bardioc" ];
         fileSystems."/bardioc/private" = lib.mkIf (!vmTest) {
-          device = "pool8/private";
+          device = "bardioc/private";
           fsType = "zfs";
           options = [ "nofail" ];
           neededForBoot = false; # set to true if system services depend on this data
         };
         fileSystems."/bardioc/public" = lib.mkIf (!vmTest) {
-          device = "pool8/public";
+          device = "bardioc/public";
           fsType = "zfs";
           options = [ "nofail" ];
           neededForBoot = false;
