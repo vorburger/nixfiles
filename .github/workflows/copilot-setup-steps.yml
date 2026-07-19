@@ -1,3 +1,5 @@
+# NOTE: This file MUST be named copilot-setup-steps.yml (not .yaml).
+# See https://docs.github.com/en/copilot/how-tos/use-copilot-agents/copilot-coding-agent/customizing-the-development-environment-for-copilot-coding-agent#about-copilot-setup-steps
 name: Copilot Setup Steps
 
 on:
