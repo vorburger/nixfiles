@@ -37,6 +37,9 @@
           trust = 5;
         }
       ];
+      scdaemonSettings = {
+        disable-ccid = true;
+      };
     };
   };
 
