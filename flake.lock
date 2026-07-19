@@ -451,11 +451,11 @@
       },
       "locked": {
         "dir": "dotfiles/home-manager",
-        "lastModified": 1780437113,
-        "narHash": "sha256-AXDUGcNkgcOALo8kYvRpfBoltKONcxMWOGr6fg4ERUo=",
+        "lastModified": 1784496303,
+        "narHash": "sha256-WDcXwRunoY0+BzdyiEZeW24q3ThKbzlmjYRpAMB5w9I=",
         "owner": "vorburger",
         "repo": "dotfiles",
-        "rev": "bb32463ee6f17684cec1534bd521a34a05a4e676",
+        "rev": "f991b299adacaea4309751003a76f23abfac74f1",
         "type": "github"
       },
       "original": {
