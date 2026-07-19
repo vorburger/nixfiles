@@ -1,0 +1,44 @@
+# NOTE: This file MUST be named copilot-setup-steps.yml (not .yaml).
+# See https://docs.github.com/en/copilot/how-tos/use-copilot-agents/copilot-coding-agent/customizing-the-development-environment-for-copilot-coding-agent#about-copilot-setup-steps
+name: Copilot Setup Steps
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+  pull_request:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+
+jobs:
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Install Nix
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y nix-bin nix-setup-systemd
+
+      - name: Prepare Nix daemon access for runner
+        run: |
+          sudo usermod -a -G nix-users "$USER"
+          sudo mkdir -p /nix/var/nix/daemon-socket
+          sudo nohup nix-daemon >/tmp/nix-daemon.log 2>&1 &
+          for i in {1..30}; do
+            [ -S /nix/var/nix/daemon-socket/socket ] && break
+            sleep 1
+          done
+
+      - name: Configure Nix defaults for Copilot session
+        run: |
+          {
+            echo "NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt"
+            echo "NIX_CONFIG=experimental-features = nix-command flakes"
+          } >> "$GITHUB_ENV"
+
+      - name: Verify Nix is available
+        run: |
+          sg nix-users -c 'nix --version'
