@@ -34,16 +34,17 @@ First, [check your disks's health](smart.md)!
       -O keyformat=passphrase \
       -O keylocation=prompt \
       -O mountpoint=none \
-      pool8 mirror \
+      bardioc mirror \
       /dev/disk/by-id/ata-WDC_WD80PUZX-64NEAY0_VK0GUMLY \
       /dev/disk/by-id/ata-ST8000AS0002-1NA17Z_Z840N805
 
-    sudo bash -c 'chattr +i /nas'
-    sudo zfs create -o mountpoint=/nas pool8/nas
+    sudo mkdir -p /bardioc/private
+    sudo bash -c 'chattr +i /bardioc/private'
+    sudo zfs create -o mountpoint=legacy bardioc/private
 
-    sudo mkdir /nas/test
-    sudo chown $USER: /nas/test
-    echo "hello, world" >/nas/test/hello.txt
+    sudo mkdir /bardioc/private/test
+    sudo chown $USER: /bardioc/private/test
+    echo "hello, world" >/bardioc/private/test/hello.txt
 
 PS: The ZFS pool name `tank` often seen in other examples is just a convention, nothing more!
 
@@ -58,7 +59,7 @@ It's highly recommended to create a reservation to prevent performance deteriora
       -o refreservation=100G \
       -o mountpoint=none \
       -o canmount=off \
-      "pool8/reserved"
+      "bardioc/reserved"
 
 ## Datasets
 
@@ -71,7 +72,7 @@ To manage ZFS mount points declaratively in NixOS (e.g. in your `fileSystems` co
 1. **`mountpoint=legacy`**: By default, ZFS manages dataset mounting itself using the dataset's `mountpoint` property. However, the NixOS systemd-based mounting generator requires standard mount commands. To allow NixOS to mount datasets via `fileSystems` entries, set the ZFS dataset mountpoint to `legacy`:
 
    ```bash
-   sudo zfs set mountpoint=legacy pool8/nas
+   sudo zfs set mountpoint=legacy bardioc/private
    ```
 
 2. **`options = [ "nofail" ];`**: When mounting optional datasets (like data disks or backup targets that might be missing or disconnected), always include `options = [ "nofail" ];` in your NixOS `fileSystems` definition. Without `nofail`, systemd treats the mount as a critical boot dependency, causing the system to crash or enter an infinite emergency mode loop if the ZFS pool/disk is unavailable. With `nofail`, systemd will gracefully skip the mount if the pool import fails or times out.
@@ -82,9 +83,9 @@ To manage ZFS mount points declaratively in NixOS (e.g. in your `fileSystems` co
     no pools available
 
     $ sudo zpool import
-    $ sudo zpool import pool8
+    $ sudo zpool import bardioc
 
-    $ sudo zfs mount -l pool8/nas
+    $ sudo zfs mount -l bardioc/private
 
 This (with `-l`) will ask for the passphrase.
 
@@ -99,19 +100,19 @@ documents how it handles if a device is missing; hint: it still works - that's t
 ### zfs list
 
     $ zfs list
-    NAME        USED  AVAIL  REFER  MOUNTPOINT
-    pool8       888K  7.14T   192K  none
-    pool8/nas   192K  7.14T   192K  /nas
+    NAME            USED  AVAIL  REFER  MOUNTPOINT
+    bardioc         888K  7.14T   192K  none
+    bardioc/private  192K  7.14T   192K  legacy
 
 ### zpool status
 
     $ zpool status
-    pool: pool8
+    pool: bardioc
     state: ONLINE
     config:
 
         NAME                                   STATE     READ WRITE CKSUM
-        pool8                                  ONLINE       0     0     0
+        bardioc                                ONLINE       0     0     0
         mirror-0                               ONLINE       0     0     0
             ata-WDC_WD80PUZX-64NEAY0_VK0GUMLY  ONLINE       0     0     0
             ata-ST8000AS0002-1NA17Z_Z840N805   ONLINE       0     0     0
@@ -122,15 +123,15 @@ Note that `READ`, `WRITE`, and `CKSUM` represent the count of I/O errors for rea
 
 ### zpool history
 
-    sudo zpool history pool8
+    sudo zpool history bardioc
 
 ## Encryption
 
 Encryption is enabled in the TL;DR above; the key can be changed like this:
 
-    zfs change-key pool8
+    zfs change-key bardioc
 
-    zfs change-key -o keyformat=raw -o keylocation=zfs-key pool8
+    zfs change-key -o keyformat=raw -o keylocation=zfs-key bardioc
 
 It's instantaneous, and does not need to rewrite or re-encrypt any of your data.
 
@@ -180,7 +181,7 @@ TODO L2ARC with an SSD, for read caching? Or will it trash the SSD with too much
 
 ### rsync
 
-    rsync -aHAXx --info=progress2 --inplace /mnt/source/ /nas/...
+    rsync -aHAXx --info=progress2 --inplace /mnt/source/ /bardioc/private/...
 
 - `-aHAXx` The Bulletproof Archive Mode:
   - `-a` (archive) copies recursively and preserves symlinks, devices, permissions, and modification times.
@@ -224,7 +225,7 @@ You may however occasionally wish to manually use a (not ZFS specific) [file-lev
 Automatic [scrubbing](https://openzfs.github.io/openzfs-docs/man/master/8/zpool-scrub.8.html) is enabled, note:
 
     $ zpool status
-      pool: pool8
+      pool: bardioc
      state: ONLINE
       scan: scrub in progress since Sat Jun  6 16:56:23 2026
     	852G / 852G scanned, 28.7G / 852G issued at 70.3M/s
@@ -232,7 +233,7 @@ Automatic [scrubbing](https://openzfs.github.io/openzfs-docs/man/master/8/zpool-
     config:
 
     	NAME                                   STATE     READ WRITE CKSUM
-    	pool8                                  ONLINE       0     0     0
+    	bardioc                                ONLINE       0     0     0
     	  mirror-0                             ONLINE       0     0     0
     	    ata-WDC_WD80PUZX-64NEAY0_VK0GUMLY  ONLINE       0     0     0
     	    ata-ST8000AS0002-1NA17Z_Z840N805   ONLINE       0     0     0
@@ -242,13 +243,13 @@ Automatic [scrubbing](https://openzfs.github.io/openzfs-docs/man/master/8/zpool-
 and later, hopefully:
 
     $ zpool status
-      pool: pool8
+      pool: bardioc
      state: ONLINE
       scan: scrub repaired 0B in 03:14:43 with 0 errors on Sat Jun  6 20:11:06 2026
     config:
 
     	NAME                                   STATE     READ WRITE CKSUM
-    	pool8                                  ONLINE       0     0     0
+    	bardioc                                ONLINE       0     0     0
     	  mirror-0                             ONLINE       0     0     0
     	    ata-WDC_WD80PUZX-64NEAY0_VK0GUMLY  ONLINE       0     0     0
     	    ata-ST8000AS0002-1NA17Z_Z840N805   ONLINE       0     0     0
