@@ -90,6 +90,7 @@ mkHost {
           nvtopPackages.amd
         ];
 
+        # https://jellyfin.org
         services.jellyfin = {
           enable = true;
           openFirewall = true;
@@ -115,11 +116,11 @@ mkHost {
             };
           };
         };
-
         users.users.jellyfin.extraGroups = [
           "video"
           "render"
         ];
+        systemd.services.jellyfin.serviceConfig.PrivateUsers = lib.mkForce false;
       }
     )
   ];
