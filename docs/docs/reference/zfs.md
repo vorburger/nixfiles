@@ -173,6 +173,41 @@ We recommend [`sanoid`](https://github.com/jimsalterjrs/sanoid) over [`zfstools`
 1. **Policy Flexibility**: `sanoid` supports customizable templates, retention policies (e.g. keeping varying numbers of hourly, daily, monthly snapshots), and pre/post-snapshot scripts. `zfstools` has hardcoded retention defaults that are harder to customize.
 1. **Maintenance**: `sanoid` (written in Perl) is actively maintained and the industry standard for ZFS snapshot management. `zfstools` is an older, relatively inactive Ruby-based tool.
 
+### Destroying Snapshots
+
+Because ZFS snapshots are read-only copy-on-write references to blocks on disk, deleting files from a dataset (e.g. via `rm -rf`) **will not free disk space** if those files are still referenced by any existing snapshots. The physical space will only be reclaimed once all snapshots containing those files are destroyed or naturally expire.
+
+To manually delete a single specific snapshot, use:
+
+```bash
+sudo zfs destroy bardioc/private@snapshot-name
+```
+
+If you want to destroy all snapshots up to a certain point in time (for example, to reclaim space immediately after a large deletion), you can destroy a range using the `%` syntax:
+
+```bash
+# Syntax: zfs destroy dataset@oldest_snap%newest_snap
+sudo zfs destroy bardioc/private@autosnap_2026-01-01_00:00:00_yearly%autosnap_2026-07-19_18:00:00_hourly
+```
+
+#### Freeing Space
+
+When destroying a snapshot containing large amounts of unique data, the operation might take time as ZFS traverses metadata and frees blocks. However, ZFS processes this cleanup asynchronously in the background.
+
+`zfs destroy` is completely **atomic and transactional** (handled via ZFS Transaction Groups). Even if you interrupt the CLI command (e.g. by pressing `Ctrl-C`), **no data or filesystem corruption will occur**. The ZFS kernel module will either finish registering the deletion or safely roll it back.
+
+You can monitor the background freeing progress with:
+
+```bash
+zpool list -o name,freeing
+```
+
+Or query the property directly for a specific pool:
+
+```bash
+zpool get freeing bardioc
+```
+
 ## Cache
 
 TODO L2ARC with an SSD, for read caching? Or will it trash the SSD with too much writes if it's an old one?

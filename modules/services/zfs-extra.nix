@@ -49,8 +49,8 @@ in
                 datasets =
                   lib.genAttrs
                     (map (fs: fs.device) (lib.filter (fs: fs.fsType == "zfs") (lib.attrValues config.fileSystems)))
-                    (_name: {
-                      useTemplate = [ "default" ];
+                    (name: {
+                      useTemplate = if name == "bardioc/public" then [ "short" ] else [ "default" ];
                       recursive = true;
                     });
                 templates = {
@@ -61,6 +61,14 @@ in
                     weekly = 30;
                     monthly = 24;
                     yearly = 100;
+                  };
+                  "short" = {
+                    frequently = 8;
+                    hourly = 48;
+                    daily = 90;
+                    weekly = 12; # 12 weeks = ~3 months
+                    monthly = 3; # 3 months
+                    yearly = 0; # no yearly snapshots
                   };
                 };
               };
