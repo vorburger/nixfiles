@@ -22,6 +22,7 @@
     self.nixosModules.openssh-extra
     self.nixosModules.sudo-ssh-agent-auth
     self.nixosModules.nix-extra
+    self.nixosModules.unfree
     self.nixosModules.fwupd-extra
     self.nixosModules.systemd-boot
     self.nixosModules.zram

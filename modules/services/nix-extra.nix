@@ -1,28 +1,14 @@
-{ inputs, ... }:
+_:
 let
   inherit (import ../../lib/mk-service.nix) mkService;
 in
 {
-  perSystem =
-    { system, ... }:
-    {
-      _module.args.pkgs = import inputs.nixpkgs {
-        inherit system;
-        config = {
-          allowUnfreePredicate =
-            pkg: builtins.elem (inputs.nixpkgs.lib.getName pkg) (import ../../lib/unfree-packages.nix);
-        };
-      };
-    };
-
   flake.nixosModules.nix-extra = mkService {
     name = "nix-extra";
     description = "extra Nix configuration (flakes, etc.)";
     content =
       {
         inputs,
-        lib,
-        options,
         pkgs,
         ...
       }:
@@ -48,11 +34,6 @@ in
           pkgs.nix-output-monitor
           inputs.nix-fast-build.packages.${pkgs.stdenv.hostPlatform.system}.nix-fast-build
         ];
-
-        # Required, for now; e.g. for Visual Studio Code (VSC)
-        nixpkgs.config = lib.mkIf (!options.nixpkgs.pkgs.isDefined) {
-          allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) (import ../../lib/unfree-packages.nix);
-        };
       };
   };
 }
