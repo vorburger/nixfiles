@@ -26,6 +26,7 @@ nav:
       - reference/power.md
       - reference/smart.md
       - reference/zfs.md
+      - reference/backup.md
       - reference/disko-layouts.md
       - reference/rescue-usb.md
       - reference/nix-cli.md

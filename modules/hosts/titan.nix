@@ -121,6 +121,21 @@ mkHost {
           "render"
         ];
         systemd.services.jellyfin.serviceConfig.PrivateUsers = lib.mkForce false;
+
+        services.backup = {
+          enable = true;
+          baseDir = "/bardioc/services";
+          zfs = {
+            enable = !vmTest;
+            pool = "bardioc";
+          };
+          jobs.jellyfin = {
+            srcDir = "/var/lib/jellyfin";
+            sqliteDbs = [
+              "data/jellyfin.db"
+            ];
+          };
+        };
       }
     )
   ];

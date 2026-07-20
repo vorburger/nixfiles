@@ -6,6 +6,7 @@
 }:
 {
   imports = [
+    self.nixosModules.backup
     self.nixosModules.smart
     self.nixosModules.zfs-extra
     self.nixosModules.virt-guest
