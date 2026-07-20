@@ -16,11 +16,11 @@ in
               boot.initrd.supportedFilesystems = [ "zfs" ];
               boot.zfs.requestEncryptionCredentials = true;
               systemd.services = {
-                zfs-import-cache.serviceConfig.TimeoutStartSec = "30s";
-                zfs-import-scan.serviceConfig.TimeoutStartSec = "30s";
+                zfs-import-cache.serviceConfig.TimeoutStartSec = "90s";
+                zfs-import-scan.serviceConfig.TimeoutStartSec = "90s";
               }
               // lib.genAttrs (map (pool: "zfs-import-${pool}") config.boot.zfs.extraPools) (_name: {
-                serviceConfig.TimeoutStartSec = "30s";
+                serviceConfig.TimeoutStartSec = "90s";
               });
               services.zfs = {
                 autoScrub = {
