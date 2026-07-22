@@ -11,7 +11,7 @@ in
         environment.systemPackages = [ pkgs.pam_u2f ];
 
         security.pam.u2f = {
-          enable = true;
+          enable = false;
           control = "sufficient";
           settings = {
             cue = true;

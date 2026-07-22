@@ -30,7 +30,7 @@ _(Note: The `-n` option ensures that the username prefix is not repeated, as `pa
 
 ## Configuration Options
 
-The U2F configuration is handled by `modules/services/pam-u2f.nix`, which enables `pam_u2f` globally and for `sudo`.
+The U2F configuration is handled by `modules/services/pam-u2f.nix`, which enables `pam_u2f` specifically for `sudo` (keeping login and screen unlock password-protected).
 
-- `security.pam.u2f.control = "sufficient"`: Setting the control rule to `sufficient` ensures that a successful YubiKey touch is enough on its own to authenticate you, bypassing the password prompt.
+- `security.pam.u2f.control = "sufficient"`: Setting the control rule to `sufficient` ensures that a successful YubiKey touch is enough on its own to authenticate `sudo`, bypassing the password prompt.
 - `security.pam.u2f.settings.cue = true`: This displays a cue message (`Please touch the device.`) during authentication so you know when to press the key.
