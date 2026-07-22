@@ -5,7 +5,7 @@ to find bad blocks and record [SMART](https://en.wikipedia.org/wiki/Self-Monitor
 do this, in this order:
 
 1. Run a SMART Short Self-Test (~2') and a Conveyance Self-Test (5'),
-   using GNOME Disks, [GSmartControl](#GSmartControl), or `sudo smartctl -t short /dev/sdX`
+   using GNOME Disks, [GSmartControl](#gsmartcontrol), or `sudo smartctl -t short /dev/sdX`
    and `sudo smartctl -t conveyance /dev/sdX`.
 
 1. Run [`badblocks`](#badblocks) (N hours)
