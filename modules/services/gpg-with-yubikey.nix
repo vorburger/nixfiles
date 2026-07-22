@@ -95,18 +95,14 @@ in
         };
 
         # Restart pcscd and kill scdaemon on resume from suspend to prevent "gpg: selecting card failed: No such device"
-        systemd.services.restart-pcscd-on-resume = {
-          description = "Restart pcscd and kill scdaemon after resume from suspend";
-          wantedBy = [ "post-resume.target" ];
-          after = [ "post-resume.target" ];
-          serviceConfig = {
-            Type = "oneshot";
-            ExecStart = pkgs.writeShellScript "restart-pcscd-on-resume" ''
-              ${pkgs.systemd}/bin/systemctl restart pcscd.service
-              ${pkgs.procps}/bin/pkill scdaemon || true
-            '';
-          };
-        };
+        powerManagement.resumeCommands = ''
+          echo "Re-triggering YubiKey udev rules and restarting pcscd on resume..." | ${pkgs.systemd}/bin/systemd-cat -t restart-pcscd-on-resume
+          sleep 1
+          ${pkgs.systemd}/bin/udevadm trigger --action=add --subsystem-match=usb --attr-match=idVendor=1050
+          ${pkgs.systemd}/bin/udevadm settle --timeout=10
+          ${pkgs.systemd}/bin/systemctl restart pcscd.service
+          ${pkgs.procps}/bin/pkill -9 scdaemon || true
+        '';
       };
   };
 }
