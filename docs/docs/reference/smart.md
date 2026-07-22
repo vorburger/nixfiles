@@ -1,12 +1,34 @@
 # SMART
 
+On any new disks, whether brand new fresh from the factory or second hand, to get their controller
+to find bad blocks and record [SMART](https://en.wikipedia.org/wiki/Self-Monitoring,_Analysis_and_Reporting_Technology),
+do this, in this order:
+
+1. Run a SMART Short Self-Test (~2') and a Conveyance Self-Test (5'),
+   using GNOME Disks, [GSmartControl](#GSmartControl), or `sudo smartctl -t short /dev/sdX`
+   and `sudo smartctl -t conveyance /dev/sdX`.
+
+1. Run [`badblocks`](#badblocks) (N hours)
+
+1. Run a SMART Long/Extended Self-Test (~12h); via UI, or `sudo smartctl -t long /dev/sdX`
+
+1. Verify results, via UI, or `sudo smartctl -a /dev/sdX`, and watch out for:
+   - `Reallocated_Sector_Ct` should be 0
+   - `Current_Pending_Sector` must be 0
+   - `Offline_Uncorrectable` must be 0
+
+Running tests in this specific order should catch all damaged sectors etc.
+
+It is recommended to run such extended disk stress tests by connecting the drive directly to
+an internal SATA port instead of in an external enclosure via USB-to-SATA adapter.
+
 ## `badblocks`
 
-Run `badblocks` on new disks to get their controller to find bad blocks and record
-[SMART](https://en.wikipedia.org/wiki/Self-Monitoring,_Analysis_and_Reporting_Technology)
-statistics, using the following **destructive** (!) command:
+Use the following **destructive** (!) command: (Where `-t` reduces the default
+4 passes to 1, and `-c` increases the buffer from the tiny default (64 blocks) to test 65,536 blocks
+at a time; this uses ~256 MB of RAM and significantly improves sequential I/O throughput.)
 
-    sudo badblocks -wsv /dev/sdc
+    sudo badblocks -wsv -t 0xaa -c 65536 /dev/sdX
 
 In case this produces the following error on large (e.g. 8 TB) HDDs:
 
@@ -14,9 +36,11 @@ In case this produces the following error on large (e.g. 8 TB) HDDs:
 
 then add `-b 4096` to increase the block size:
 
-    sudo badblocks -wsv -b 4096 /dev/sdc
+    time sudo badblocks -wsv -t 0xaa -c 65536 -b 4096 /dev/sdX
 
-On a 8 TB HDD this will take about 12h. See e.g. the [Arch Linux Wiki for more background about `badblocks`](https://wiki.archlinux.org/title/Badblocks).
+On a 8 TB HDD this will take about a day (?).
+
+See e.g. the [Arch Linux Wiki for more background about `badblocks`](https://wiki.archlinux.org/title/Badblocks).
 
 ## GSmartControl
 
