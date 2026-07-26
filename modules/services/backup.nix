@@ -92,10 +92,25 @@ in
             "${job.srcDir}/" "${job.destDir}/files/"
         '';
 
+        # Helper to escape paths into systemd unit names (e.g. /bardioc/services/jellyfin -> bardioc-services-jellyfin)
+        escapeSystemdPath =
+          path:
+          let
+            stripped = lib.removePrefix "/" path;
+          in
+          builtins.replaceStrings [ "/" ] [ "-" ] stripped;
+
         services = lib.mapAttrs' (
           name: job:
+          let
+            requiresMount =
+              cfg.zfs.enable && cfg.zfs.pool != null && lib.hasPrefix "/${cfg.zfs.pool}/" job.destDir;
+            mountUnit = escapeSystemdPath job.destDir + ".mount";
+          in
           lib.nameValuePair "backup-${name}" {
             description = "Hot backup for service ${name}";
+            requires = lib.optional requiresMount mountUnit;
+            after = lib.optional requiresMount mountUnit;
             serviceConfig = {
               Type = "oneshot";
               User = "root";
