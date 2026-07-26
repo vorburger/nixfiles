@@ -33,6 +33,8 @@
     self.nixosModules.ragenix
     self.nixosModules.h
     self.nixosModules.hello
+    self.nixosModules.metrics-exporter
+    self.nixosModules.monitoring
   ];
 
   services.locale-ch.enable = lib.mkDefault true;
@@ -44,6 +46,7 @@
   services.systemd-boot.enable = lib.mkDefault true;
   services.zram.enable = lib.mkDefault false;
   services.hello.enable = lib.mkDefault false;
+  services.metrics-exporter.enable = lib.mkDefault true;
 
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

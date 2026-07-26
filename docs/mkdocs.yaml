@@ -23,6 +23,7 @@ nav:
           # TODO - tutorial/nixos-desktop-workstation/index.md
     # TODO - Nix Lang:
   - References:
+      - reference/monitoring.md
       - reference/power.md
       - reference/smart.md
       - reference/zfs.md
