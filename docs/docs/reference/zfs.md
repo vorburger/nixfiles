@@ -77,6 +77,23 @@ To manage ZFS mount points declaratively in NixOS (e.g. in your `fileSystems` co
 
 2. **`options = [ "nofail" ];`**: When mounting optional datasets (like data disks or backup targets that might be missing or disconnected), always include `options = [ "nofail" ];` in your NixOS `fileSystems` definition. Without `nofail`, systemd treats the mount as a critical boot dependency, causing the system to crash or enter an infinite emergency mode loop if the ZFS pool/disk is unavailable. With `nofail`, systemd will gracefully skip the mount if the pool import fails or times out.
 
+3. **Manual Mounting when `mountpoint=legacy`**:
+   Datasets with `mountpoint=legacy` cannot be mounted using `zfs mount` (which returns `cannot mount '...': legacy mountpoint; use mount(8) to mount this filesystem`). Instead, use standard Linux `mount(8)` commands or systemd:
+   - **Using systemd service (Recommended)**:
+     NixOS automatically generates systemd mount units for entries in `fileSystems`. For example, a dataset configured for `/bardioc/public` will have a unit named `bardioc-public.mount`. You can check status or start/restart it directly:
+
+     ```bash
+     sudo systemctl status bardioc-public.mount
+     sudo systemctl start bardioc-public.mount
+     ```
+
+   - **Using standard `mount`**:
+     Alternatively, specify `zfs` as the filesystem type:
+
+     ```bash
+     sudo mount -t zfs bardioc/public /bardioc/public
+     ```
+
 ## Import
 
     $ zpool status
@@ -85,15 +102,132 @@ To manage ZFS mount points declaratively in NixOS (e.g. in your `fileSystems` co
     $ sudo zpool import
     $ sudo zpool import bardioc
 
-    $ sudo zfs mount -l bardioc/private
+If encrypted datasets were not loaded automatically, load their keys:
 
-This (with `-l`) will ask for the passphrase.
+    sudo zfs load-key bardioc/private
+
+Mount legacy datasets either via systemd or standard `mount(8)`:
+
+    sudo systemctl start bardioc-private.mount
+
+Or manually:
+
+    sudo mount -t zfs bardioc/private /bardioc/private
 
 [`ZFS-8000-4J`](https://openzfs.github.io/openzfs-docs/msg/ZFS-8000-4J/)
 documents how it handles if a device is missing; hint: it still works - that's the point!
-(On reconnecting the missing drive it will have to [scrub](#scrub) for a few hours.)
+(On reconnecting the same previously missing drive it will have to [scrub](#scrub) for a few hours.)
 
 [See here how to automatically have the pool imported at boot, with passphrase](https://github.com/vorburger/nixfiles/commit/5fb545dae24cd7d7b68dfe6223b89d43bcf752c2).
+
+## Replace
+
+It's faster, but not required, to replace a disk in a pool with all datasets unmounted.
+
+    $ sudo zpool status
+      pool: bardioc
+     state: DEGRADED
+    status: One or more devices could not be used because the label is missing or
+        invalid.  Sufficient replicas exist for the pool to continue
+        functioning in a degraded state.
+    action: Replace the device using 'zpool replace'.
+       see: https://openzfs.github.io/openzfs-docs/msg/ZFS-8000-4J
+      scan: scrub repaired 0B in 1 days 00:34:11 with 0 errors on Sun Jul 12 17:52:43 2026
+    config:
+
+        NAME                                   STATE     READ WRITE CKSUM
+        bardioc                                DEGRADED     0     0     0
+          mirror-0                             DEGRADED     0     0     0
+            ata-WDC_WD80PUZX-64NEAY0_VK0GUMLY  ONLINE       0     0     0
+            2121792862421408442                UNAVAIL      0     0     0  was /dev/disk/by-id/ata-ST8000AS0002-1NA17Z_Z840N805-part1
+
+    errors: No known data errors
+
+To replace this unavailable (removed) drive with another one, we can simply:
+
+    $ sudo zpool replace bardioc /dev/disk/by-id/ata-ST8000AS0002-1NA17Z_Z840N805-part1 /dev/disk/by-id/ata-WDC_WD80EFPX-68C4ZN0_WD-1F0XZZUU
+
+    $ zpool status
+      pool: bardioc
+     state: DEGRADED
+    status: One or more devices is currently being resilvered.  The pool will
+        continue to function, possibly in a degraded state.
+    action: Wait for the resilver to complete.
+      scan: resilver in progress since Sat Jul 25 14:17:47 2026
+        631G / 3.18T scanned at 39.5G/s, 0B / 3.18T issued
+        0B resilvered, 0.00% done, no estimated completion time
+    config:
+
+        NAME                                        STATE     READ WRITE CKSUM
+        bardioc                                     DEGRADED     0     0     0
+          mirror-0                                  DEGRADED     0     0     0
+            ata-WDC_WD80PUZX-64NEAY0_VK0GUMLY       ONLINE       0     0     0
+            replacing-1                             DEGRADED     0     0     0
+              2121792862421408442                   UNAVAIL      0     0     0  was /dev/disk/by-id/ata-ST8000AS0002-1NA17Z_Z840N805-part1
+              ata-WDC_WD80EFPX-68C4ZN0_WD-1F0XZZUU  ONLINE       0     0     0
+
+    errors: No known data errors
+
+After it's done _scanning_ (which is relatively quick) and started _resilvering_ (which takes a long time), this will show:
+
+```sh
+$ zpool status
+  pool: bardioc
+ state: DEGRADED
+status: One or more devices is currently being resilvered.  The pool will
+ continue to function, possibly in a degraded state.
+action: Wait for the resilver to complete.
+  scan: resilver in progress since Sat Jul 25 14:17:47 2026
+ 3.16T / 3.18T scanned at 3.95G/s, 22.6G / 3.18T issued at 28.2M/s
+ 22.6G resilvered, 0.69% done, 1 days 08:37:09 to go
+config:
+
+ NAME                                        STATE     READ WRITE CKSUM
+ bardioc                                     DEGRADED     0     0     0
+   mirror-0                                  DEGRADED     0     0     0
+     ata-WDC_WD80PUZX-64NEAY0_VK0GUMLY       ONLINE       0     0     0
+     replacing-1                             DEGRADED     0     0     0
+       2121792862421408442                   UNAVAIL      0     0     0  was /dev/disk/by-id/ata-ST8000AS0002-1NA17Z_Z840N805-part1
+       ata-WDC_WD80EFPX-68C4ZN0_WD-1F0XZZUU  ONLINE       0     0     0  (resilvering)
+
+errors: No known data errors
+```
+
+After the resilvering is done, the pool is already back in `ONLINE` state. It will automatically also _scrub_ the pool:
+
+```
+  pool: bardioc
+ state: ONLINE
+  scan: scrub in progress since Sat Jul 25 21:58:47 2026
+ 3.18T / 3.18T scanned, 2.59T / 3.17T issued at 146M/s
+ 0B repaired, 81.48% done, 01:10:36 to go
+config:
+
+ NAME                                      STATE     READ WRITE CKSUM
+ bardioc                                   ONLINE       0     0     0
+   mirror-0                                ONLINE       0     0     0
+     ata-WDC_WD80PUZX-64NEAY0_VK0GUMLY     ONLINE       0     0     0
+     ata-WDC_WD80EFPX-68C4ZN0_WD-1F0XZZUU  ONLINE       0     0     0
+
+errors: No known data errors
+```
+
+And eventually this scrub will also be completed:
+
+```
+pool: bardioc
+ state: ONLINE
+  scan: scrub repaired 0B in 06:36:24 with 0 errors on Sun Jul 26 04:35:11 2026
+config:
+
+ NAME                                      STATE     READ WRITE CKSUM
+ bardioc                                   ONLINE       0     0     0
+   mirror-0                                ONLINE       0     0     0
+     ata-WDC_WD80PUZX-64NEAY0_VK0GUMLY     ONLINE       0     0     0
+     ata-WDC_WD80EFPX-68C4ZN0_WD-1F0XZZUU  ONLINE       0     0     0
+
+errors: No known data errors
+```
 
 ## Status
 
@@ -263,15 +397,15 @@ Automatic [scrubbing](https://openzfs.github.io/openzfs-docs/man/master/8/zpool-
       pool: bardioc
      state: ONLINE
       scan: scrub in progress since Sat Jun  6 16:56:23 2026
-    	852G / 852G scanned, 28.7G / 852G issued at 70.3M/s
-    	0B repaired, 3.37% done, 03:20:02 to go
+     852G / 852G scanned, 28.7G / 852G issued at 70.3M/s
+     0B repaired, 3.37% done, 03:20:02 to go
     config:
 
-    	NAME                                   STATE     READ WRITE CKSUM
-    	bardioc                                ONLINE       0     0     0
-    	  mirror-0                             ONLINE       0     0     0
-    	    ata-WDC_WD80PUZX-64NEAY0_VK0GUMLY  ONLINE       0     0     0
-    	    ata-ST8000AS0002-1NA17Z_Z840N805   ONLINE       0     0     0
+     NAME                                   STATE     READ WRITE CKSUM
+     bardioc                                ONLINE       0     0     0
+       mirror-0                             ONLINE       0     0     0
+         ata-WDC_WD80PUZX-64NEAY0_VK0GUMLY  ONLINE       0     0     0
+         ata-ST8000AS0002-1NA17Z_Z840N805   ONLINE       0     0     0
 
     errors: No known data errors
 
@@ -283,16 +417,15 @@ and later, hopefully:
       scan: scrub repaired 0B in 03:14:43 with 0 errors on Sat Jun  6 20:11:06 2026
     config:
 
-    	NAME                                   STATE     READ WRITE CKSUM
-    	bardioc                                ONLINE       0     0     0
-    	  mirror-0                             ONLINE       0     0     0
-    	    ata-WDC_WD80PUZX-64NEAY0_VK0GUMLY  ONLINE       0     0     0
-    	    ata-ST8000AS0002-1NA17Z_Z840N805   ONLINE       0     0     0
+     NAME                                   STATE     READ WRITE CKSUM
+     bardioc                                ONLINE       0     0     0
+       mirror-0                             ONLINE       0     0     0
+         ata-WDC_WD80PUZX-64NEAY0_VK0GUMLY  ONLINE       0     0     0
+         ata-ST8000AS0002-1NA17Z_Z840N805   ONLINE       0     0     0
 
     errors: No known data errors
 
 You can also manually trigger scrubbing with `zpool scrub -a -w`.
-This is recommended after _"resilvering"_ completes when you replace a drive.
 
 ## UI
 
