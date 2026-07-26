@@ -18,6 +18,8 @@ in
           };
         };
         security.pam.services.sudo.u2fAuth = true;
+        security.pam.services.polkit-1.u2fAuth = true;
+        security.pam.services.systemd-run0.u2fAuth = true;
       };
   };
 }
