@@ -20,6 +20,17 @@ in
         security.pam.services.sudo.u2fAuth = true;
         security.pam.services.polkit-1.u2fAuth = true;
         security.pam.services.systemd-run0.u2fAuth = true;
+
+        # Allow polkit-agent-helper to access FIDO/U2F devices (/dev/hidraw*)
+        # and read ~/.config/Yubico/u2f_keys when security.pam.u2f.enable is false.
+        systemd.services."polkit-agent-helper@".serviceConfig = {
+          PrivateDevices = false;
+          DeviceAllow = [
+            "/dev/urandom r"
+            "char-hidraw rw"
+          ];
+          ProtectHome = "read-only";
+        };
       };
   };
 }
