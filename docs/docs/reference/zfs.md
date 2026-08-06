@@ -120,6 +120,16 @@ documents how it handles if a device is missing; hint: it still works - that's t
 
 [See here how to automatically have the pool imported at boot, with passphrase](https://github.com/vorburger/nixfiles/commit/5fb545dae24cd7d7b68dfe6223b89d43bcf752c2).
 
+### Boot Acceleration via `zpool.cache`
+
+To prevent `zfs-import-<pool>.service` from delaying system boot by 43–60 seconds while probing for block devices during startup, ensure the pool cachefile is enabled:
+
+```bash
+sudo zpool set cachefile=/etc/zfs/zpool.cache bardioc
+```
+
+This creates `/etc/zfs/zpool.cache`, allowing `zfs-import-cache.service` to import `bardioc` in milliseconds during boot before `zfs-import-bardioc.service` runs.
+
 ## Replace
 
 It's faster, but not required, to replace a disk in a pool with all datasets unmounted.
