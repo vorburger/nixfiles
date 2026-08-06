@@ -51,6 +51,16 @@ This initial problem can be worked around by using `--build-host $HOSTNEW --use-
 
 This can be worked around by adding `--use-remote-sudo --ask-sudo-password` (and then entering the password when prompted).
 
+### Live activation / user unit failure on switch (`Activation (test) failed`)
+
+When `nrs` (`nh os switch`) fails during user/systemd unit activation (e.g. `warning: the following user units failed: gnome-session@gnome.target`), the build itself succeeded but live unit restarting failed.
+
+To make the new configuration active on next boot without failing on live unit restarts, use `boot` instead of `switch`:
+
+    nh os boot .
+
+(or `sudo nixos-rebuild boot --flake .`), then reboot the system.
+
 ## Alternatives
 
 - Clan: https://docs.clan.lol/guides/nixos-rebuild/
