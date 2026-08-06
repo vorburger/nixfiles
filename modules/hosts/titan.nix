@@ -36,6 +36,7 @@ mkHost {
         services.samba-extra.enable = true;
         services.zfs-extra.enable = true;
         services.zram.enable = true;
+        services.hello.enable = true;
         hardware.amdgpu.initrd.enable = true; # sets boot.initrd.kernelModules = ["amdgpu"];
 
         boot.initrd.availableKernelModules = [

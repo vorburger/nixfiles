@@ -30,6 +30,7 @@
     self.nixosModules.power
     self.nixosModules.samba-extra
     self.nixosModules.printing-extra
+    self.nixosModules.hello
   ];
 
   services.locale-ch.enable = lib.mkDefault true;
@@ -40,6 +41,7 @@
   services.fwupd-extra.enable = lib.mkDefault true;
   services.systemd-boot.enable = lib.mkDefault true;
   services.zram.enable = lib.mkDefault false;
+  services.hello.enable = lib.mkDefault false;
 
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
