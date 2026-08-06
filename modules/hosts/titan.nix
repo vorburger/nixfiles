@@ -33,7 +33,7 @@ mkHost {
         services.printing-extra.enable = false; # true for CUPS (but generally NOT required); see http://localhost:631
         services.gpg-with-yubikey.ssh = true;
         services.smart.enable = true;
-        services.samba-extra.enable = true;
+        services.samba-extra.enable = false;
         services.zfs-extra.enable = true;
         services.zram.enable = true;
         services.hello.enable = true;
