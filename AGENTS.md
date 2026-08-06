@@ -9,6 +9,7 @@
   So there is never any need to manually edit `fake.nix` to add or remove any `*.nix` files.
 
 - Whenever making changes to `*.nix` files, check if there is any related documentation under `docs/` that needs to be updated to match the changes.
+- All documentation Markdown files must be created inside `docs/docs/` (e.g., `docs/docs/reference/*.md`), NOT in the `docs/` root directory. When adding new documentation pages, always register them under the `nav:` section in `docs/mkdocs.yaml`.
 
 - If Nix is missing in the environment, install it using:
   `curl -L https://raw.github.com/vorburger/aifiles/main/skills/install-nix/scripts/install-nix.sh | sh && . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh`

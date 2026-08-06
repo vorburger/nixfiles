@@ -1,10 +1,18 @@
 {
   flake.nixosModules.personality-workstation =
-    { pkgs, inputs, ... }:
     {
+      pkgs,
+      inputs,
+      self,
+      ...
+    }:
+    {
+      imports = [
+        self.nixosModules.secrets
+      ];
+
       environment.systemPackages = [
         pkgs.lsof
-        pkgs.pass
         pkgs.pciutils
         pkgs.shellcheck
         pkgs.starship

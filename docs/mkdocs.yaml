@@ -11,7 +11,7 @@ nav:
       - tutorial/first-flake/index.md
       - tutorial/systems/index.md
       # TODO - tutorial/devShells/index.md
-      # TODO - tutorial/direnv.md
+      - tutorial/direnv.md
       - tutorial/home-manager.md
       - tutorial/testing-local-flakes.md
       # TODO - tutorial/flake-parts.md
@@ -39,6 +39,7 @@ nav:
       - reference/fprintd.md
       - reference/ssh-tpm-keygen.md
       - reference/yubikey.md
+      - reference/secrets.md
       - reference/wiki.md
       - reference/we.md
       - ToDo.md

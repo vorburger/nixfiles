@@ -41,6 +41,8 @@
             "*.fish"
             "*/.gitignore"
             "LICENSE"
+            "*.txt"
+            "*.age"
           ];
           formatter.sh = {
             command = "${pkgs.shfmt}/bin/shfmt";
