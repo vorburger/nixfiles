@@ -4,4 +4,15 @@ _: {
   flake-file.inputs.nix-fast-build.inputs.nixpkgs.follows = "nixpkgs";
   flake-file.inputs.nix-fast-build.inputs.flake-parts.follows = "flake-parts";
   flake-file.inputs.nix-fast-build.inputs.treefmt-nix.follows = "treefmt-nix";
+
+  perSystem =
+    { inputs', ... }:
+    {
+      packages.nix-fast-build = inputs'.nix-fast-build.packages.nix-fast-build.overrideAttrs (oldAttrs: {
+        postInstall = (oldAttrs.postInstall or "") + ''
+          substituteInPlace $out/lib/python*/site-packages/nix_fast_build/processes.py \
+            --replace 'if proc.returncode is not None:' 'if proc.returncode is None:'
+        '';
+      });
+    };
 }

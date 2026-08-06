@@ -8,8 +8,8 @@ in
     description = "extra Nix configuration (flakes, etc.)";
     content =
       {
-        inputs,
         pkgs,
+        self,
         ...
       }:
       {
@@ -32,7 +32,7 @@ in
           pkgs.dix # https://github.com/manic-systems/dix
           pkgs.nh # https://github.com/nix-community/nh
           pkgs.nix-output-monitor
-          inputs.nix-fast-build.packages.${pkgs.stdenv.hostPlatform.system}.nix-fast-build
+          self.packages.${pkgs.stdenv.hostPlatform.system}.nix-fast-build
         ];
       };
   };
