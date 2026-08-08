@@ -76,6 +76,11 @@ in
 
         networking.firewall.allowedTCPPorts = pkgs.lib.optionals cfg.openFirewall [ cfg.port ];
 
+        age.secrets.hello-secret = {
+          file = ../../secrets/hello-secret.age;
+          mode = "0444";
+        };
+
         systemd.services.hello = {
           description = "Hello HTTP Service";
           wantedBy = [ "multi-user.target" ];

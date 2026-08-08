@@ -40,6 +40,7 @@ nav:
       - reference/ssh-tpm-keygen.md
       - reference/yubikey.md
       - reference/age.md
+      - reference/secrets.md
       - reference/wiki.md
       - reference/we.md
       - ToDo.md

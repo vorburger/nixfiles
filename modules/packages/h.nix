@@ -6,6 +6,10 @@
         name = "h";
         text = ''
           echo "hello, world"
+          if [ -f /run/secrets/hello-secret ]; then
+            cat /run/secrets/hello-secret
+            echo ""
+          fi
         '';
       };
     in

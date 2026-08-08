@@ -31,6 +31,7 @@
     self.nixosModules.samba-extra
     self.nixosModules.printing-extra
     self.nixosModules.hello
+    self.nixosModules.secrets
   ];
 
   services.locale-ch.enable = lib.mkDefault true;
