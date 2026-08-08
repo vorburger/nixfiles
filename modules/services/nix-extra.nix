@@ -18,6 +18,19 @@ in
           "flakes"
         ];
 
+        nix.settings = {
+          # Build multiple derivation dependencies in parallel
+          max-jobs = "auto";
+
+          # Allow make (or ninja) inside each derivation to use all available CPU threads
+          # 0 uses all available cores!
+          cores = 0;
+
+          # Increase parallel HTTP connections for downloading binary cache substitutes
+          # 0 for unlimited (default is 25)
+          http-connections = 0;
+        };
+
         # Save space in /nix via hard-links using scheduled background optimization
         # (avoiding auto-optimise-store = true which slows down builds and switches synchronously)
         nix.optimise.automatic = true;
