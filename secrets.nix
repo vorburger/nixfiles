@@ -23,5 +23,5 @@ let
   ];
 in
 {
-  "secrets/hello-secret.age".publicKeys = allHosts;
+  "encrypted/hello-secret.age".publicKeys = allHosts;
 }

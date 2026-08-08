@@ -31,7 +31,7 @@ let
   allHosts = [ ixoHostKey userMasterKey ];
 in
 {
-  "secrets/hello-secret.age".publicKeys = allHosts;
+  "encrypted/hello-secret.age".publicKeys = allHosts;
 }
 ```
 
@@ -44,7 +44,7 @@ in
 ### Create or Edit a Secret File
 
 ```bash
-ragenix -e secrets/hello-secret.age
+ragenix -e encrypted/hello-secret.age
 ```
 
 This opens your `$EDITOR` securely, allowing you to edit the secret in cleartext. Upon saving, it re-encrypts the file automatically using the keys in `secrets.nix`.
@@ -72,7 +72,7 @@ In your NixOS module (e.g., `modules/services/hello.nix`):
 
 ```nix
 age.secrets.hello-secret = {
-  file = ../../secrets/hello-secret.age;
+  file = ../../encrypted/hello-secret.age;
   mode = "0444";
 };
 ```

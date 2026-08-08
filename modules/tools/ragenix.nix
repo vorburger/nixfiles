@@ -38,7 +38,7 @@ in
       environment.systemPackages = secretPackages pkgs pkgs.stdenv.hostPlatform.system;
 
       age.secrets.hello-secret = {
-        file = ../../secrets/hello-secret.age;
+        file = ../../encrypted/hello-secret.age;
         mode = "0444";
       };
 
