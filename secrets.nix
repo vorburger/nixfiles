@@ -13,7 +13,7 @@ let
 
     # User "Forever Recovery Access" from YubiKeys, or last-ressort file or even paper backed.
     # Required because Host SSH and User TPM keys are by their very nature ultimately more "ephemeral".
-    # TODO YubiKeys!!
+    "age1yubikey1qd5rn4s8d04pjkhqe4xq8nspc883gm7jnnk3pucsr33yg6eq00v9uq5tsas" # Portable YK
 
     # Note: ecdsa-sha2-nistp256 public keys from ssh-tpm-agent are NOT supported here;
     # above are thus either age-plugin-tpm or age-plugin-yubikey keys, only.
