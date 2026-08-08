@@ -62,14 +62,6 @@ in
                 EDITOR=nano VISUAL=nano command ragenix $argv
             end
         end
-
-        function rage --description 'rage wrapper passing default ~/.config/age/identities'
-            if test -f $HOME/.config/age/identities
-                command rage -i $HOME/.config/age/identities $argv
-            else
-                command rage $argv
-            end
-        end
       '';
     };
 }

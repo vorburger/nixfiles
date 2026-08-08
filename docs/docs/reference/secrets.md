@@ -50,9 +50,11 @@ ragenix -e encrypted/hello-secret.age
 This opens your `$EDITOR` securely, allowing you to edit the secret in cleartext. Upon saving, it re-encrypts the file automatically using the keys in `secrets.nix`.
 
 > **Note on User Identities in `nixfiles`**:
-> Standard `ragenix` and `rage` require passing `-i /path/to/identity` when decrypting if your user identity isn't stored in default SSH key paths.
+> Standard `ragenix` requires passing `-i /path/to/identity` when decrypting if your user identity isn't stored in default SSH key paths.
 >
-> In this repository's `nixfiles` environment, interactive Fish shell startup automatically defines wrapper functions for `ragenix` and `rage` that pass `-i $HOME/.config/age/identities` if that file exists. This allows non-root user shell execution of `ragenix -e`, `ragenix --rekey`, and `rage -d` without needing `sudo` or manual `-i` arguments.
+> In this repository's `nixfiles` environment, interactive Fish shell startup automatically defines a wrapper function for `ragenix` that passes `-i $HOME/.config/age/identities` if that file exists. This allows non-root user shell execution of `ragenix -e` and `ragenix --rekey` without needing `sudo` or manual `-i` arguments.
+>
+> **Why `rage` remains unaliased**: Encryption commands (`rage -e -r ...`) **cannot** receive `-i` identity files, as identity files contain private key material meant only for decryption. (Passing `-i` during encryption causes plugins like `age-plugin-tpm` to crash, see [Foxboron/age-plugin-tpm#46](https://github.com/Foxboron/age-plugin-tpm/issues/46)). `rage` is kept unaliased so standard `rage -e` encryption commands operate cleanly.
 
 ### Rekeying Secrets (e.g. after adding a new host key)
 
