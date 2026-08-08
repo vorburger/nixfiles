@@ -49,6 +49,11 @@ ragenix -e secrets/hello-secret.age
 
 This opens your `$EDITOR` securely, allowing you to edit the secret in cleartext. Upon saving, it re-encrypts the file automatically using the keys in `secrets.nix`.
 
+> **Note on User Identities in `nixfiles`**:
+> Standard `ragenix` and `rage` require passing `-i /path/to/identity` when decrypting if your user identity isn't stored in default SSH key paths.
+>
+> In this repository's `nixfiles` environment, interactive Fish shell startup automatically defines wrapper functions for `ragenix` and `rage` that pass `-i $HOME/.config/age/identities` if that file exists. This allows non-root user shell execution of `ragenix -e`, `ragenix --rekey`, and `rage -d` without needing `sudo` or manual `-i` arguments.
+
 ### Rekeying Secrets (e.g. after adding a new host key)
 
 When a new host key or master key is added to `secrets.nix`:

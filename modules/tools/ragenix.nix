@@ -42,12 +42,28 @@ in
         mode = "0444";
       };
 
-      # Ensure pinentry and age/rage passphrase UI can bind to the current terminal TTY
+      # Ensure pinentry can bind to the current TTY and define Fish wrappers for ragenix and rage
       environment.interactiveShellInit = ''
         export GPG_TTY=$(tty)
       '';
       programs.fish.interactiveShellInit = ''
         set -gx GPG_TTY (tty)
+
+        function ragenix --description 'ragenix wrapper passing default ~/.config/age/identities'
+            if test -f $HOME/.config/age/identities
+                command ragenix -i $HOME/.config/age/identities $argv
+            else
+                command ragenix $argv
+            end
+        end
+
+        function rage --description 'rage wrapper passing default ~/.config/age/identities'
+            if test -f $HOME/.config/age/identities
+                command rage -i $HOME/.config/age/identities $argv
+            else
+                command rage $argv
+            end
+        end
       '';
     };
 }

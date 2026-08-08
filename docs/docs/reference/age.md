@@ -11,6 +11,12 @@ To avoid confusion when using `age` and `rage`:
 - **Identity File** (`-i <file>`): Represents the **Identity** / key reference payload (`*-identity.txt` or `private-key.txt`). Used for **decryption**.
 - **Recipient File** (`-R <file>`) or **Recipient Address** (`-r <address>`): Contains one or more **Public Keys** (`tpm-public-key.txt`, `yubikey-public-key.txt`). Used for **encryption**.
 
+> **Standard Identity File Location (`~/.config/age/identities`)**:
+> `rage` and `age` CLI tools require passing explicit `-i /path/to/identity` arguments for custom key locations.
+> A common community convention is to append your user private key handles (such as TPM identities or YubiKey stubs) into `~/.config/age/identities`.
+>
+> In this repository's `nixfiles` environment, interactive Fish shell startup defines wrapper functions for `ragenix` and `rage` that pass `-i $HOME/.config/age/identities` if that file exists, enabling non-root CLI usage without manual `-i` flags.
+
 ---
 
 ## SSH Host Keys & `age` vs `rage`
