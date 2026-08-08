@@ -147,9 +147,39 @@ rage -d -i tpm-identity.txt secret.txt.age
 Insert your YubiKey and generate a new identity key, then print its recipient address:
 
 ```bash
-age-plugin-yubikey --generate
-age-plugin-yubikey --identity > yubikey-identity.txt
-age-plugin-yubikey --list > yubikey-public-key.txt
+$ age-plugin-yubikey --generate
+
+🎲 Generating key...
+
+Enter PIN for YubiKey with serial 9599730 (default is 123456): [hidden]
+
+✨ Your YubiKey is using the default PIN. Let's change it!
+✨ We'll also set the PUK equal to the PIN.
+
+🔐 The PIN can be numbers, letters, or symbols. Not just numbers!
+📏 The PIN must be at least 6 and at most 8 characters in length.
+❌ Your keys will be lost if the PIN and PUK are locked after 3 incorrect tries.
+
+Enter current PUK (default is 12345678): [hidden]
+Choose a new PIN/PUK: [hidden]
+
+✨ Your YubiKey is using the default management key.
+✨ We'll migrate it to a PIN-protected management key.
+... Success!
+
+🔏 Generating certificate...
+👆 Please touch the YubiKey
+#       Serial: 1234567, Slot: 1
+#         Name: age identity abcdefgh
+#      Created: Sat, 08 Aug 2026 22:09:57 +0000
+#   PIN policy: Once   (A PIN is required once per session, if set)
+# Touch policy: Always (A physical touch is required for every decryption)
+#    Recipient: age1yubikey1q...
+AGE-PLUGIN-YUBIKEY-...
+
+
+$ age-plugin-yubikey --identity > yubikey-identity.txt
+$ age-plugin-yubikey --list > yubikey-public-key.txt
 ```
 
 **How identity files work & System Wipes**:
