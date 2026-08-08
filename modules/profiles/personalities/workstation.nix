@@ -8,7 +8,7 @@
     }:
     {
       imports = [
-        self.nixosModules.secrets
+        self.nixosModules.ragenix
       ];
 
       environment.systemPackages = [

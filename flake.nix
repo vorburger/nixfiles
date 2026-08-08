@@ -64,7 +64,10 @@
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
     ragenix = {
       url = "github:yaxitech/ragenix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        agenix.inputs.home-manager.follows = "home-manager";
+        nixpkgs.follows = "nixpkgs";
+      };
     };
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
@@ -72,7 +75,11 @@
     };
     vorburger-dotfiles = {
       url = "github:vorburger/dotfiles?dir=dotfiles/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        home-manager.follows = "home-manager";
+        nix-index-database.follows = "nix-index-database";
+        nixpkgs.follows = "nixpkgs";
+      };
     };
   };
 }

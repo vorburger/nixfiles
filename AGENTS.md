@@ -13,3 +13,7 @@
 
 - If Nix is missing in the environment, install it using:
   `curl -L https://raw.github.com/vorburger/aifiles/main/skills/install-nix/scripts/install-nix.sh | sh && . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh`
+
+- **Flake Inputs & Follows**:
+  - Always declare new flake inputs in the appropriate `modules/**/*.nix` file using `flake-file.inputs.<name> = { url = "..."; ... };` instead of editing `flake.nix` directly. Running `nix run .#write-flake` will auto-generate `flake.nix`.
+  - Always override sub-dependencies (like `nixpkgs`, `home-manager`, `systems`) in flake inputs with `inputs.<dep>.follows = "<dep>";` to prevent duplicate lockfile dependencies and keep builds lean.

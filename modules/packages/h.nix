@@ -9,6 +9,8 @@
           if [ -f /run/secrets/hello-secret ]; then
             cat /run/secrets/hello-secret
             echo ""
+          else
+            echo "MISSING /run/secrets/hello-secret"
           fi
         '';
       };

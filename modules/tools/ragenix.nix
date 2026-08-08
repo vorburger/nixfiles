@@ -2,6 +2,7 @@
 let
   secretPackages = pkgs: system: [
     pkgs.rage
+    pkgs.ssh-to-age
     pkgs.age-plugin-tpm
     pkgs.age-plugin-yubikey
     inputs.ragenix.packages.${system}.default
@@ -12,7 +13,10 @@ in
 {
   flake-file.inputs.ragenix = {
     url = "github:yaxitech/ragenix";
-    inputs.nixpkgs.follows = "nixpkgs";
+    inputs = {
+      nixpkgs.follows = "nixpkgs";
+      agenix.inputs.home-manager.follows = "home-manager";
+    };
   };
 
   perSystem =
@@ -23,12 +27,20 @@ in
       };
     };
 
-  flake.nixosModules.secrets =
+  flake.nixosModules.ragenix =
     { pkgs, ... }:
     {
       imports = [ inputs.ragenix.nixosModules.default ];
 
+      age.ageBin = "${pkgs.rage}/bin/rage";
+      age.secretsDir = "/run/secrets";
+
       environment.systemPackages = secretPackages pkgs pkgs.stdenv.hostPlatform.system;
+
+      age.secrets.hello-secret = {
+        file = ../../secrets/hello-secret.age;
+        mode = "0444";
+      };
 
       # Ensure pinentry and age/rage passphrase UI can bind to the current terminal TTY
       environment.interactiveShellInit = ''

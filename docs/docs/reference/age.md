@@ -13,6 +13,16 @@ To avoid confusion when using `age` and `rage`:
 
 ---
 
+## SSH Host Keys & `age` vs `rage`
+
+When using SSH host keys (`/etc/ssh/ssh_host_ed25519_key`) as decryption identities:
+
+1. **`age` (Go implementation)**: Supports raw OpenSSH public keys (`ssh-ed25519 AAAAC3...`) directly as recipients (`-r "ssh-ed25519 AAAAC3..."`) and decrypts natively with `-i /etc/ssh/ssh_host_ed25519_key`.
+2. **`ragenix` / `agenix`**: Configures `secrets/secrets.nix` with raw `ssh-ed25519 AAAAC3...` public key strings. During system activation, `ragenix` uses `age`/`rage` to decrypt `/run/secrets/` directly using the system host key.
+3. **`ssh-to-age`**: Converts an OpenSSH public key into a native X25519 `age1...` address. Note that converting to `age1...` recipient format requires converting the private key with `ssh-to-age -k` for manual decryption via `rage -d`. Using raw `ssh-ed25519 AAAAC3...` strings in `secrets.nix` is the standard convention for NixOS activation.
+
+---
+
 ## 1. Passphrase Encryption
 
 Passphrase-based encryption prompts for a password interactively during encryption and decryption. No key files or hardware tokens are required.
