@@ -42,18 +42,24 @@ in
         mode = "0444";
       };
 
-      # Ensure pinentry can bind to the current TTY and define Fish wrappers for ragenix and rage
+      # Ensure pinentry can bind to the current TTY and define Fish wrappers for ragenix, rage, and pass
       environment.interactiveShellInit = ''
         export GPG_TTY=$(tty)
       '';
       programs.fish.interactiveShellInit = ''
         set -gx GPG_TTY (tty)
 
-        function ragenix --description 'ragenix wrapper passing default ~/.config/age/identities'
+        # Force using only nano as editor, because e.g. VSC (code) may leak secrets to AI APIs.
+
+        function pass --description 'pass wrapper ensuring nano is always used as editor'
+            EDITOR=nano VISUAL=nano command pass $argv
+        end
+
+        function ragenix --description 'ragenix wrapper passing default ~/.config/age/identities and using nano editor'
             if test -f $HOME/.config/age/identities
-                command ragenix -i $HOME/.config/age/identities $argv
+                EDITOR=nano VISUAL=nano command ragenix -i $HOME/.config/age/identities $argv
             else
-                command ragenix $argv
+                EDITOR=nano VISUAL=nano command ragenix $argv
             end
         end
 
