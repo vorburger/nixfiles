@@ -16,22 +16,22 @@ For lower-level commands and key generation details for `rage`, TPM, and YubiKey
 
 ---
 
-## 1. Secrets Directory & `secrets.nix`
+## 1. Root `secrets.nix` & Secret Rules
 
-Secret rules are defined in `secrets/secrets.nix`:
+Secret rules are defined in `secrets.nix` at the repository root:
 
 ```nix
 let
   # Host SSH public keys (use raw `ssh-ed25519 AAAAC3...` string)
   ixoHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPobJWkfYiOfQ/dfIz6HYY9LooERxuxXBQGE+oBxQpPH";
 
-  # Admin / Master recovery keys (YubiKey or Personal TPM key)
-  userMasterKey = "age1q57l6ph65sfd3x7ltahjumns8uamtsyz6eg3ek79kass4phkrf8s82u0px";
+  # Admin / Master recovery keys (Personal TPM key - use age1tpm1... format due to yaxitech/ragenix#170)
+  userMasterKey = "age1tpm1qt0wrxgpsmxq6s29wydwrc4hedg3mpn6utl5e8adrnmau5f4udghvs66e5k";
 
   allHosts = [ ixoHostKey userMasterKey ];
 in
 {
-  "hello-secret.age".publicKeys = allHosts;
+  "secrets/hello-secret.age".publicKeys = allHosts;
 }
 ```
 

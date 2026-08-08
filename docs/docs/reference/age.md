@@ -94,12 +94,19 @@ rage -d -i private-key.txt secret.txt.age
 
 ### Key Generation
 
-Generate the TPM identity file (`-g`) and convert it to a recipient public key (`-y` reading from input file `-o`):
+Generate the TPM identity file sealed with a PIN/passphrase (`-g -p`) and convert it to a recipient public key (`-y` reading from input file `-o`):
 
 ```bash
-age-plugin-tpm -g -o tpm-identity.txt
-age-plugin-tpm -y -o tpm-public-key.txt tpm-identity.txt
+age-plugin-tpm -g -p -o tpm-identity.txt
+# Export recipient in age1tpm1... format (required for ragenix due to https://github.com/yaxitech/ragenix/issues/170)
+age-plugin-tpm --tpm-recipient -y -o tpm-public-key.txt tpm-identity.txt
 ```
+
+> **Important Note for `ragenix` / `secrets.nix`**:
+> When generating TPM recipient public keys for use in `secrets.nix`, always use `age-plugin-tpm --tpm-recipient -y ...` to export the recipient in `age1tpm1...` format. The default `age1tag1...` (`p256tag`) format is currently not handled correctly during `ragenix` rekeying ([yaxitech/ragenix#170](https://github.com/yaxitech/ragenix/issues/170)).
+
+> **PIN / Passphrase Security Requirement**:
+> Always supply the `-p` / `--pin` flag when generating a TPM key. Without `-p`, any unprivileged process running under your user shell could silently ask the TPM chip to unseal and decrypt age secrets. With `-p`, `age-plugin-tpm` triggers a graphical/terminal `pinentry` prompt requiring human confirmation before the TPM releases the key.
 
 **How identity files work & System Wipes**:
 
