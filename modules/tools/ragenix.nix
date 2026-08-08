@@ -57,9 +57,19 @@ in
 
         function ragenix --description 'ragenix wrapper passing default ~/.config/age/identities and using nano editor'
             if test -f $HOME/.config/age/identities
+                echo "(ragenix wrapper automatically using -i $HOME/.config/age/identities)" >&2
                 EDITOR=nano VISUAL=nano command ragenix -i $HOME/.config/age/identities $argv
             else
                 EDITOR=nano VISUAL=nano command ragenix $argv
+            end
+        end
+
+        function raged --description 'rage decryption helper passing default ~/.config/age/identities'
+            if test -f $HOME/.config/age/identities
+                command rage -d -i $HOME/.config/age/identities $argv
+            else
+                echo "raged: Error: identity file $HOME/.config/age/identities does not exist" >&2
+                return 1
             end
         end
       '';
