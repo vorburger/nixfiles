@@ -39,7 +39,7 @@ nav:
       - reference/fprintd.md
       - reference/ssh-tpm-keygen.md
       - reference/yubikey.md
-      - reference/secrets.md
+      - reference/age.md
       - reference/wiki.md
       - reference/we.md
       - ToDo.md
