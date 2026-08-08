@@ -192,7 +192,7 @@ $ age-plugin-yubikey --list > yubikey-public-key.txt
 `age-plugin-yubikey` outputs age recipient addresses (`age1yubikey1...`). Encrypt using `-r` with the recipient address (or `-R` with a recipient file containing `age1yubikey...` addresses):
 
 ```bash
-rage -r $(cat yubikey-public-key.txt) -o secret.txt.age secret.txt
+rage -e -r $(cat yubikey-public-key.txt) -o secret.txt.age secret.txt
 ```
 
 ### Decrypt
