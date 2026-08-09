@@ -200,3 +200,35 @@ rage -d -i yubikey-identity.txt secret.txt.age
 ```
 
 When decrypting, `rage` will prompt for your YubiKey PIN and require physical touch on the YubiKey hardware button.
+
+---
+
+## Troubleshooting
+
+### PC/SC Security Violation Error with YubiKey over SSH
+
+When running `age-plugin-yubikey -l` or decrypting with a YubiKey over an SSH session, you may encounter an error such as:
+
+```text
+$ age-plugin-yubikey -l
+Error: Error while communicating with YubiKey: PC/SC error: Access was denied because of a security violation
+Cause: Access was denied because of a security violation
+```
+
+**Cause**:
+
+Smart card readers and CCID daemons (`pcscd`) rely on `polkit` and `systemd-logind` session authorization for access control.
+
+- When logged into a **local desktop/terminal session** (`seat0`), `systemd-logind` classifies your session as `Remote=no`. Polkit's default policy (`org.debian.pcsc-lite.access_pcsc` / `access_card`) automatically allows active local users access to hardware tokens.
+- When connected over **SSH**, `systemd-logind` classifies the session as `Remote=yes`. Polkit denies PC/SC access to remote sessions by default to prevent remote SSH users from unauthorized access to physically plugged-in YubiKeys.
+
+**Verification**:
+
+Verify how `systemd-logind` classifies your current session:
+
+```bash
+loginctl show-session $XDG_SESSION_ID
+```
+
+- **Local terminal:** `Remote=no`, `Seat=seat0`
+- **SSH terminal:** `Remote=yes`, `Seat=`
