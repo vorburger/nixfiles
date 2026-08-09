@@ -20,6 +20,6 @@
   # Host SSH Public Keys (OpenSSH format)
   hostKeys = {
     ixo = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPobJWkfYiOfQ/dfIz6HYY9LooERxuxXBQGE+oBxQpPH";
-    # titan = "ssh-ed25519 AAAAC3..."; # TODO Add titan host SSH key when generated
+    titan = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDaWEMW3J3uusXtUhvzd/enp8bhb+U0QpbZeobkcJOnb";
   };
 }
