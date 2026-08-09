@@ -53,28 +53,6 @@ lib.recursiveUpdate secret {
           "GOOGLE_APPLICATION_CREDENTIALS=/run/secrets/caddy-gcp-sa"
           "GCP_APPLICATION_CREDENTIALS=/run/secrets/caddy-gcp-sa"
         ];
-
-        # DNS
-        services.coredns = {
-          enable = true;
-          config = ''
-            . {
-              hosts {
-                # TODO Automagically add all virtualHosts!
-                # TODO Use "IP of host", instead of hard-coding 192.168.1.99...
-                192.168.1.99 hello.home.vorburger.ch vorbflix.home.vorburger.ch
-                fallthrough
-              }
-              # TODO Use "IP of network's default DNS", instead of hard-coding 192.168.1.1...
-              forward . 192.168.1.1 # Forward everything else to upstream
-            }
-          '';
-        };
-        # Use our very own DNS server (CoreDNS, above) for all lookups,
-        # so that we can resolve our own local hostnames (like hello.home.vorburger.ch).
-        # Alternatively, configure this host's IP on the home router's DHCP DNS setting.
-        # This works for networkmanager from networking-extra.nix, but needs to be changed if we're ever switching to systemd-resolved or other.
-        networking.nameservers = [ "127.0.0.1" ];
       };
   };
 }
