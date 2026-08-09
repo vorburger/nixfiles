@@ -27,8 +27,6 @@
 
       checks.h = h;
 
-      devshells.default = {
-        devshell.packages = [ h ];
-      };
+      # Do *NOT* expose it *ALSO* via DevShell, because that's too confusing: devshells.default = { devshell.packages = [ h ]; };
     };
 }
