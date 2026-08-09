@@ -20,6 +20,14 @@ in
           PubkeyAuthentication yes
       '';
 
+      services.openssh.hostKeys = [
+        # Do not generate an RSA SSH host key, only an Ed25519 key.
+        {
+          path = "/etc/ssh/ssh_host_ed25519_key";
+          type = "ed25519";
+        }
+      ];
+
       networking.firewall.allowedTCPPorts = [ 22 ];
     };
   };
