@@ -134,10 +134,10 @@ in
 
         function ragenix --description 'ragenix wrapper passing default ~/.config/age/identities and using nano editor'
             if test -f $HOME/.config/age/identities
-                echo "(ragenix wrapper automatically using -f secrets/rules.nix -i $HOME/.config/age/identities)" >&2
-                EDITOR=nano VISUAL=nano command ragenix -f secrets/rules.nix -i $HOME/.config/age/identities $argv
+                echo "(ragenix wrapper automatically using --rules secrets/rules.nix -i $HOME/.config/age/identities)" >&2
+                EDITOR=nano VISUAL=nano command ragenix --rules secrets/rules.nix -i $HOME/.config/age/identities $argv
             else
-                EDITOR=nano VISUAL=nano command ragenix -f secrets/rules.nix $argv
+                EDITOR=nano VISUAL=nano command ragenix --rules secrets/rules.nix $argv
             end
         end
 
