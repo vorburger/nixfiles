@@ -57,7 +57,22 @@ in
 
 ---
 
-## 2. Onboarding a New Host (e.g. `titan`)
+## 2. Adding a New Key
+
+1. Pull out any other previous YK
+1. Generate Key Identity; e.g. `age-plugin-yubikey`
+1. Edit `secrets/identities.nix` to add it in there
+1. Run `nix run .#write-recipients` to update `secrets/recipients.nix`
+1. Plug in previous registered YK (so now BOTH YKs are in)
+1. Run `ragenix --rekey` to update all `secrets/encrypted/*.age`, type PIN of previous YK
+1. Pull out any other previous YK
+1. Commit: `git commit -a -m "secrets: Add 🔑 Key"`
+1. Switch: `nh os switch .`
+1. Test with `raged secrets/encrypted/hello-secret.age`
+1. Test with `h`
+1. Push
+
+## 3. Onboarding a New Host (e.g. `titan`)
 
 When setting up a brand-new host machine (`titan`), system activation during `nixos-rebuild switch` will initially fail to decrypt secrets if `titan`'s host SSH key has not yet been added to `secrets/identities.nix` and re-encrypted into the `.age` files.
 
@@ -126,7 +141,7 @@ If no other active workstation is up and running, you can onboard directly on `t
 
 ---
 
-## 3. Managing Secrets with `ragenix` CLI
+## 4. Managing Secrets with `ragenix` CLI
 
 `ragenix` CLI is available in the default `devShell` and on all NixOS hosts running `nixfiles`.
 
@@ -154,7 +169,7 @@ When a new host key or master key is added to `secrets/identities.nix`:
 
 ---
 
-## 4. Using Secrets in NixOS Modules
+## 5. Using Secrets in NixOS Modules
 
 Import `ragenix` via `self.nixosModules.ragenix` (or automatically via `modules/hosts/_common.nix`).
 
@@ -171,7 +186,7 @@ NixOS will automatically decrypt the file to `/run/secrets/hello-secret` at runt
 
 ---
 
-## 5. Demo: `h` CLI
+## 6. Demo: `h` CLI
 
 The `h` CLI tool (`modules/packages/h.nix`) checks for `/run/secrets/hello-secret`:
 

@@ -6,5 +6,6 @@
     ixo-tpm = "age1tpm1qt0wrxgpsmxq6s29wydwrc4hedg3mpn6utl5e8adrnmau5f4udghvs66e5k";
     portable-yubikey-9599730 = "age1yubikey1qd5rn4s8d04pjkhqe4xq8nspc883gm7jnnk3pucsr33yg6eq00v9uq5tsas";
     titan = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDaWEMW3J3uusXtUhvzd/enp8bhb+U0QpbZeobkcJOnb";
+    titan-yubikey-10300902 = "age1yubikey1q2srzzljuztqwy93v0tpalk9h6feu9sqzpp2q5ldvrcnaj9gmwlvumytux3";
   };
 }
