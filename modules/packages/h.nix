@@ -1,11 +1,12 @@
-{
-  flake.nixosModules.h = {
-    age.secrets.hello = {
-      file = ../../secrets/encrypted/hello.age;
-      mode = "0444";
-    };
-  };
-
+let
+  inherit (import ../../lib/mk-secret.nix) mkSecret;
+in
+mkSecret {
+  name = "hello";
+  moduleName = "h";
+  mode = "0444";
+}
+// {
   perSystem =
     { pkgs, ... }:
     let

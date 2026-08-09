@@ -44,16 +44,20 @@ nix run .#write-recipients
 
 ### `secrets/rules.nix`
 
-`secrets/rules.nix` imports `recipients.nix` and assigns public recipient keys to encrypted files:
+`secrets/rules.nix` dynamically collects `flake.secretRules` declarations defined across `modules/**/*.nix` (e.g., `modules/packages/h.nix`). Feature modules can use the `mkSecret` helper (`lib/mk-secret.nix`) to declare their secrets and rules compactly:
 
 ```nix
 let
-  keys = (import ./recipients.nix).recipients;
+  inherit (import ../../lib/mk-secret.nix) mkSecret;
 in
-{
-  "encrypted/hello-secret.age".publicKeys = builtins.attrValues keys;
+mkSecret {
+  name = "hello";
+  moduleName = "h";
+  mode = "0444";
 }
 ```
+
+When evaluated by `ragenix`, `secrets/rules.nix` imports `recipients.nix` and merges all secret recipient rules (defaulting to encrypting to all `recipients`).
 
 ---
 
@@ -179,18 +183,20 @@ When a new host key or master key is added to `secrets/identities.nix`:
 
 Import `ragenix` via `self.nixosModules.ragenix` (or automatically via `modules/hosts/_common.nix`).
 
-In your NixOS module (e.g., `modules/packages/h.nix`):
+In your module (e.g., `modules/packages/h.nix`), use `mkSecret` (`lib/mk-secret.nix`):
 
 ```nix
-flake.nixosModules.h = {
-  age.secrets.hello-secret = {
-    file = ../../secrets/encrypted/hello-secret.age;
-    mode = "0444";
-  };
-};
+let
+  inherit (import ../../lib/mk-secret.nix) mkSecret;
+in
+mkSecret {
+  name = "hello";
+  moduleName = "h";
+  mode = "0444";
+}
 ```
 
-NixOS will automatically decrypt the file to `/run/secrets/hello-secret` at runtime.
+NixOS will automatically decrypt the file to `/run/secrets/hello` at runtime.
 
 ---
 
