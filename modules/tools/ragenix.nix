@@ -40,26 +40,48 @@ in
 
               echo "Dynamically deriving recipients from secrets/identities.nix..."
 
-              # Evaluate secrets/identities.nix dynamically using nix-instantiate
-              nix-instantiate --eval --strict --json -E '
-                let
-                  data = import "'"$ROOT_DIR"'/secrets/identities.nix";
-                  hosts = data.hostKeys;
+              # 1. Export JSON map of identities and hostKeys from identities.nix
+              nix-instantiate --eval --strict --json -E '(import "'"$ROOT_DIR"'/secrets/identities.nix")' > "$ROOT_DIR/scratch_identities.json"
 
-                  extractRecipient = name: text:
-                    let
-                      lines = builtins.split "\n" text;
-                      matching = builtins.filter (l: builtins.isString l && builtins.match ".*Recipient: age1.*" l != null) lines;
-                    in
-                    if matching != [] then
-                      builtins.elemAt (builtins.match ".*Recipient: (age1[a-z0-9]+).*" (builtins.elemAt matching 0)) 0
-                    else
-                      null;
+              # 2. Process each identity using age-plugin-tpm -y, comments, or host keys
+              PYTHON_PARSER='
+              import json, sys, subprocess, re
 
-                  derivedIdentities = builtins.mapAttrs extractRecipient data.identities;
-                in
-                derivedIdentities // hosts
-              ' > "$ROOT_DIR/scratch_recipients.json"
+              data = json.load(open("'$ROOT_DIR'/scratch_identities.json"))
+              identities = data.get("identities", {})
+              host_keys = data.get("hostKeys", {})
+              recipients = {}
+
+              for name, text in identities.items():
+                  rec = None
+                  # First try extracting from comment block (# Recipient: age1...)
+                  m = re.search(r"#\s*Recipient:\s*(age1[a-z0-9]+)", text, re.IGNORECASE)
+                  if m:
+                      rec = m.group(1)
+                  else:
+                      # Run age-plugin-tpm -y to convert TPM identities dynamically
+                      try:
+                          res = subprocess.run(
+                              ["${pkgs.age-plugin-tpm}/bin/age-plugin-tpm", "-y", "--tpm-recipient", "-o", "-"],
+                              input=text.encode(),
+                              stdout=subprocess.PIPE,
+                              stderr=subprocess.PIPE,
+                              check=True
+                          )
+                          rec = res.stdout.decode().strip()
+                      except Exception:
+                          rec = None
+                  recipients[name] = rec
+
+              # Add host SSH public keys directly
+              for name, key in host_keys.items():
+                  recipients[name] = key
+
+              json.dump(recipients, open("'$ROOT_DIR'/scratch_recipients.json", "w"))
+              '
+
+              ${pkgs.python3}/bin/python3 -c "$PYTHON_PARSER"
+              rm -f "$ROOT_DIR/scratch_identities.json"
 
               # Fail-fast validation: Ensure no key evaluated to null or empty
               NULL_KEYS="$(${pkgs.jq}/bin/jq -r 'to_entries[] | select(.value == null or .value == "") | .key' "$ROOT_DIR/scratch_recipients.json")"
@@ -68,7 +90,7 @@ in
                 echo "ERROR: Could not derive recipient public keys for the following identities in secrets/identities.nix:" >&2
                 echo "$NULL_KEYS" | sed 's/^/  - /' >&2
                 echo "" >&2
-                echo "Please ensure identities in secrets/identities.nix include their comment block containing '# Recipient: age1...' or a valid recipient string." >&2
+                echo "Please ensure TPM identities can be converted via age-plugin-tpm or identities contain a '# Recipient: age1...' comment block." >&2
                 rm -f "$ROOT_DIR/scratch_recipients.json"
                 exit 1
               fi
