@@ -13,7 +13,7 @@ To avoid confusion when using `age` and `rage`:
 
 > **Standard Identity File Location (`~/.config/age/identities`)**:
 > `rage` and `age` CLI tools require passing explicit `-i /path/to/identity` arguments for custom key locations during decryption.
-> For details on how `nixfiles` handles default identity loading via the `ragenix` wrapper and `raged` Fish alias while keeping `rage` unaliased, see [Secrets Documentation - User Identities](secrets.md#2-managing-secrets-with-ragenix-cli).
+> For details on how `nixfiles` handles default identity loading via the `ragenix` wrapper and `raged` Fish alias while keeping `rage` unaliased, see [Secrets Documentation - User Identities](secrets.md#4-managing-secrets-with-ragenix-cli).
 
 ---
 

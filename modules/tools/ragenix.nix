@@ -3,16 +3,18 @@ let
   identitiesData = import ../../secrets/identities.nix;
 
   # Filter identities for the host:
-  # - Global identities (e.g. YubiKeys without host suffix) deployed everywhere.
-  # - Machine TPM identities deployed ONLY on their matching host (e.g. ixo-tpm only on ixo).
+  # - Host-specific identities (e.g. titan-yubikey-*, ixo-tpm) deployed ONLY on their matching host.
+  # - Portable identities (e.g. portable-yubikey-*) deployed on all hosts, but placed AFTER host-specific ones.
   hostIdentitiesText =
     hostName:
     let
-      filtered = lib.filterAttrs (
-        name: _: !lib.hasSuffix "-tpm" name || lib.hasPrefix hostName name
+      hostSpecific = lib.filterAttrs (
+        name: _: lib.hasPrefix "${hostName}-" name
       ) identitiesData.identities;
+      portable = lib.filterAttrs (name: _: lib.hasPrefix "portable-" name) identitiesData.identities;
+      orderedValues = builtins.attrValues hostSpecific ++ builtins.attrValues portable;
     in
-    builtins.concatStringsSep "\n\n" (builtins.attrValues filtered);
+    builtins.concatStringsSep "\n\n" orderedValues;
 
   secretPackages = pkgs: system: [
     pkgs.rage

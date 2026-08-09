@@ -1,10 +1,12 @@
+# TODO: Look into organizing identities.nix keyed by hosts instead of a flat identities attribute set.
+#
 # Machine-readable identity handles and host public keys.
 # Identity handles (identities) are used to populate ~/.config/age/identities for decryption.
 # Host SSH keys (hostKeys) are used by NixOS activation to decrypt secrets via /etc/ssh/ssh_host_ed25519_key.
 {
   # User hardware / plugin identities (identity handles)
-  # - Global identities (e.g. portable YubiKeys) are deployed to all hosts.
-  # - Host-specific TPM identities are deployed ONLY to their respective host (e.g. ixo-tpm only on ixo).
+  # - Host-specific identities (prefixed with `<host>-`, e.g. titan-yubikey-*, ixo-tpm) are deployed ONLY to their respective host.
+  # - Portable identities (prefixed with `portable-`, e.g. portable-yubikey-*) are deployed to all hosts, but placed AFTER host-specific ones in ~/.config/age/identities.
   identities = {
     # Recipients are still required for all YK, see https://github.com/str4d/age-plugin-yubikey/issues/240
 
