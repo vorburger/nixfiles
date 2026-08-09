@@ -102,7 +102,7 @@ in
                 recipients = {
               EOF
 
-              ${pkgs.jq}/bin/jq -r 'to_entries[] | "    \(.key) = \"\(.value)\";"' "$ROOT_DIR/scratch_recipients.json" >> "$RECIPIENTS_FILE"
+              ${pkgs.jq}/bin/jq -r 'to_entries | sort_by(.key)[] | "    \(.key) = \"\(.value)\";"' "$ROOT_DIR/scratch_recipients.json" >> "$RECIPIENTS_FILE"
               rm -f "$ROOT_DIR/scratch_recipients.json"
 
               cat <<'EOF' >> "$RECIPIENTS_FILE"
