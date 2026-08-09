@@ -37,6 +37,7 @@ mkHost {
         services.zfs-extra.enable = true;
         services.zram.enable = true;
         services.hello.enable = true;
+        services.caddy-extra.enable = true;
         hardware.amdgpu.initrd.enable = true; # sets boot.initrd.kernelModules = ["amdgpu"];
 
         boot.initrd.availableKernelModules = [
