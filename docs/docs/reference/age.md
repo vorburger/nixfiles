@@ -232,3 +232,49 @@ loginctl show-session $XDG_SESSION_ID
 
 - **Local terminal:** `Remote=no`, `Seat=seat0`
 - **SSH terminal:** `Remote=yes`, `Seat=`
+
+### No Output from `age-plugin-yubikey -l`
+
+If `age-plugin-yubikey -l` completes without printing any identities or errors, no age key has been generated on the YubiKey yet.
+
+**Resolution**:
+
+Generate a new identity key on your YubiKey:
+
+```bash
+age-plugin-yubikey --generate
+```
+
+---
+
+### `age-plugin-yubikey --generate` Timeout or Hanging (Disabled PIV Interface)
+
+When running `age-plugin-yubikey --generate`, if it hangs on `⏳ Please insert the YubiKey.` even though your YubiKey is plugged in, and eventually fails with:
+
+```text
+Error: Timed out while waiting for a YubiKey to be inserted.
+```
+
+**Cause**:
+
+The PIV interface on your YubiKey may be disabled over USB.
+
+**Verification**:
+
+Check enabled USB applications using `ykman`:
+
+```bash
+ykman info
+```
+
+Check if `PIV` is listed under enabled USB applications.
+
+**Resolution**:
+
+Enable the PIV application over USB:
+
+```bash
+ykman config usb --enable PIV
+```
+
+Related: [str4d/age-plugin-yubikey#238](https://github.com/str4d/age-plugin-yubikey/issues/238)
