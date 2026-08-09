@@ -33,7 +33,7 @@ secrets/
 
 - **`secrets/identities.nix`**: Human-edited source of truth containing named decryption identity handles (`portable-yubikey`, `ixo-tpm`) and OpenSSH host keys (`ixo`, `titan`).
 - **`secrets/recipients.nix`**: Auto-generated recipient map (`nix run .#write-recipients`) imported by `secrets/rules.nix`.
-- **`secrets/rules.nix`**: Evaluated by `ragenix` (`ragenix -f secrets/rules.nix`).
+- **`secrets/rules.nix`**: Evaluated by `ragenix` (`ragenix --rules secrets/rules.nix`).
 
 To regenerate `recipients.nix` dynamically after editing `secrets/identities.nix`:
 
@@ -56,7 +56,57 @@ in
 
 ---
 
-## 2. Managing Secrets with `ragenix` CLI
+## 2. Onboarding a New Host (e.g. `titan`)
+
+When setting up a brand-new host machine (`titan`), system activation during `nixos-rebuild switch` will initially fail to decrypt secrets if `titan`'s host SSH key has not yet been added to `secrets/identities.nix` and re-encrypted into the `.age` files.
+
+Follow these 3 quick onboarding steps on the new host (with your YubiKey plugged in):
+
+### Step 1: Add the Host's SSH Public Key to `secrets/identities.nix`
+
+On the new host (`titan`), view its SSH host public key:
+
+```bash
+cat /etc/ssh/ssh_host_ed25519_key.pub
+```
+
+_(If the file does not exist yet, generate it via `sudo ssh-keygen -A`)._
+
+Add the public key to `hostKeys` inside `secrets/identities.nix`:
+
+```nix
+  hostKeys = {
+    ixo = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPobJWkfYiOfQ/dfIz6HYY9LooERxuxXBQGE+oBxQpPH";
+    titan = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI..."; # titan host key
+  };
+```
+
+### Step 2: Regenerate Recipients & Rekey Secrets
+
+Because `secrets/identities.nix` automatically provisions `~/.config/age/identities` for your user, your YubiKey identity handle is already active!
+
+Run the recipient generator and rekey the secret files:
+
+```bash
+nix run .#write-recipients
+ragenix --rekey
+```
+
+When prompted for your YubiKey PIN and touch, `ragenix` will decrypt the `.age` secret files and re-encrypt them with `titan`'s new host key added to the recipient list.
+
+### Step 3: Commit and Switch
+
+Commit the updated `secrets/identities.nix`, `secrets/recipients.nix`, and `secrets/encrypted/*.age` files to git, and complete the switch:
+
+```bash
+nixos-rebuild switch
+```
+
+System activation will now decrypt `/run/secrets/*` cleanly using `/etc/ssh/ssh_host_ed25519_key`!
+
+---
+
+## 3. Managing Secrets with `ragenix` CLI
 
 `ragenix` CLI is available in the default `devShell` and on all NixOS hosts running `nixfiles`.
 
@@ -69,7 +119,7 @@ ragenix -e secrets/encrypted/hello-secret.age
 This opens your `$EDITOR` securely, allowing you to edit the secret in cleartext. Upon saving, it re-encrypts the file automatically using the keys in `secrets/rules.nix`.
 
 > **Note on User Identities and `ragenix` wrapper**:
-> The `ragenix` Fish shell alias automatically passes `-f secrets/rules.nix` and `-i $HOME/.config/age/identities` if available.
+> The `ragenix` Fish shell alias automatically passes `--rules secrets/rules.nix` and `-i $HOME/.config/age/identities` if available.
 >
 > **Why `rage` remains unaliased**: Encryption commands (`rage -e -r ...`) **cannot** receive `-i` identity files, as identity files contain private key material meant only for decryption. (Passing `-i` during encryption causes plugins like `age-plugin-tpm` to crash, see [Foxboron/age-plugin-tpm#46](https://github.com/Foxboron/age-plugin-tpm/issues/46)). `rage` is kept unaliased so standard `rage -e` encryption commands operate cleanly.
 >
@@ -84,7 +134,7 @@ When a new host key or master key is added to `secrets/identities.nix`:
 
 ---
 
-## 3. Using Secrets in NixOS Modules
+## 4. Using Secrets in NixOS Modules
 
 Import `ragenix` via `self.nixosModules.ragenix` (or automatically via `modules/hosts/_common.nix`).
 
@@ -101,7 +151,7 @@ NixOS will automatically decrypt the file to `/run/secrets/hello-secret` at runt
 
 ---
 
-## 4. Demo: `h` CLI
+## 5. Demo: `h` CLI
 
 The `h` CLI tool (`modules/packages/h.nix`) checks for `/run/secrets/hello-secret`:
 
