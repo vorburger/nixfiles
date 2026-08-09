@@ -61,63 +61,68 @@ in
 
 When setting up a brand-new host machine (`titan`), system activation during `nixos-rebuild switch` will initially fail to decrypt secrets if `titan`'s host SSH key has not yet been added to `secrets/identities.nix` and re-encrypted into the `.age` files.
 
-Follow these onboarding steps on the new host (with your YubiKey plugged in):
+### Recommended Method: Onboard from an Existing Active Workstation (e.g. `ixo`)
 
-### Step 1: Add the Host's SSH Public Key to `secrets/identities.nix`
+If you have an existing active machine (`ixo`) where your YubiKey is plugged in:
 
-On the new host (`titan`), view its SSH host public key:
+1. **Get Host Key on `titan` (via SSH)**:
+   ```bash
+   cat /etc/ssh/ssh_host_ed25519_key.pub
+   ```
+2. **Add Key & Rekey on `ixo`**:
+   Add `titan = "ssh-ed25519 AAAAC3...";` to `secrets/identities.nix` on `ixo`.
+   ```bash
+   nix run .#write-recipients
+   ragenix --rekey
+   git commit -am "secrets: Add titan host key" && git push
+   ```
+3. **Switch on `titan` (via SSH)**:
+   ```bash
+   git pull && nixos-rebuild switch
+   ```
 
-```bash
-cat /etc/ssh/ssh_host_ed25519_key.pub
-```
+---
 
-_(If the file does not exist yet, generate it via `sudo ssh-keygen -A`)._
+### Standalone Method: Direct Onboarding on `titan` (YubiKey plugged directly into `titan`)
 
-Add the public key to `hostKeys` inside `secrets/identities.nix`:
+If no other active workstation is up and running, you can onboard directly on `titan` with your YubiKey plugged into `titan`:
 
-```nix
-  hostKeys = {
-    ixo = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPobJWkfYiOfQ/dfIz6HYY9LooERxuxXBQGE+oBxQpPH";
-    titan = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI..."; # titan host key
-  };
-```
+1. **Add `titan`'s Host SSH Key**:
+   View `cat /etc/ssh/ssh_host_ed25519_key.pub` and add it to `hostKeys` in `secrets/identities.nix`.
 
-### Step 2: Manually Copy `secrets/identities.nix` to `~/.config/age/identities`
+2. **Manually Provision `~/.config/age/identities`**:
+   Before initial `switch`, manually copy your YubiKey identity handle block into `~/.config/age/identities`:
 
-Before `nixos-rebuild switch` runs successfully for the first time, `~/.config/age/identities` is not yet deployed by NixOS system activation.
+   ```bash
+   mkdir -p ~/.config/age
+   cat <<'EOF' > ~/.config/age/identities
+   # Recipient: age1yubikey1qd5rn4s8d04pjkhqe4xq8nspc883gm7jnnk3pucsr33yg6eq00v9uq5tsas
+   AGE-PLUGIN-YUBIKEY-17FAFYQYZ4MD0W7CZP5JUV
+   EOF
+   chmod 0600 ~/.config/age/identities
+   ```
 
-Manually copy the identity handles text (or your YubiKey handle) into `~/.config/age/identities`:
+3. **Resolve Smartcard Locks (if accessing over SSH)**:
+   If accessing `titan` remotely over SSH while the YubiKey is plugged into `titan`, ensure `gpg-agent` / `scdaemon` has not exclusively locked the card:
 
-```bash
-mkdir -p ~/.config/age
-# Copy the YubiKey identity handle block from secrets/identities.nix
-cat <<'EOF' > ~/.config/age/identities
-# Recipient: age1yubikey1qd5rn4s8d04pjkhqe4xq8nspc883gm7jnnk3pucsr33yg6eq00v9uq5tsas
-AGE-PLUGIN-YUBIKEY-17FAFYQYZ4MD0W7CZP5JUV
-EOF
-chmod 0600 ~/.config/age/identities
-```
+   ```bash
+   gpgconf --kill gpg-agent || true
+   sudo systemctl restart pcscd
+   ```
 
-### Step 3: Regenerate Recipients & Rekey Secrets
+4. **Regenerate Recipients & Rekey Secrets**:
+   Run with explicit flags (`--rules` and `-i`):
 
-Run the recipient generator and rekey the secret files using explicit flags (`--rules` and `-i`):
+   ```bash
+   nix run .#write-recipients
+   ragenix --rules secrets/rules.nix -i ~/.config/age/identities --rekey
+   ```
 
-```bash
-nix run .#write-recipients
-ragenix --rules secrets/rules.nix -i ~/.config/age/identities --rekey
-```
-
-When prompted for your YubiKey PIN and touch, `ragenix` will decrypt the `.age` secret files and re-encrypt them with `titan`'s new host key added to the recipient list.
-
-### Step 4: Commit and Switch
-
-Commit the updated `secrets/identities.nix`, `secrets/recipients.nix`, and `secrets/encrypted/*.age` files to git, and complete the switch:
-
-```bash
-nixos-rebuild switch
-```
-
-System activation will now decrypt `/run/secrets/*` cleanly using `/etc/ssh/ssh_host_ed25519_key`!
+5. **Commit and Switch**:
+   ```bash
+   git commit -am "secrets: Add titan host key"
+   nixos-rebuild switch
+   ```
 
 ---
 
