@@ -185,9 +185,9 @@ To declare a secret for a feature or service module (e.g. `modules/services/moni
 
 ### Module Merging Pattern
 
-When a module exposes both secret rules (`mkSecret`) and service definitions (`mkService`), combine them using `lib.recursiveUpdate` AND explicitly import the secret's derived NixOS module inside `mkService`'s `imports` list.
+When a module exposes both secret rules (`mkSecret`) and service definitions (`mkService`), combine them using `lib.recursiveUpdate` and merge `secret.flake.nixosModules.<name>` inside `mkService`'s `content` function.
 
-This is because `mkSecret` generates a NixOS module fragment under `flake.nixosModules.<name>` containing `age.secrets.<name>`. Overwriting or recursive updating `flake.nixosModules.<name>` with `mkService` replaces the module function, so the `age.secrets.<name>` declaration must be imported into `mkService`:
+This ensures that `age.secrets.<name>` is only enabled when `services.<name>.enable = true`, preventing decryption or missing group errors on hosts where the service is disabled:
 
 ```nix
 let
@@ -205,10 +205,11 @@ lib.recursiveUpdate secret {
   flake.nixosModules.monitoring = mkService {
     name = "monitoring";
     description = "Grafana service";
-    imports = [ secret.flake.nixosModules.monitoring ];
-    content = { pkgs, ... }: {
-      services.grafana.settings.security.secret_key = "$__file{/run/secrets/grafana}";
-    };
+    content =
+      { pkgs, ... }:
+      lib.recursiveUpdate secret.flake.nixosModules.monitoring {
+        services.grafana.settings.security.secret_key = "$__file{/run/secrets/grafana}";
+      };
   };
 }
 ```

@@ -13,7 +13,6 @@ lib.recursiveUpdate secret {
   flake.nixosModules.monitoring = mkService {
     name = "monitoring";
     description = "Prometheus server and Grafana monitoring stack";
-    imports = [ secret.flake.nixosModules.monitoring ];
     content =
       { pkgs, ... }:
       let
@@ -23,7 +22,7 @@ lib.recursiveUpdate secret {
             ${pkgs.gnused}/bin/sed 's/''${DS_[^}]*}/Prometheus/g' ${src} > $out
           '';
       in
-      {
+      lib.recursiveUpdate secret.flake.nixosModules.monitoring {
         services.prometheus = {
           enable = true;
           port = 9090;
