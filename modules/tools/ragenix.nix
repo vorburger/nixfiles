@@ -162,11 +162,6 @@ in
         '';
       };
 
-      age.secrets.hello-secret = {
-        file = ../../secrets/encrypted/hello-secret.age;
-        mode = "0444";
-      };
-
       # Ensure pinentry can bind to the current TTY and define Fish wrappers for ragenix, rage, and pass
       environment.interactiveShellInit = ''
         export GPG_TTY=$(tty)

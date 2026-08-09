@@ -81,17 +81,22 @@ When setting up a brand-new host machine (`titan`), system activation during `ni
 If you have an existing active machine (`ixo`) where your YubiKey is plugged in:
 
 1. **Get Host Key on `titan` (via SSH)**:
+
    ```bash
    cat /etc/ssh/ssh_host_ed25519_key.pub
    ```
+
 2. **Add Key & Rekey on `ixo`**:
    Add `titan = "ssh-ed25519 AAAAC3...";` to `secrets/identities.nix` on `ixo`.
+
    ```bash
    nix run .#write-recipients
    ragenix --rekey
    git commit -am "secrets: Add titan host key" && git push
    ```
+
 3. **Switch on `titan` (via SSH)**:
+
    ```bash
    git pull && nixos-rebuild switch
    ```
@@ -134,6 +139,7 @@ If no other active workstation is up and running, you can onboard directly on `t
    ```
 
 5. **Commit and Switch**:
+
    ```bash
    git commit -am "secrets: Add titan host key"
    nixos-rebuild switch
@@ -173,12 +179,14 @@ When a new host key or master key is added to `secrets/identities.nix`:
 
 Import `ragenix` via `self.nixosModules.ragenix` (or automatically via `modules/hosts/_common.nix`).
 
-In your NixOS module (e.g., `modules/services/hello.nix`):
+In your NixOS module (e.g., `modules/packages/h.nix`):
 
 ```nix
-age.secrets.hello-secret = {
-  file = ../../secrets/encrypted/hello-secret.age;
-  mode = "0444";
+flake.nixosModules.h = {
+  age.secrets.hello-secret = {
+    file = ../../secrets/encrypted/hello-secret.age;
+    mode = "0444";
+  };
 };
 ```
 
@@ -188,7 +196,7 @@ NixOS will automatically decrypt the file to `/run/secrets/hello-secret` at runt
 
 ## 6. Demo: `h` CLI
 
-The `h` CLI tool (`modules/packages/h.nix`) checks for `/run/secrets/hello-secret`:
+The `modules/packages/h.nix` defines `flake.nixosModules.h` (which registers `age.secrets.hello-secret`) and provides the `h` CLI command which checks for `/run/secrets/hello-secret`:
 
 ```bash
 $ h

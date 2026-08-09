@@ -30,8 +30,9 @@
     self.nixosModules.power
     self.nixosModules.samba-extra
     self.nixosModules.printing-extra
-    self.nixosModules.hello
     self.nixosModules.ragenix
+    self.nixosModules.h
+    self.nixosModules.hello
   ];
 
   services.locale-ch.enable = lib.mkDefault true;

@@ -1,4 +1,11 @@
 {
+  flake.nixosModules.h = {
+    age.secrets.hello-secret = {
+      file = ../../secrets/encrypted/hello-secret.age;
+      mode = "0444";
+    };
+  };
+
   perSystem =
     { pkgs, ... }:
     let
