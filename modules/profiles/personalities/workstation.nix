@@ -12,12 +12,17 @@
       ];
 
       environment.systemPackages = [
+        pkgs.dmidecode
+        pkgs.efivar
+        pkgs.efibootmgr
+        pkgs.hdparm
         pkgs.lsof
-        pkgs.pciutils
+        pkgs.nvme-cli # https://man.archlinux.org/man/nvme.1
+        pkgs.pciutils # lspci
         pkgs.shellcheck
         pkgs.starship
         pkgs.unzip
-        pkgs.usbutils
+        pkgs.usbutils # lsusb
 
         inputs.antigravity.packages.${pkgs.stdenv.hostPlatform.system}.google-antigravity-cli # agy (UI is in ui.nix)
       ];
