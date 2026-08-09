@@ -6,13 +6,8 @@
   identities = {
     # Portable YubiKey
     portable-yubikey = ''
-      #       Serial: 9599730, Slot: 1
-      #         Name: age identity aedaf77b
-      #      Created: Sat, 08 Aug 2026 22:09:57 +0000
-      #   PIN policy: Once   (A PIN is required once per session, if set)
-      # Touch policy: Always (A physical touch is required for every decryption)
-      #    Recipient: age1yubikey1qd5rn4s8d04pjkhqe4xq8nspc883gm7jnnk3pucsr33yg6eq00v9uq5tsas
-      AGE-PLUGIN-YUBIKEY-17FAFYQYZ4MD0W7CZP5JUV
+      # Recipient: age1yubikey1qd5rn4s8d04pjkhqe4xq8nspc883gm7jnnk3pucsr33yg6eq00v9uq5tsas
+      AGE-PLUGIN-YUBIKEY-17FAFYQYZ4MD0W7CZP5JUV # Serial: 9599730, Slot: 1
     '';
 
     # ixo TPM identity
