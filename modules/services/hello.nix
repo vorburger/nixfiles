@@ -18,11 +18,6 @@ in
           default = 8080;
           description = "Port for the hello HTTP service.";
         };
-        openFirewall = lib.mkOption {
-          type = lib.types.bool;
-          default = false;
-          description = "Whether to open the firewall port for the hello HTTP service.";
-        };
       };
     content =
       {
@@ -73,8 +68,6 @@ in
       in
       {
         environment.systemPackages = [ hPkg ];
-
-        networking.firewall.allowedTCPPorts = pkgs.lib.optionals cfg.openFirewall [ cfg.port ];
 
         systemd.services.hello = {
           description = "Hello HTTP Service";
