@@ -20,11 +20,12 @@ lib.recursiveUpdate secret {
         # https://wiki.nixos.org/wiki/Caddy
         services.caddy = {
           enable = true;
-          openFirewall = false; # TODO reverse_proxy for all services, so that we can open the firewall for Caddy and close for all the other HTTP services
+          openFirewall = true;
 
           virtualHosts."hello.home.vorburger.ch".extraConfig = ''
             respond "hello, caddy!"
           '';
+          # https://jellyfin.org/docs/general/post-install/networking/reverse-proxy/caddy/
           virtualHosts."vorbflix.home.vorburger.ch".extraConfig = ''
             reverse_proxy :8096
           '';
