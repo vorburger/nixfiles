@@ -95,7 +95,6 @@ mkHost {
         # https://jellyfin.org
         services.jellyfin = {
           enable = true;
-          openFirewall = true; # TODO Remove! After testing Chromecast through Caddy reverse proxy... and always-on NUC.
           hardwareAcceleration = {
             enable = true;
             type = "vaapi";

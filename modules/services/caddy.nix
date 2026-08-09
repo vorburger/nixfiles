@@ -29,7 +29,6 @@ lib.recursiveUpdate secret {
           virtualHosts."vorbflix.home.vorburger.ch".extraConfig = ''
             reverse_proxy :8096
           '';
-          # TODO Does Jellyfin Chromecast work with reverse_proxy? Does it need TLS?
           # TODO Auth! WebAuthn, ideally... check github.com/greenpau/caddy-security, or Authelia or Authentik.
           # TODO Services overview welcome sort of page; static, or auto-generated?
           # TODO http://localhost/ should show ^^^ it
