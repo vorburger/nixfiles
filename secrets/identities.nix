@@ -7,6 +7,7 @@
   # - Host-specific TPM identities are deployed ONLY to their respective host (e.g. ixo-tpm only on ixo).
   identities = {
     portable-yubikey-9599730 = ''
+      # Receipt is still required, see https://github.com/str4d/age-plugin-yubikey/issues/240
       # Recipient: age1yubikey1qd5rn4s8d04pjkhqe4xq8nspc883gm7jnnk3pucsr33yg6eq00v9uq5tsas
       AGE-PLUGIN-YUBIKEY-17FAFYQYZ4MD0W7CZP5JUV
     '';
