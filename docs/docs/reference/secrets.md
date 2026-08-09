@@ -10,28 +10,37 @@ For lower-level commands and key generation details for `rage`, TPM, and YubiKey
 
 1. **No Cleartext in `/nix/store` or Git**: Cleartext secret values **never** enter the world-readable `/nix/store` or the public Git repository. Only encrypted `.age` files are tracked in Git and evaluated into `/nix/store`.
 2. **Runtime RAM Decryption**: During NixOS system activation/boot, secrets are decrypted into a temporary RAM filesystem (`/run/secrets/<name>`) with strict ownership (`0400` / `0444`) and cleared on reboot.
-3. **Forever Access (Multi-Recipient Encryption)**: To prevent loss of access if a machine disk is lost or reinstalled (invalidating `/etc/ssh/ssh_host_ed25519_key`), every secret file is encrypted to **both**:
+3. **Automatic Identity Provisioning**: Decryption identity handles (YubiKey and TPM handle stubs) are stored in `identities.nix` at the repository root and automatically deployed to `~/.config/age/identities` on every NixOS system during activation.
+4. **Machine-Readable Keys**: Keys are named (`portable-yubikey`, `ixo-tpm`, `ixo`, etc.) in `identities.nix` and `recipients.nix`, allowing structured key management.
+5. **Forever Access (Multi-Recipient Encryption)**: To prevent loss of access if a machine disk is lost or reinstalled (invalidating `/etc/ssh/ssh_host_ed25519_key`), every secret file is encrypted to **both**:
    - **Host Keys**: Raw OpenSSH host public key strings (`ssh-ed25519 AAAAC3...`) from `/etc/ssh/ssh_host_ed25519_key.pub` for unattended system boot decryption.
    - **Master / Admin Keys**: Your personal YubiKey address (`age1yubikey...`) or personal TPM public key.
 
 ---
 
-## 1. Root `secrets.nix` & Secret Rules
+## 1. Key Definitions & Auto-Derived Recipients
 
-Secret rules are defined in `secrets.nix` at the repository root:
+Key definitions are split into two complementary files:
+
+- **`identities.nix`**: Human-edited source of truth containing named decryption identity handles (`portable-yubikey`, `ixo-tpm`) and OpenSSH host keys (`ixo`, `titan`).
+- **`recipients.nix`**: Auto-generated recipient map (`nix run .#write-recipients`) imported by `secrets.nix`.
+
+To regenerate `recipients.nix` dynamically after editing `identities.nix`:
+
+```bash
+nix run .#write-recipients
+```
+
+### `secrets.nix`
+
+`secrets.nix` imports `recipients.nix` and assigns public recipient keys to encrypted files:
 
 ```nix
 let
-  # Host SSH public keys (use raw `ssh-ed25519 AAAAC3...` string)
-  ixoHostKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPobJWkfYiOfQ/dfIz6HYY9LooERxuxXBQGE+oBxQpPH";
-
-  # Admin / Master recovery keys (Personal TPM key - use age1tpm1... format due to yaxitech/ragenix#170)
-  userMasterKey = "age1tpm1qt0wrxgpsmxq6s29wydwrc4hedg3mpn6utl5e8adrnmau5f4udghvs66e5k";
-
-  allHosts = [ ixoHostKey userMasterKey ];
+  keys = (import ./recipients.nix).recipients;
 in
 {
-  "encrypted/hello-secret.age".publicKeys = allHosts;
+  "encrypted/hello-secret.age".publicKeys = builtins.attrValues keys;
 }
 ```
 
@@ -60,11 +69,10 @@ This opens your `$EDITOR` securely, allowing you to edit the secret in cleartext
 
 ### Rekeying Secrets (e.g. after adding a new host key)
 
-When a new host key or master key is added to `secrets.nix`:
+When a new host key or master key is added to `identities.nix`:
 
-```bash
-ragenix --rekey
-```
+1. Run `nix run .#write-recipients` to update `recipients.nix`.
+2. Run `ragenix --rekey`.
 
 ---
 

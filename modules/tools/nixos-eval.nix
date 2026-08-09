@@ -12,7 +12,15 @@
     { pkgs, ... }:
     {
       checks = builtins.mapAttrs (
-        name: cfg: pkgs.writeText "nixos-eval-${name}" "${cfg.config.system.build.toplevel}"
+        name: cfg:
+        let
+          toplevel = cfg.config.system.build.toplevel;
+        in
+        pkgs.runCommand "nixos-eval-${name}" { } ''
+          echo "${toplevel}"
+          ${pkgs.bash}/bin/bash -n "${toplevel}/activate"
+          touch $out
+        ''
       ) self.nixosConfigurations;
     };
 }
