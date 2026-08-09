@@ -1,7 +1,18 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 let
   identitiesData = import ../../secrets/identities.nix;
-  identitiesText = builtins.concatStringsSep "\n\n" (builtins.attrValues identitiesData.identities);
+
+  # Filter identities for the host:
+  # - Global identities (e.g. YubiKeys without host suffix) deployed everywhere.
+  # - Machine TPM identities deployed ONLY on their matching host (e.g. ixo-tpm only on ixo).
+  hostIdentitiesText =
+    hostName:
+    let
+      filtered = lib.filterAttrs (
+        name: _: !lib.hasSuffix "-tpm" name || lib.hasPrefix hostName name
+      ) identitiesData.identities;
+    in
+    builtins.concatStringsSep "\n\n" (builtins.attrValues filtered);
 
   secretPackages = pkgs: system: [
     pkgs.rage
@@ -117,8 +128,9 @@ in
     };
 
   flake.nixosModules.ragenix =
-    { pkgs, ... }:
+    { pkgs, config, ... }:
     let
+      identitiesText = hostIdentitiesText config.networking.hostName;
       identitiesFile = pkgs.writeText "age-identities" identitiesText;
     in
     {

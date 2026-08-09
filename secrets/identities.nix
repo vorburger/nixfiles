@@ -3,13 +3,14 @@
 # Host SSH keys (hostKeys) are used by NixOS activation to decrypt secrets via /etc/ssh/ssh_host_ed25519_key.
 {
   # User hardware / plugin identities (identity handles)
+  # - Global identities (e.g. portable YubiKeys) are deployed to all hosts.
+  # - Host-specific TPM identities are deployed ONLY to their respective host (e.g. ixo-tpm only on ixo).
   identities = {
     portable-yubikey-9599730 = ''
       # Recipient: age1yubikey1qd5rn4s8d04pjkhqe4xq8nspc883gm7jnnk3pucsr33yg6eq00v9uq5tsas
       AGE-PLUGIN-YUBIKEY-17FAFYQYZ4MD0W7CZP5JUV
     '';
 
-    # ixo TPM identity
     ixo-tpm = ''
       AGE-PLUGIN-TPM-1QGQSQKQQYVQQKQQZQPEQQQQQZQQPJQQTQQPSQYQQYR0WRXGPSMXQ6S29WYDWRC4HEDG3MPN6UTL5E8ADRNMAU5F4UDGHVQPQAA8MU4CHL808V0GE2PTKJTUT7XP89KSNYTQMXCYKRWPFX5QENE5QQLSQYZPWUTA9WVV2HAYRL3DLA8DM2CCCPJ6R8F985D7G32QQC559ULZ6QQQS35CFYSFKXG94AWUK56HRLMZMTC7YE92RH9FZEX4UU7CFA85ZYQZL0U5QKAUG94CQ7AX9PWLQHV6WLW8XECL2YRNS5K5GE2JKFADDX43TS8F4P4ZJ7N7EE0750TW6DAC4D5AJ0LUSV232XACNQQ3QQZCKDV46YPLYZ6NM2NM2XG4NH0KH6A03YEUMF5LDM7YECN2NAV633CX8SFRU
     '';

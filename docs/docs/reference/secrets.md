@@ -10,9 +10,10 @@ For lower-level commands and key generation details for `rage`, TPM, and YubiKey
 
 1. **No Cleartext in `/nix/store` or Git**: Cleartext secret values **never** enter the world-readable `/nix/store` or the public Git repository. Only encrypted `.age` files are tracked in Git and evaluated into `/nix/store`.
 2. **Runtime RAM Decryption**: During NixOS system activation/boot, secrets are decrypted into a temporary RAM filesystem (`/run/secrets/<name>`) with strict ownership (`0400` / `0444`) and cleared on reboot.
-3. **Automatic Identity Provisioning**: Decryption identity handles (YubiKey and TPM handle stubs) are stored in `secrets/identities.nix` and automatically deployed to `~/.config/age/identities` on every NixOS system during activation.
-4. **Machine-Readable Keys**: Keys are named (`portable-yubikey`, `ixo-tpm`, `ixo`, etc.) in `secrets/identities.nix` and `secrets/recipients.nix`, allowing structured key management.
-5. **Forever Access (Multi-Recipient Encryption)**: To prevent loss of access if a machine disk is lost or reinstalled (invalidating `/etc/ssh/ssh_host_ed25519_key`), every secret file is encrypted to **both**:
+3. **Automatic Identity Provisioning**: Decryption identity handles (YubiKey and host-specific TPM handle stubs) are stored in `secrets/identities.nix` and automatically deployed to `~/.config/age/identities` on every NixOS system during activation.
+4. **Host Isolation for TPM Keys**: Machine-sealed TPM identity handles (`*-tpm`) are deployed _only_ to their matching host, preventing `age-plugin-tpm` unsealing errors on other machines. Global identities (YubiKeys) are deployed everywhere.
+5. **Machine-Readable Keys**: Keys are named (`portable-yubikey-9599730`, `ixo-tpm`, `ixo`, etc.) in `secrets/identities.nix` and `secrets/recipients.nix`, allowing structured key management.
+6. **Forever Access (Multi-Recipient Encryption)**: To prevent loss of access if a machine disk is lost or reinstalled (invalidating `/etc/ssh/ssh_host_ed25519_key`), every secret file is encrypted to **both**:
    - **Host Keys**: Raw OpenSSH host public key strings (`ssh-ed25519 AAAAC3...`) from `/etc/ssh/ssh_host_ed25519_key.pub` for unattended system boot decryption.
    - **Master / Admin Keys**: Your personal YubiKey address (`age1yubikey...`) or personal TPM public key.
 
@@ -31,7 +32,7 @@ secrets/
     └── hello-secret.age
 ```
 
-- **`secrets/identities.nix`**: Human-edited source of truth containing named decryption identity handles (`portable-yubikey`, `ixo-tpm`) and OpenSSH host keys (`ixo`, `titan`).
+- **`secrets/identities.nix`**: Human-edited source of truth containing named decryption identity handles (`portable-yubikey-9599730`, `ixo-tpm`) and OpenSSH host keys (`ixo`, `titan`).
 - **`secrets/recipients.nix`**: Auto-generated recipient map (`nix run .#write-recipients`) imported by `secrets/rules.nix`.
 - **`secrets/rules.nix`**: Evaluated by `ragenix` (`ragenix --rules secrets/rules.nix`).
 
@@ -60,7 +61,7 @@ in
 
 When setting up a brand-new host machine (`titan`), system activation during `nixos-rebuild switch` will initially fail to decrypt secrets if `titan`'s host SSH key has not yet been added to `secrets/identities.nix` and re-encrypted into the `.age` files.
 
-Follow these 3 quick onboarding steps on the new host (with your YubiKey plugged in):
+Follow these onboarding steps on the new host (with your YubiKey plugged in):
 
 ### Step 1: Add the Host's SSH Public Key to `secrets/identities.nix`
 
@@ -81,20 +82,34 @@ Add the public key to `hostKeys` inside `secrets/identities.nix`:
   };
 ```
 
-### Step 2: Regenerate Recipients & Rekey Secrets
+### Step 2: Manually Copy `secrets/identities.nix` to `~/.config/age/identities`
 
-Because `secrets/identities.nix` automatically provisions `~/.config/age/identities` for your user, your YubiKey identity handle is already active!
+Before `nixos-rebuild switch` runs successfully for the first time, `~/.config/age/identities` is not yet deployed by NixOS system activation.
 
-Run the recipient generator and rekey the secret files:
+Manually copy the identity handles text (or your YubiKey handle) into `~/.config/age/identities`:
+
+```bash
+mkdir -p ~/.config/age
+# Copy the YubiKey identity handle block from secrets/identities.nix
+cat <<'EOF' > ~/.config/age/identities
+# Recipient: age1yubikey1qd5rn4s8d04pjkhqe4xq8nspc883gm7jnnk3pucsr33yg6eq00v9uq5tsas
+AGE-PLUGIN-YUBIKEY-17FAFYQYZ4MD0W7CZP5JUV
+EOF
+chmod 0600 ~/.config/age/identities
+```
+
+### Step 3: Regenerate Recipients & Rekey Secrets
+
+Run the recipient generator and rekey the secret files using explicit flags (`--rules` and `-i`):
 
 ```bash
 nix run .#write-recipients
-ragenix --rekey
+ragenix --rules secrets/rules.nix -i ~/.config/age/identities --rekey
 ```
 
 When prompted for your YubiKey PIN and touch, `ragenix` will decrypt the `.age` secret files and re-encrypt them with `titan`'s new host key added to the recipient list.
 
-### Step 3: Commit and Switch
+### Step 4: Commit and Switch
 
 Commit the updated `secrets/identities.nix`, `secrets/recipients.nix`, and `secrets/encrypted/*.age` files to git, and complete the switch:
 
