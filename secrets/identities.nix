@@ -4,10 +4,9 @@
 {
   # User hardware / plugin identities (identity handles)
   identities = {
-    # Portable YubiKey
-    portable-yubikey = ''
+    portable-yubikey-9599730 = ''
       # Recipient: age1yubikey1qd5rn4s8d04pjkhqe4xq8nspc883gm7jnnk3pucsr33yg6eq00v9uq5tsas
-      AGE-PLUGIN-YUBIKEY-17FAFYQYZ4MD0W7CZP5JUV # Serial: 9599730, Slot: 1
+      AGE-PLUGIN-YUBIKEY-17FAFYQYZ4MD0W7CZP5JUV
     '';
 
     # ixo TPM identity
