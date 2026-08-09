@@ -88,6 +88,8 @@ Decrypt using the private key file (`-i`):
 rage -d -i private-key.txt secret.txt.age
 ```
 
+NB: The `private-key.txt` is not protected by any passphrase. We therefore do not generally recommend this, and instead encourage the use of TPM (and YK, if available).
+
 ---
 
 ## 3. TPM (Trusted Platform Module)
@@ -98,12 +100,13 @@ rage -d -i private-key.txt secret.txt.age
 
 ### Key Generation
 
-Generate the TPM identity file sealed with a PIN/passphrase (`-g -p`) and convert it to a recipient public key (`-y` reading from input file `-o`):
+Generate the TPM identity file sealed with a PIN/passphrase (`-g -p`), append it directly to `~/.config/age/identities`, and convert it to a recipient public key (`-y` reading from input file `-o`):
 
 ```bash
-age-plugin-tpm -g -p -o tpm-identity.txt
+mkdir -p ~/.config/age
+age-plugin-tpm -g -p >> ~/.config/age/identities
 # Export recipient in age1tpm1... format (required for ragenix due to https://github.com/yaxitech/ragenix/issues/170)
-age-plugin-tpm --tpm-recipient -y -o tpm-public-key.txt tpm-identity.txt
+age-plugin-tpm --tpm-recipient -y -o tpm-public-key.txt ~/.config/age/identities
 ```
 
 > **Important Note for `ragenix` / `secrets.nix`**:
@@ -114,9 +117,9 @@ age-plugin-tpm --tpm-recipient -y -o tpm-public-key.txt tpm-identity.txt
 
 **How identity files work & System Wipes**:
 
-- `tpm-identity.txt` contains a sealed key blob payload bound to your system's TPM 2.0.
-- If your machine is completely wiped and NixOS is re-installed, as long as you back up `tpm-identity.txt` **and** the hardware TPM chip was not reset in BIOS/UEFI, `tpm-identity.txt` can still be unsealed and decrypted on the fresh NixOS installation.
-- If the TPM chip is cleared/reset in BIOS/UEFI, `tpm-identity.txt` becomes permanently unrecoverable.
+- `~/.config/age/identities` contains sealed key blob payloads bound to your system's TPM 2.0.
+- If your machine is completely wiped and NixOS is re-installed, as long as you retain `~/.config/age/identities` **and** the hardware TPM chip was not reset in BIOS/UEFI, your identity can still be unsealed and decrypted on the fresh NixOS installation.
+- If the TPM chip is cleared/reset in BIOS/UEFI, the TPM identity becomes permanently unrecoverable.
 
 ### Encrypt
 
@@ -129,7 +132,7 @@ rage -R tpm-public-key.txt -o secret.txt.age secret.txt
 ### Decrypt
 
 ```bash
-rage -d -i tpm-identity.txt secret.txt.age
+rage -d -i ~/.config/age/identities secret.txt.age
 ```
 
 ---
@@ -176,14 +179,15 @@ Choose a new PIN/PUK: [hidden]
 AGE-PLUGIN-YUBIKEY-...
 
 
-$ age-plugin-yubikey --identity > yubikey-identity.txt
+$ mkdir -p ~/.config/age
+$ age-plugin-yubikey --identity >> ~/.config/age/identities
 $ age-plugin-yubikey --list > yubikey-public-key.txt
 ```
 
 **How identity files work & System Wipes**:
 
-- `yubikey-identity.txt` contains a stub reference (serial number, slot, public key) pointing to the secret key stored securely inside the physical YubiKey.
-- If your OS is wiped and re-installed, backing up `yubikey-identity.txt` (or re-running `age-plugin-yubikey --identity`) will allow you to decrypt files on the new installation using the same physical YubiKey.
+- `~/.config/age/identities` contains stub references (serial number, slot, public key) pointing to secret keys stored securely inside physical YubiKeys.
+- If your OS is wiped and re-installed, retaining `~/.config/age/identities` (or re-running `age-plugin-yubikey --identity >> ~/.config/age/identities`) will allow you to decrypt files on the new installation using the same physical YubiKey.
 
 ### Encrypt
 
@@ -196,7 +200,7 @@ rage -e -r $(cat yubikey-public-key.txt) -o secret.txt.age secret.txt
 ### Decrypt
 
 ```bash
-rage -d -i yubikey-identity.txt secret.txt.age
+rage -d -i ~/.config/age/identities secret.txt.age
 ```
 
 When decrypting, `rage` will prompt for your YubiKey PIN and require physical touch on the YubiKey hardware button.
