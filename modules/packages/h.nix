@@ -1,7 +1,7 @@
 {
   flake.nixosModules.h = {
-    age.secrets.hello-secret = {
-      file = ../../secrets/encrypted/hello-secret.age;
+    age.secrets.hello = {
+      file = ../../secrets/encrypted/hello.age;
       mode = "0444";
     };
   };
@@ -13,11 +13,11 @@
         name = "h";
         text = ''
           echo "hello, world"
-          if [ -f /run/secrets/hello-secret ]; then
-            cat /run/secrets/hello-secret
+          if [ -f /run/secrets/hello ]; then
+            cat /run/secrets/hello
             echo ""
           else
-            echo "MISSING /run/secrets/hello-secret"
+            echo "MISSING /run/secrets/hello"
           fi
         '';
       };

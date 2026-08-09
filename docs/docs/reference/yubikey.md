@@ -8,13 +8,20 @@ Ensure your NixOS configuration has the `pam-u2f` module enabled. To register yo
 
 1. Connect your YubiKey to the system.
 2. Create the directory for the config files:
+
    ```bash
    mkdir -p ~/.config/Yubico
    ```
+
 3. Run the following command to output the key configuration and press/touch the flashing YubiKey when prompted:
+
    ```bash
    pamu2fcfg > ~/.config/Yubico/u2f_keys
    ```
+
+If it's asking to `Enter PIN for /dev/hidraw2`, this is the YK's FIDO2 Applet PIN.
+That's the same PIN as the one which you set in a Web Browser for using WebAuthn with this YK.
+(See `ykman fido info`, so same PIN as `ykman fido access verify-pin`, change via `ykman fido access change-pin`.)
 
 ### Registering Multiple Keys
 
