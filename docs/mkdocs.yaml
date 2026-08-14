@@ -32,6 +32,7 @@ nav:
       - reference/rescue-usb.md
       - reference/nix-cli.md
       - reference/determinate.md
+      - reference/lix.md
       - reference/nixos-generate-config.md
       - reference/nixos-rebuild.md
       - reference/nixos-anywhere.md

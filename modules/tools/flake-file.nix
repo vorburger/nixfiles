@@ -15,6 +15,8 @@
     };
     nixConfig = {
       abort-on-warn = true;
+      warn-dirty = false;
+      eval-cache = true;
     };
     description = "Nix files of https://www.vorburger.ch";
   };

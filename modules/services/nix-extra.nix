@@ -13,6 +13,8 @@ in
         ...
       }:
       {
+        nix.package = pkgs.lix;
+
         nix.settings.experimental-features = [
           "nix-command"
           "flakes"
@@ -29,6 +31,10 @@ in
           # Increase parallel HTTP connections for downloading binary cache substitutes
           # 0 for unlimited (default is 25)
           http-connections = 0;
+
+          # Caching & performance
+          eval-cache = true;
+          warn-dirty = false;
         };
 
         # Save space in /nix via hard-links using scheduled background optimization

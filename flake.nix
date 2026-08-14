@@ -7,6 +7,8 @@
 
   nixConfig = {
     abort-on-warn = true;
+    eval-cache = true;
+    warn-dirty = false;
   };
 
   inputs = {
