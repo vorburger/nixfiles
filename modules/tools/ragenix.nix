@@ -32,6 +32,7 @@ in
     inputs = {
       nixpkgs.follows = "nixpkgs";
       agenix.inputs.home-manager.follows = "home-manager";
+      flake-utils.inputs.systems.follows = "ragenix/agenix/systems";
     };
   };
 

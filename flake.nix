@@ -66,6 +66,7 @@
       url = "github:yaxitech/ragenix";
       inputs = {
         agenix.inputs.home-manager.follows = "home-manager";
+        flake-utils.inputs.systems.follows = "ragenix/agenix/systems";
         nixpkgs.follows = "nixpkgs";
       };
     };
