@@ -15,7 +15,7 @@
       flake = false;
     };
     antigravity = {
-      url = "github:jacopone/antigravity-nix";
+      url = "github:Hy4ri/antigravity-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     devshell = {

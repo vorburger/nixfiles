@@ -24,7 +24,7 @@
         pkgs.unzip
         pkgs.usbutils # lsusb
 
-        inputs.antigravity.packages.${pkgs.stdenv.hostPlatform.system}.google-antigravity-cli # agy (UI is in ui.nix)
+        inputs.antigravity.packages.${pkgs.stdenv.hostPlatform.system}.antigravity-cli # agy (UI is in ui.nix)
       ];
 
       services.gpg-with-yubikey.enable = true;
