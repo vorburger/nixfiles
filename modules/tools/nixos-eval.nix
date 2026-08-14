@@ -3,9 +3,10 @@
 # errors as "nix flake check" (conflicting options, assertion failures, etc.)
 # without actually building the full NixOS system toplevels.
 #
-# The string interpolation of a derivation resolves to its output store path,
-# which only requires evaluation (not building). So writeText forces a full
-# config eval but the resulting derivation is trivially small and fast to build.
+# Checking system.activationScripts verifies the bash syntax of all activation
+# script fragments without pulling in the entire toplevel OS closure.
+# Discarding the string context on toplevel.drvPath forces full NixOS evaluation
+# without adding toplevel as a build dependency.
 { self, ... }:
 {
   perSystem =
@@ -14,12 +15,12 @@
       checks = builtins.mapAttrs (
         name: cfg:
         let
-          toplevel = cfg.config.system.build.toplevel;
+          actScript = pkgs.writeScript "activation-script-${name}" cfg.config.system.activationScripts.script;
+          drvPath = builtins.unsafeDiscardStringContext cfg.config.system.build.toplevel.drvPath;
         in
         pkgs.runCommand "nixos-eval-${name}" { } ''
-          echo "${toplevel}"
-          ${pkgs.bash}/bin/bash -n "${toplevel}/activate"
-          touch $out
+          ${pkgs.bash}/bin/bash -n "${actScript}"
+          echo "${drvPath}" > $out
         ''
       ) self.nixosConfigurations;
     };
