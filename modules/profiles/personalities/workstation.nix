@@ -9,6 +9,7 @@
     {
       imports = [
         self.nixosModules.ragenix
+        self.nixosModules.antigravity
       ];
 
       environment.systemPackages = [
