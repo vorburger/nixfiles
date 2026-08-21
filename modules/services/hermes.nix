@@ -42,6 +42,18 @@ lib.recursiveUpdate secret {
               provider = "gemini";
               base_url = "https://generativelanguage.googleapis.com/v1beta";
             };
+            model_aliases = {
+              gemma = {
+                model = "gemma4:e2b";
+                provider = "custom";
+                base_url = "http://localhost:11434/v1";
+              };
+              gemini = {
+                model = "gemini-flash-latest";
+                provider = "gemini";
+                base_url = "https://generativelanguage.googleapis.com/v1beta";
+              };
+            };
             display = {
               interface = "tui";
               compact = true;
