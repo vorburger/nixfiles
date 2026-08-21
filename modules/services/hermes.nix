@@ -42,6 +42,9 @@ lib.recursiveUpdate secret {
               provider = "gemini";
               base_url = "https://generativelanguage.googleapis.com/v1beta";
             };
+            display = {
+              interface = "tui";
+            };
           };
           environmentFiles = [
             "/run/secrets/hermes"
