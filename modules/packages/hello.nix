@@ -3,15 +3,15 @@ let
 in
 mkSecret {
   name = "hello";
-  moduleName = "h";
+  moduleName = "hello";
   mode = "0444";
 }
 // {
   perSystem =
     { pkgs, ... }:
     let
-      h = pkgs.writeShellApplication {
-        name = "h";
+      hello = pkgs.writeShellApplication {
+        name = "hello";
         text = ''
           echo "hello, world"
           if [ -f /run/secrets/hello ]; then
@@ -24,10 +24,10 @@ mkSecret {
       };
     in
     {
-      packages.h = h;
+      packages.hello = hello;
 
-      checks.h = h;
+      checks.hello = hello;
 
-      # Do *NOT* expose it *ALSO* via DevShell, because that's too confusing: devshells.default = { devshell.packages = [ h ]; };
+      # Do *NOT* expose it *ALSO* via DevShell, because that's too confusing: devshells.default = { devshell.packages = [ hello ]; };
     };
 }

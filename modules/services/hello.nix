@@ -27,7 +27,7 @@ in
         ...
       }:
       let
-        hPkg = self.packages.${pkgs.stdenv.hostPlatform.system}.h;
+        helloPkg = self.packages.${pkgs.stdenv.hostPlatform.system}.hello;
         helloServer = pkgs.writeShellApplication {
           name = "hello-server";
           runtimeInputs = [ pkgs.python3 ];
@@ -43,7 +43,7 @@ in
             class Handler(http.server.BaseHTTPRequestHandler):
                 def do_GET(self):
                     try:
-                        output = subprocess.check_output(["${hPkg}/bin/h"])
+                        output = subprocess.check_output(["${helloPkg}/bin/hello"])
                     except Exception as e:
                         self.send_response(500)
                         self.end_headers()
@@ -67,7 +67,7 @@ in
         };
       in
       {
-        environment.systemPackages = [ hPkg ];
+        environment.systemPackages = [ helloPkg ];
 
         systemd.services.hello = {
           description = "Hello HTTP Service";

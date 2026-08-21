@@ -41,7 +41,7 @@ When enabled, this service automatically:
 - Configures and starts the native Hermes systemd service (`services.hermes-agent`) configured to use Google Gemini (`gemini-flash-latest` at `https://generativelanguage.googleapis.com/v1beta`).
 - Binds the encrypted API key secret `/run/secrets/hermes` (`secrets/encrypted/hermes.age`) into the Hermes environment.
 - Adds user `vorburger` to the `hermes` group and sets `HERMES_HOME = "/var/lib/hermes/.hermes"` so interactive shells and the CLI use the system configuration and shared state.
-- Installs the `hermes` CLI into system packages (`addToSystemPackages = true`).
+- Installs the `hermes` CLI into system packages (`addToSystemPackages = true`) and sets the `h` shell alias to `hermes`.
 
 ## Secrets
 

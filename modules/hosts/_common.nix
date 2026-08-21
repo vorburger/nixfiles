@@ -31,7 +31,6 @@
     self.nixosModules.samba-extra
     self.nixosModules.printing-extra
     self.nixosModules.ragenix
-    self.nixosModules.h
     self.nixosModules.hello
     self.nixosModules.metrics-exporter
     self.nixosModules.monitoring

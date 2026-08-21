@@ -44,7 +44,7 @@ nix run .#write-recipients
 
 ### `secrets/rules.nix`
 
-`secrets/rules.nix` dynamically collects `flake.secretRules` declarations defined across `modules/**/*.nix` (e.g., `modules/packages/h.nix`). Feature modules can use the `mkSecret` helper (`lib/mk-secret.nix`) to declare their secrets and rules compactly:
+`secrets/rules.nix` dynamically collects `flake.secretRules` declarations defined across `modules/**/*.nix` (e.g., `modules/packages/hello.nix`). Feature modules can use the `mkSecret` helper (`lib/mk-secret.nix`) to declare their secrets and rules compactly:
 
 ```nix
 let
@@ -52,7 +52,7 @@ let
 in
 mkSecret {
   name = "hello";
-  moduleName = "h";
+  moduleName = "hello";
   mode = "0444";
 }
 ```
@@ -233,12 +233,12 @@ ragenix --rules secrets/rules.nix -e secrets/encrypted/grafana.age
 
 ---
 
-## 6. Demo: `h` CLI
+## 6. Demo: `hello` CLI
 
-The `modules/packages/h.nix` defines `flake.nixosModules.h` (which registers `age.secrets.hello-secret`) and provides the `h` CLI command which checks for `/run/secrets/hello-secret`:
+The `modules/packages/hello.nix` defines `flake.nixosModules.hello` (which registers `age.secrets.hello`) and provides the `hello` CLI command which checks for `/run/secrets/hello`:
 
 ```bash
-$ h
+$ hello
 hello, world
 hello, secret
 ```

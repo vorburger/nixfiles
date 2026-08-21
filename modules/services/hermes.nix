@@ -44,6 +44,12 @@ lib.recursiveUpdate secret {
             };
             display = {
               interface = "tui";
+              compact = true;
+              tui_compact = true;
+              resume_display = "minimal";
+            };
+            approvals = {
+              destructive_slash_confirm = false;
             };
           };
           environmentFiles = [
@@ -60,9 +66,10 @@ lib.recursiveUpdate secret {
           "agenixChown"
         ];
 
-        # Export HERMES_HOME for fish interactive shells and desktop environment
+        # Export HERMES_HOME and alias h for fish interactive shells and desktop environment
         programs.fish.interactiveShellInit = ''
           set -gx HERMES_HOME /var/lib/hermes/.hermes
+          alias h=hermes
         '';
 
         environment.sessionVariables = {
