@@ -36,6 +36,7 @@
     self.nixosModules.metrics-exporter
     self.nixosModules.monitoring
     self.nixosModules.caddy-extra
+    self.nixosModules.hermes
   ];
 
   services.locale-ch.enable = lib.mkDefault true;

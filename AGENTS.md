@@ -17,3 +17,9 @@
 - **Flake Inputs & Follows**:
   - Always declare new flake inputs in the appropriate `modules/**/*.nix` file using `flake-file.inputs.<name> = { url = "..."; ... };` instead of editing `flake.nix` directly. Running `nix run .#write-flake` will auto-generate `flake.nix`.
   - Always override sub-dependencies (like `nixpkgs`, `home-manager`, `systems`) in flake inputs with `inputs.<dep>.follows = "<dep>";` to prevent duplicate lockfile dependencies and keep builds lean.
+
+- **Adding Services**:
+  - Always define new services in `modules/services/<name>.nix` using `mkService` (from `../../lib/mk-service.nix`), exporting `flake.nixosModules.<name> = mkService { name = "<name>"; ... };`.
+  - Always register the new module in `modules/hosts/_common.nix` under `imports = [ self.nixosModules.<name> ... ]`.
+  - Service naming convention: If there is an existing standard NixOS service with that name, use `<name>-extra` (e.g. `caddy-extra`, `fprintd-extra`); otherwise name it directly `<name>` (e.g. `backup`, `smart`, `hello`, `hermes`).
+  - Enable services only on the specific host configurations that require them (e.g., `services.<name>.enable = true;` in `modules/hosts/titan.nix`), rather than enabling them globally on all hosts.

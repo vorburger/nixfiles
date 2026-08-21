@@ -1,5 +1,6 @@
-# Hermes Agent - AI agent framework by Nous Research
-# See https://hermes-agent.nousresearch.com/docs/getting-started/nix-setup#nixos-module
+let
+  inherit (import ../../lib/mk-service.nix) mkService;
+in
 { inputs, ... }:
 {
   flake-file.inputs.hermes-agent = {
@@ -11,20 +12,17 @@
     };
   };
 
-  flake.nixosModules = {
-    hermes =
-      { ... }:
-      {
-        imports = [
-          inputs.hermes-agent.nixosModules.default
-        ];
+  flake.nixosModules.hermes = mkService {
+    name = "hermes";
+    description = "Hermes Agent AI framework";
+    imports = [
+      inputs.hermes-agent.nixosModules.default
+    ];
+    content = {
+      services.hermes-agent = {
+        enable = true;
+        addToSystemPackages = true;
       };
-    hermes-agent =
-      { ... }:
-      {
-        imports = [
-          inputs.hermes-agent.nixosModules.default
-        ];
-      };
+    };
   };
 }
