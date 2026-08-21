@@ -46,6 +46,8 @@ lib.recursiveUpdate secret {
               interface = "tui";
               compact = true;
               tui_compact = true;
+              tui_statusbar = "off";
+              cli_refresh_interval = 0;
               resume_display = "minimal";
             };
             approvals = {
