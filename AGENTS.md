@@ -23,3 +23,9 @@
   - Always register the new module in `modules/hosts/_common.nix` under `imports = [ self.nixosModules.<name> ... ]`.
   - Service naming convention: If there is an existing standard NixOS service with that name, use `<name>-extra` (e.g. `caddy-extra`, `fprintd-extra`); otherwise name it directly `<name>` (e.g. `backup`, `smart`, `hello`, `hermes`).
   - Enable services only on the specific host configurations that require them (e.g., `services.<name>.enable = true;` in `modules/hosts/titan.nix`), rather than enabling them globally on all hosts.
+
+- **Secrets Management**:
+  - Never put API keys, passwords, or tokens directly in Nix files, system files, or unencrypted `.env` files in state directories.
+  - Always use `mkSecret` (from `../../lib/mk-secret.nix`) in the service module to manage secrets encrypted with `ragenix` (`secrets/encrypted/<name>.age`).
+  - Merge the secret into the service module so that `age.secrets.<name>` is only enabled when `services.<name>.enable = true`.
+  - Pass secrets to services using the runtime decrypted path at `/run/secrets/<name>`.
