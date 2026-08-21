@@ -43,6 +43,7 @@ nav:
       - reference/yubikey.md
       - reference/age.md
       - reference/secrets.md
+      - reference/hermes.md
       - reference/wiki.md
       - reference/we.md
       - ToDo.md
