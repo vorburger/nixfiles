@@ -85,7 +85,7 @@ mkHost {
             libvdpau-va-gl
           ];
         };
-        services.ollama = {
+        services.ollama-extra = {
           enable = true;
           package = unstable-pkgs.ollama-rocm;
         };

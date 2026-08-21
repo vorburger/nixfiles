@@ -19,7 +19,7 @@ mkHost {
       {
         system.stateVersion = "26.05";
 
-        services.ollama = {
+        services.ollama-extra = {
           enable = true;
           package = pkgs.ollama-vulkan;
           environmentVariables = {
