@@ -31,11 +31,34 @@ lib.recursiveUpdate secret {
       inputs.hermes-agent.nixosModules.default
     ];
     content =
-      _:
+      { pkgs, ... }:
+      let
+        rtk-hermes = pkgs.python3Packages.buildPythonPackage rec {
+          pname = "rtk-hermes";
+          version = "1.2.3";
+          pyproject = true;
+          src = pkgs.fetchFromGitHub {
+            owner = "ogallotti";
+            repo = "rtk-hermes";
+            rev = "v${version}";
+            hash = "sha256-7YRW6PODrCapfYLFn3DvgHAEME//RGC48GQt+s9ot0s=";
+          };
+          build-system = with pkgs.python3Packages; [
+            setuptools
+            wheel
+          ];
+        };
+      in
       lib.recursiveUpdate secret.flake.nixosModules.hermes {
         services.hermes-agent = {
           enable = true;
           addToSystemPackages = true;
+          extraPackages = [
+            pkgs.rtk
+          ];
+          extraPythonPackages = [
+            rtk-hermes
+          ];
           settings = {
             model = {
               default = "gemini-flash-latest";
@@ -54,6 +77,17 @@ lib.recursiveUpdate secret {
                 base_url = "https://generativelanguage.googleapis.com/v1beta";
               };
             };
+            plugins = {
+              enabled = [
+                "rtk-rewrite"
+              ];
+            };
+            compression = {
+              enabled = true;
+              threshold = 0.50;
+              target_ratio = 0.20;
+              protect_last_n = 20;
+            };
             display = {
               interface = "tui";
               compact = true;
@@ -64,6 +98,7 @@ lib.recursiveUpdate secret {
             approvals = {
               destructive_slash_confirm = false;
             };
+            # TODO Remove when https://github.com/NousResearch/hermes-agent/issues/91927 is fixed:
             auxiliary = {
               title_generation = {
                 extra_body = {
