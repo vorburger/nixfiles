@@ -80,6 +80,8 @@ in
           desktopManager.gnome.extraGSettingsOverrides = ''
             [org.gnome.desktop.interface]
             color-scheme='prefer-dark'
+            cursor-theme='Adwaita'
+            cursor-size=24
 
             [org.gnome.desktop.wm.keybindings]
             switch-applications=[]

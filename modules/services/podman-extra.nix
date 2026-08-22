@@ -34,7 +34,7 @@ in
       };
     };
     content =
-      { cfg, ... }:
+      { cfg, options, ... }:
       {
         virtualisation.podman = {
           enable = true;
@@ -48,9 +48,15 @@ in
           };
         };
 
-        virtualisation.containers.registries.settings = {
-          unqualified-search-registries = cfg.searchRegistries;
-        };
+        virtualisation.containers.registries =
+          if options.virtualisation.containers.registries ? settings then
+            {
+              settings.unqualified-search-registries = cfg.searchRegistries;
+            }
+          else
+            {
+              search = cfg.searchRegistries;
+            };
       };
   };
 }
