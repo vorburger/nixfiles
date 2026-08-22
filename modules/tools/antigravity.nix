@@ -36,10 +36,15 @@ lib.recursiveUpdate secret {
                         Accept: "application/json, text/event-stream"
                       }
                     },
+                    # Note: We cannot use remote "https://api.githubcopilot.com/mcp/" because GitHub
+                    # does not support OAuth Dynamic Client Registration (RFC 7591) and drops raw-PAT
+                    # SSE stream subscriptions with "session not found". Running github-mcp-server
+                    # locally via stdio with GITHUB_PERSONAL_ACCESS_TOKEN works reliably across all hosts.
                     github: {
-                      serverUrl: "https://api.githubcopilot.com/mcp/",
-                      headers: {
-                        Authorization: ("Bearer " + $pat)
+                      command: "${pkgs.github-mcp-server}/bin/github-mcp-server",
+                      args: ["stdio"],
+                      env: {
+                        GITHUB_PERSONAL_ACCESS_TOKEN: $pat
                       }
                     }
                   }
