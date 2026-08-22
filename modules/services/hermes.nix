@@ -64,6 +64,15 @@ lib.recursiveUpdate secret {
             approvals = {
               destructive_slash_confirm = false;
             };
+            auxiliary = {
+              title_generation = {
+                extra_body = {
+                  thinking_config = {
+                    thinking_budget = 0;
+                  };
+                };
+              };
+            };
           };
           environmentFiles = [
             "/run/secrets/hermes"
