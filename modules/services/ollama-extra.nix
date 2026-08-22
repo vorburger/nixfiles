@@ -40,6 +40,11 @@ in
         default = 512;
         description = "Maximum request queue length (OLLAMA_MAX_QUEUE).";
       };
+      keepAlive = lib.mkOption {
+        type = lib.types.str;
+        default = "24h";
+        description = "How long models stay in memory after a request (OLLAMA_KEEP_ALIVE).";
+      };
       environmentVariables = lib.mkOption {
         type = lib.types.attrsOf lib.types.str;
         default = { };
@@ -58,6 +63,7 @@ in
             OLLAMA_FLASH_ATTENTION = if cfg.flashAttention then "1" else "0";
             OLLAMA_NUM_PARALLEL = toString cfg.numParallel;
             OLLAMA_MAX_QUEUE = toString cfg.maxQueue;
+            OLLAMA_KEEP_ALIVE = cfg.keepAlive;
           }
           // cfg.environmentVariables;
         };

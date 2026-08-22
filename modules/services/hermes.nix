@@ -115,9 +115,13 @@ lib.recursiveUpdate secret {
             approvals = {
               destructive_slash_confirm = false;
             };
-            # TODO Remove when https://github.com/NousResearch/hermes-agent/issues/91927 is fixed:
             auxiliary = {
               title_generation = {
+                provider = "custom";
+                model = "gemma4:e2b";
+                base_url = "http://localhost:11434/v1";
+                api_key = "ollama";
+                # Keep thinking_budget = 0 for Gemini fallback, until https://github.com/NousResearch/hermes-agent/issues/91927 is fixed:
                 extra_body = {
                   thinking_config = {
                     thinking_budget = 0;
