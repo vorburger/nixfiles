@@ -45,6 +45,7 @@ nav:
       - reference/secrets.md
       - reference/hermes.md
       - reference/ollama.md
+      - reference/podman.md
       - reference/wiki.md
       - reference/we.md
       - ToDo.md

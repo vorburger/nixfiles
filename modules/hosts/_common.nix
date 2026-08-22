@@ -37,6 +37,7 @@
     self.nixosModules.caddy-extra
     self.nixosModules.hermes
     self.nixosModules.ollama-extra
+    self.nixosModules.podman-extra
   ];
 
   services.locale-ch.enable = lib.mkDefault true;

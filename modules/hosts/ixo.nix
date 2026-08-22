@@ -39,6 +39,7 @@ mkHost {
         services.hyprland-extra.enable = true;
 
         services.monitoring.enable = true;
+        services.podman-extra.enable = true;
       }
     )
     self.nixosModules.target-x1_12
