@@ -35,10 +35,6 @@ mkHost {
         };
 
         services.power.enable = true;
-
-        services.hyprland-extra.enable = true;
-
-        services.monitoring.enable = true;
         services.podman-extra.enable = true;
       }
     )
