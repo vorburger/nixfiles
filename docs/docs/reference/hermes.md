@@ -40,7 +40,7 @@ When enabled, this service automatically:
 
 - Configures and starts the native Hermes systemd service (`services.hermes-agent`) configured to use Google Gemini (`gemini-flash-latest` at `https://generativelanguage.googleapis.com/v1beta`).
 - Integrates the **RTK (Rust Token Killer)** CLI proxy (`pkgs.rtk`) and `rtk-hermes` plugin (`rtk-rewrite`) to intercept and compress shell command outputs (saving 60–90% LLM tokens on terminal outputs).
-- Enables automatic **Context Compression** (`compression.enabled = true`, threshold `0.50`, protect last `20` messages) to prevent context exhaustion in multi-turn sessions.
+- Integrates the **`hermes-lcm`** (Lossless Context Management) plugin (`context.engine = "lcm"`), providing SQLite DAG-backed bounded context management with agent recall tools (`lcm_grep`, `lcm_expand`, `lcm_recall`, `lcm_recent`, etc.), with built-in context compression configured as a fallback.
 - Binds the encrypted API key secret `/run/secrets/hermes` (`secrets/encrypted/hermes.age`) into the Hermes environment.
 - Adds user `vorburger` to the `hermes` group and sets `HERMES_HOME = "/var/lib/hermes/.hermes"` so interactive shells and the CLI use the system configuration and shared state.
 - Installs the `hermes` CLI into system packages (`addToSystemPackages = true`) and sets the `h` shell alias to `hermes`.

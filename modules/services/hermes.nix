@@ -48,6 +48,13 @@ lib.recursiveUpdate secret {
             wheel
           ];
         };
+
+        hermes-lcm = pkgs.fetchFromGitHub {
+          owner = "stephenschoettler";
+          repo = "hermes-lcm";
+          rev = "v0.21.0-rc2";
+          hash = "sha256-EtrrGsmsnDUsGv76pUlKlXsqyAnja53avmsNGb3dsdg=";
+        };
       in
       lib.recursiveUpdate secret.flake.nixosModules.hermes {
         services.hermes-agent = {
@@ -58,6 +65,11 @@ lib.recursiveUpdate secret {
           ];
           extraPythonPackages = [
             rtk-hermes
+            pkgs.python3Packages.tiktoken
+            pkgs.python3Packages.regex
+          ];
+          extraPlugins = [
+            hermes-lcm
           ];
           settings = {
             model = {
@@ -80,8 +92,13 @@ lib.recursiveUpdate secret {
             plugins = {
               enabled = [
                 "rtk-rewrite"
+                "hermes-lcm"
               ];
             };
+            context = {
+              engine = "lcm";
+            };
+            # Unused as long as context.engine = "lcm" is active, but kept as a fallback if LCM is ever disabled
             compression = {
               enabled = true;
               threshold = 0.50;
