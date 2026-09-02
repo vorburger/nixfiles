@@ -110,6 +110,7 @@
     envHOME = config.users.users.vorburger.home;
     envUSER = config.users.users.vorburger.name;
     username = lib.mkDefault config.users.users.vorburger.name;
+    homeDirectory = lib.mkDefault config.users.users.vorburger.home;
   };
 
   nix.settings.trusted-users = [ "vorburger" ];
