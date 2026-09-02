@@ -40,6 +40,7 @@ mkHost {
         services.caddy-extra.enable = true;
         services.hermes.enable = true;
         services.podman-extra.enable = true;
+        services.nixarr.enable = !vmTest;
         hardware.amdgpu.initrd.enable = true; # sets boot.initrd.kernelModules = ["amdgpu"];
 
         boot.initrd.availableKernelModules = [
@@ -120,10 +121,30 @@ mkHost {
           };
         };
         users.users.jellyfin.extraGroups = [
+          "media"
           "video"
           "render"
         ];
         systemd.services.jellyfin.serviceConfig.PrivateUsers = lib.mkForce false;
+        systemd.services.nixarr-dirs = lib.mkIf (!vmTest) {
+          description = "Create Nixarr media directories on /bardioc/public";
+          after = [ "bardioc-public.mount" ];
+          bindsTo = [ "bardioc-public.mount" ];
+          wantedBy = [ "bardioc-public.mount" ];
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
+            ExecStart = "${pkgs.systemd}/bin/systemd-tmpfiles --create --prefix=/bardioc/public";
+          };
+        };
+        systemd.services.transmission = lib.mkIf (!vmTest) {
+          after = [
+            "bardioc-public.mount"
+            "nixarr-dirs.service"
+          ];
+          bindsTo = [ "bardioc-public.mount" ];
+          requires = [ "nixarr-dirs.service" ];
+        };
 
         services.backup = {
           enable = true;
@@ -136,6 +157,15 @@ mkHost {
             srcDir = "/var/lib/jellyfin";
             sqliteDbs = [
               "data/jellyfin.db"
+            ];
+          };
+          jobs.nixarr = {
+            srcDir = "/var/lib/nixarr";
+            sqliteDbs = [
+              "radarr/radarr.db"
+              "sonarr/sonarr.db"
+              "prowlarr/prowlarr.db"
+              "seerr/db/db.sqlite3"
             ];
           };
         };

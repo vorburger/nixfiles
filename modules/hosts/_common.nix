@@ -38,6 +38,7 @@
     self.nixosModules.hermes
     self.nixosModules.ollama-extra
     self.nixosModules.podman-extra
+    self.nixosModules.nixarr
   ];
 
   services.locale-ch.enable = lib.mkDefault true;
@@ -50,6 +51,7 @@
   services.zram.enable = lib.mkDefault false;
   services.hello.enable = lib.mkDefault false;
   services.metrics-exporter.enable = lib.mkDefault true;
+  services.nixarr.enable = lib.mkDefault false;
 
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

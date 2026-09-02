@@ -29,6 +29,10 @@ lib.recursiveUpdate secret {
           virtualHosts."vorbflix.home.vorburger.ch".extraConfig = ''
             reverse_proxy :8096
           '';
+          # https://seerr.dev
+          virtualHosts."seerr.home.vorburger.ch".extraConfig = ''
+            reverse_proxy :5055
+          '';
           # TODO Auth! WebAuthn, ideally... check github.com/greenpau/caddy-security, or Authelia or Authentik.
           # TODO Services overview welcome sort of page; static, or auto-generated?
           # TODO http://localhost/ should show ^^^ it
