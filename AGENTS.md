@@ -29,3 +29,9 @@
   - Always use `mkSecret` (from `../../lib/mk-secret.nix`) in the service module to manage secrets encrypted with `ragenix` (`secrets/encrypted/<name>.age`).
   - Merge the secret into the service module so that `age.secrets.<name>` is only enabled when `services.<name>.enable = true`.
   - Pass secrets to services using the runtime decrypted path at `/run/secrets/<name>`.
+
+- **Git Worktrees & Parallel Work**:
+  - When working on parallel tasks or isolated branches, use Git worktrees under `.worktrees/<branch-name>` (e.g. `git worktree add .worktrees/<branch-name> -b <branch-name>`).
+  - Use native `git worktree` commands directly rather than interactive shell wrappers (like `gwt`).
+  - Run flake checks (`nix develop --command nix-fast-build --fail-fast --flake .#checks.x86_64-linux`) within the worktree root.
+  - Subagents running parallel code changes should use isolated workspaces (`Workspace: 'share'` or separate `.worktrees/`).

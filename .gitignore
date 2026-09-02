@@ -22,3 +22,5 @@ docs/site/
 # Sub-Flakes Examples
 examples/**/.vscode/
 
+# Worktrees
+.worktrees/
