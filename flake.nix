@@ -78,7 +78,12 @@
         agenix.inputs.home-manager.follows = "home-manager";
         flake-utils.inputs.systems.follows = "ragenix/agenix/systems";
         nixpkgs.follows = "nixpkgs";
+        rust-overlay.follows = "rust-overlay";
       };
+    };
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";

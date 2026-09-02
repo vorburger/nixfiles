@@ -27,12 +27,28 @@ let
   ];
 in
 {
+  # rust-overlay is explicitly declared here and followed by ragenix because
+  # upstream yaxitech/ragenix locks an older rust-overlay in its flake.lock.
+  # When ragenix follows our nixpkgs (where stdenv.isLinux / stdenv.isDarwin was
+  # deprecated and removed from stdenv), the older rust-overlay failed during evaluation
+  # with `error: attribute 'isLinux' missing at lib/mk-aggregated.nix`.
+  # Forcing ragenix to follow the latest rust-overlay fixes this compatibility issue.
+  flake-file.inputs.rust-overlay = {
+    url = "github:oxalica/rust-overlay";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
+  # We import ragenix from github:yaxitech/ragenix rather than using pkgs.ragenix
+  # from nixpkgs because nixpkgs only provides the ragenix CLI binary, whereas the
+  # upstream flake provides inputs.ragenix.nixosModules.default (the NixOS module
+  # providing age.* configuration and secret decryption activation services).
   flake-file.inputs.ragenix = {
     url = "github:yaxitech/ragenix";
     inputs = {
       nixpkgs.follows = "nixpkgs";
       agenix.inputs.home-manager.follows = "home-manager";
       flake-utils.inputs.systems.follows = "ragenix/agenix/systems";
+      rust-overlay.follows = "rust-overlay";
     };
   };
 
