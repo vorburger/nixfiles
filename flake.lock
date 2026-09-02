@@ -29,11 +29,11 @@
     "aifiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1778762038,
-        "narHash": "sha256-ntzJ7sv2GjvgCwdWY8HswsNTBoST0ciK/+bmqhQDh9U=",
+        "lastModified": 1787514903,
+        "narHash": "sha256-uoFrWWL1+vcBOrFzJ33iVD+HRF/2BwT8f7TYzxNBBwg=",
         "owner": "vorburger",
         "repo": "aifiles",
-        "rev": "1d50c019149a63398c054414c3f7a5dc8e478550",
+        "rev": "ba1ee6ed3af42988ceb1ac414802b10d13eb4839",
         "type": "github"
       },
       "original": {
