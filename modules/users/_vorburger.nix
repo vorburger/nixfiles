@@ -78,6 +78,13 @@
   };
   programs.fish.enable = true;
 
+  # Disable NixOS's default aliases in /etc/fish/config.fish ('ls -alh' and 'ls -l')
+  # so they don't overwrite the lsd aliases defined in dotfiles/fish/conf.d/alias.fish.
+  environment.shellAliases = {
+    l = null;
+    ll = null;
+  };
+
   system.activationScripts.expire-vorburger-password = {
     text = ''
       # Skip if running inside a VM/container (to avoid breaking VM autologin and tests)
