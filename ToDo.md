@@ -8,6 +8,14 @@
 
 1. [Make the `/home`](https://gemini.google.com/app/3b7155acedd7082c) on `titan` a ZFS dataset, for backup and snapshotting
 
+1. [TPM support in VMs](https://github.com/NixOS/nixpkgs/blob/11cb3517b3af6af300dd6c055aeda73c9bf52c48/nixos/modules/virtualisation/qemu-vm.nix#L983)
+
+1. [Secure Boot in VMs](https://github.com/NixOS/nixpkgs/blob/11cb3517b3af6af300dd6c055aeda73c9bf52c48/nixos/modules/virtualisation/qemu-vm.nix#L1045)
+
+1. Secure Boot!!
+   - Possible to still dual boot gLinux / Fedora?
+   - Does `ssh-tpm-agent` still work?!
+
 1. LUKS **with TPM** https://nixos.org/manual/nixos/stable/#sec-luks-file-systems
 
    ```nix
@@ -33,8 +41,6 @@
 
 1. Wireguard into NUC
 
-1. Samba on NixOS (e.g. for for `/nas/public`)
-
 1. Backup Antigravity Config and Conversations; share between Workstation & Latpop
 
 1. replace Antigravity with https://github.com/BohdanTkachenko/nix-home/blob/main/flake.nix#L26-L40
@@ -52,10 +58,6 @@
 1. Replace `ssh-tpm-agent`, incl. its complex customization, with YK nano (after all); see also https://gemini.google.com/app/93e7b72c119c82e6
 
 1. `ssh-tpm-agent` with PIN; see https://github.com/Foxboron/ssh-tpm-agent/pull/129/changes
-
-1. Secure Boot!!
-   - Not possible to still dual boot Fedora?
-   - Does `ssh-tpm-agent` still work?!
 
 1. ZFS send/receive from NUC + Laptop to NAS `/zfs/michi/backup/vinea`? But then NUC + Laptop need to have HOME on ZFS..
 
@@ -170,6 +172,8 @@
 
 ## Clean Up
 
+1. https://github.com/vorburger/LearningLinux/blob/develop/nix/todo.md#nixos
+
 1. Consolidate [`LearningLinux` 🐧 repo](https://github.com/vorburger/LearningLinux/tree/develop/nix)
    and [`dotfiles/NixOS`](https://github.com/vorburger/dotfiles/tree/main/NixOS) here.
 
@@ -192,6 +196,10 @@
 1. Automagically extract TODO list to MD
 
 ## Low Priority / Nice to Have
+
+1. Create a GitHub Runner image
+
+1. Try `nix build .#nixosConfigurations.nixos-vm.config.system.build.images.google-compute` and start it on GCP GCE via `gcloud compute images import ...`
 
 1. Cloud VMs? `imports = [ "${modulesPath}/virtualisation/amazon-image.nix" ]` ? See e.g. [this announcement](https://www.haskellforall.com/2023/01/announcing-nixos-rebuild-new-deployment.html).
 
