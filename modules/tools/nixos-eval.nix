@@ -15,7 +15,9 @@
       checks = builtins.mapAttrs (
         name: cfg:
         let
-          actScript = pkgs.writeScript "activation-script-${name}" cfg.config.system.activationScripts.script;
+          actScript = pkgs.writeText "activation-script-${name}" (
+            builtins.unsafeDiscardStringContext cfg.config.system.activationScripts.script
+          );
           drvPath = builtins.unsafeDiscardStringContext cfg.config.system.build.toplevel.drvPath;
         in
         pkgs.runCommand "nixos-eval-${name}" { } ''
