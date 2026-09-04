@@ -18,6 +18,11 @@
       useDefaultUser ? true,
       modules ? [ ],
       testScript ? null,
+      # NOTE: enableVMTest is disabled by default unless an explicit testScript is provided.
+      # Avoid enabling VM tests for full host or desktop configurations (e.g. gnome-vm, titan, ixo).
+      # Building full system closures (with GUI apps, browsers, kernel, firmware) pulls thousands of
+      # derivation requisites into flake checks and causes multi-gigabyte downloads.
+      # Hosts are instead evaluated via modules/tools/nixos-eval.nix for fast syntax/type validation.
       enableVMTest ? (testScript != null),
     }:
     let

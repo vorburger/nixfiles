@@ -20,9 +20,10 @@ mkHost {
     self.nixosModules.target-vm-1G-grub-8G
     self.nixosModules.personality-gnome
   ];
-  testScript = ''
-    machine.succeed("lsmod | grep virtio_gpu")
-    machine.succeed("kitty --version")
-    machine.succeed("brave --version")
-  '';
+  # NOTE: Do NOT add a testScript / enableVMTest here!
+  # Building a full graphical desktop VM test in flake checks pulls in
+  # 11,000+ derivation requisites (GNOME, Chromium/Brave, Electron/VS Code, kernel,
+  # firmware), taking 15+ minutes on cold runs and slowing down fast checks.
+  # gnome-vm is already syntax- and option-evaluated by nixos-eval-gnome-vm in checks.
+  # To test gnome-vm interactively in a VM, run: vm gnome-vm clean
 }

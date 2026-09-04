@@ -114,3 +114,13 @@ If you want to test the full installation cycle of a host configuration (e.g. `g
   ```bash
   ssh -p 2222 vorburger@localhost
   ```
+
+---
+
+## ⚡ Automated Checks vs. Interactive VM Testing
+
+In this repository, automated Flake checks (`checks.x86_64-linux`) are kept fast and lightweight:
+
+- **Host Evaluation (`nixos-eval-*`)**: All NixOS configurations (`titan`, `ixo`, `vinea`, `gnome-vm`, etc.) are checked for option conflicts, syntax errors, and activation script validity in seconds without realizing full system closures.
+- **Minimal Automated VM Tests**: Automated boot tests in `checks` are strictly limited to lightweight environments (specifically `installer-boot`, which verifies SSH key generation and login on minimal installation media for `nixos-anywhere`).
+- **No Heavy GUI VM Checks**: Full desktop configurations like `gnome-vm` do **not** run automated VM boot tests in default `checks`. Building a full desktop closure with GNOME, browsers, and desktop tools pulls over 11,000 derivation requisites and multi-gigabyte downloads. Use the interactive `vm gnome-vm clean` command when testing graphical desktop changes.
