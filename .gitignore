@@ -18,3 +18,7 @@ docs/site/
 
 # AI
 /.antigravitycli/
+
+# Sub-Flakes Examples
+examples/**/.vscode/
+

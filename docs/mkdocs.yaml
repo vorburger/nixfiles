@@ -37,6 +37,7 @@ nav:
       - reference/nixos-rebuild.md
       - reference/nixos-anywhere.md
       - reference/flake-file.md
+      - reference/flakes/index.md
       - reference/fwupd.md
       - reference/fprintd.md
       - reference/ssh-tpm-keygen.md

@@ -1,0 +1,44 @@
+{
+  "nodes": {
+    "java": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1788547255,
+        "narHash": "sha256-T9oXM6D4pMuOVJQguk+E8OhwNC2OVJp7BFPHcLe5QYs=",
+        "path": "../../flakes/java",
+        "type": "path"
+      },
+      "original": {
+        "dir": "flakes/java",
+        "owner": "vorburger",
+        "repo": "nixfiles",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1788179007,
+        "narHash": "sha256-hn1oU2rue2SYK8dAr8+WNZWtbsz1S2W5mnHlSEuh3bo=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "34ab99075ac4f7e40cf037eef32cb1c360bb85e9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "java": "java"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
