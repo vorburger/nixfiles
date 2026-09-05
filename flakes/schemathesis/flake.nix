@@ -109,7 +109,7 @@
 
           allure-pytest = python.allure-pytest.overridePythonAttrs (_: {
             build-system = [
-              python.setuptools_80
+              (python.setuptools_80 or python.setuptools)
               python.setuptools-scm
             ];
           });
