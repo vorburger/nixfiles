@@ -35,6 +35,12 @@ in
           # Caching & performance
           eval-cache = true;
           warn-dirty = false;
+
+          # Timeouts to prevent deadlocks and indefinite hangs
+          connect-timeout = 10;
+          stalled-download-timeout = 30;
+          max-silent-time = 300;
+          timeout = 3600;
         };
 
         # Save space in /nix via hard-links using scheduled background optimization
