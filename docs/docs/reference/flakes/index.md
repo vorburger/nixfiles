@@ -4,10 +4,11 @@ This repository hosts standalone sub-flakes under `flakes/` to provide standardi
 
 ## Available Flakes
 
-| Flake    | Path          | Description                                                                                    |
-| :------- | :------------ | :--------------------------------------------------------------------------------------------- |
-| **Java** | `flakes/java` | Java 25 compilation, Java 21 IDE (JDT LS), Gradle 9 override, VS Code configuration generator. |
-| **Bun**  | `flakes/bun`  | Bun runtime and Node.js 26 (`npx`).                                                            |
+| Flake            | Path                  | Description                                                                                    |
+| :--------------- | :-------------------- | :--------------------------------------------------------------------------------------------- |
+| **Java**         | `flakes/java`         | Java 25 compilation, Java 21 IDE (JDT LS), Gradle 9 override, VS Code configuration generator. |
+| **Bun**          | `flakes/bun`          | Bun runtime and Node.js 26 (`npx`).                                                            |
+| **Schemathesis** | `flakes/schemathesis` | Schemathesis API testing tool with Allure report integration.                                  |
 
 ## Why Sub-Flakes?
 
