@@ -65,6 +65,10 @@ in
       services.prowlarr.settings.auth.required = lib.mkDefault "DisabledForLocalAddresses";
       services.radarr.settings.auth.required = lib.mkDefault "DisabledForLocalAddresses";
       services.sonarr.settings.auth.required = lib.mkDefault "DisabledForLocalAddresses";
+
+      # https://flaresolverr.com
+      # https://github.com/FlareSolverr/FlareSolverr
+      services.flaresolverr.enable = true;
     };
   };
 }
