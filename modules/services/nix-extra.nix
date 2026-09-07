@@ -41,7 +41,13 @@ in
           stalled-download-timeout = 30;
           max-silent-time = 300;
           timeout = 3600;
+
+          # Allow derivations using ccache to access the persistent cache
+          extra-sandbox-paths = [ "/var/cache/ccache" ];
         };
+
+        # Manage /var/cache/ccache with nixbld group permissions and provide nix-ccache utility
+        programs.ccache.enable = true;
 
         # Save space in /nix via hard-links using scheduled background optimization
         # (avoiding auto-optimise-store = true which slows down builds and switches synchronously)
