@@ -48,6 +48,7 @@ nav:
       - reference/ollama.md
       - reference/podman.md
       - reference/nixarr.md
+      - reference/nix-ld.md
       - reference/wiki.md
       - reference/we.md
       - ToDo.md
