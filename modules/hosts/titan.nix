@@ -41,7 +41,7 @@ mkHost {
         services.hermes.enable = true;
         services.podman-extra.enable = true;
         services.nixarr.enable = !vmTest;
-        services.nix-ld.enable = true;
+        services.nix-ld.enable = false;
         hardware.amdgpu.initrd.enable = true; # sets boot.initrd.kernelModules = ["amdgpu"];
 
         boot.initrd.availableKernelModules = [
