@@ -171,7 +171,8 @@ After the initial deployment:
    - Navigate to <https://vorbflix.home.vorburger.ch> (or <http://localhost:8096>) &rarr; **Dashboard** &rarr; **Libraries**.
    - Under **Movies**: click the three dots &rarr; **Manage Folders**, ensure `/bardioc/public/library/movies` is added, and verify **Enable real time monitoring** is checked.
    - Under **TV Series** (or **Shows**): click the three dots &rarr; **Manage Folders**, add `/bardioc/public/library/shows`, and verify **Enable real time monitoring** is checked.
-     _(With real-time monitoring enabled, Jellyfin's inotify watcher automatically refreshes libraries whenever Radarr or Sonarr downloads or hardlinks new media.)_
+   - **Trigger One-Time Initial Scan:** On each library card, click the three dots &rarr; **Scan Library** (_Bibliothek durchsuchen_). Jellyfin does not materialize newly added physical folder paths or attach its background inotify filesystem watcher (`LibraryMonitor`) until an initial scan has been run.
+   - _(Optional Best Practice)_ In **Sonarr** and **Radarr** &rarr; **Settings** &rarr; **Connect** &rarr; **+** &rarr; **Jellyfin**, add your Jellyfin server URL and API key. This proactively notifies Jellyfin to refresh the specific item immediately upon download/import, providing an active push mechanism alongside Jellyfin's inotify monitoring.
 1. **Access Prowlarr Web UI:**
    - Navigate to <http://localhost:9696>.
    - Choose _Authentication Method:_ `Forms (Login Page)`
