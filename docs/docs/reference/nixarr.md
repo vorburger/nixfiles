@@ -166,7 +166,12 @@ After the initial deployment:
    - Set a Username & Password
    - Navigate to <http://localhost:8989/settings/general> and note Sonarr's _API Key_
    - Navigate to <http://localhost:8989/settings/mediamanagement> and _Add Root Folder_ `/bardioc/public/library/shows`
-   - Navigate to <http://localhost:7878/settings/downloadclients> and _Add Download Client_ and choose `Transmission` (on port 9091)
+   - Navigate to <http://localhost:8989/settings/downloadclients> and _Add Download Client_ and choose `Transmission` (on port 9091)
+1. **Configure Jellyfin Libraries:**
+   - Navigate to <https://vorbflix.home.vorburger.ch> (or <http://localhost:8096>) &rarr; **Dashboard** &rarr; **Libraries**.
+   - Under **Movies**: click the three dots &rarr; **Manage Folders**, ensure `/bardioc/public/library/movies` is added, and verify **Enable real time monitoring** is checked.
+   - Under **TV Series** (or **Shows**): click the three dots &rarr; **Manage Folders**, add `/bardioc/public/library/shows`, and verify **Enable real time monitoring** is checked.
+     _(With real-time monitoring enabled, Jellyfin's inotify watcher automatically refreshes libraries whenever Radarr or Sonarr downloads or hardlinks new media.)_
 1. **Access Prowlarr Web UI:**
    - Navigate to <http://localhost:9696>.
    - Choose _Authentication Method:_ `Forms (Login Page)`
@@ -184,6 +189,94 @@ After the initial deployment:
    - In Seerr Settings &rarr; **Radarr**: add server (`http://localhost:7878`), enter the API key from Radarr, and select default root folder and quality profile (e.g. `HD-1080p`).
    - In Seerr Settings &rarr; **Sonarr**: add server (`http://localhost:8989`), enter the API key from Sonarr, and select default root folder and quality profile.
 1. **Pin Seerr in Jellyfin (Optional):**
-   - In Jellyfin Dashboard <> &rarr; **General** &rarr; **Custom Links**, add a link:
+   - In Jellyfin Dashboard &rarr; **General** &rarr; **Custom Links**, add a link:
      - Name: `Request Movies & Shows`
      - URL: `https://seerr.home.vorburger.ch`
+
+---
+
+## Troubleshooting & Diagnostics
+
+### 1. Prefer `journalctl` Over `/var/lib/...` Directory Inspection
+
+State directories for services like Jellyfin (`/var/lib/jellyfin/`) and Nixarr (`/var/lib/nixarr/`) are restricted (`0700`) to their respective service daemon users. Attempting to inspect files or logs directly under `/var/lib/...` via `sudo` can trigger hardware security keys (e.g. YubiKey via PAM U2F) or biometric prompts, which will hang or time out in automated or remote terminal sessions.
+
+Instead, always prefer `journalctl`, which members of the `wheel` group can run directly **without `sudo`**:
+
+```bash
+# Jellyfin server logs
+journalctl -u jellyfin -n 50 --no-pager
+
+# Seerr request management logs
+journalctl -u seerr -n 50 --no-pager
+
+# Sonarr & Radarr logs
+journalctl -u sonarr -n 50 --no-pager
+journalctl -u radarr -n 50 --no-pager
+
+# Transmission BitTorrent client logs
+journalctl -u transmission -n 50 --no-pager
+```
+
+### 2. Diagnosing Missing Media in Jellyfin (Inotify & Real-Time Monitoring)
+
+Jellyfin uses Linux `inotify` via its `LibraryMonitor` subsystem to detect newly imported media automatically. If newly downloaded movies or series exist in `/bardioc/public/library/` but do not show up in Jellyfin:
+
+1. **Verify active directory watchers**:
+
+   ```bash
+   journalctl -b -u jellyfin --grep="LibraryMonitor" --no-pager
+   ```
+
+   Check the output to ensure that every library folder is explicitly listed under `Watching directory ...`:
+
+   ```text
+   Watching directory /bardioc/public/library/movies
+   Watching directory /bardioc/public/library/shows
+   ```
+
+   If a folder is missing, it has not been registered in Jellyfin (**Dashboard** &rarr; **Libraries** &rarr; **Manage Folders**). Even manual library scans on a collection will not pick up media from unregistered paths.
+
+2. **Verify inotify event triggers**:
+   When Radarr or Sonarr creates a hardlink for a downloaded file, Jellyfin should log a refresh event within seconds:
+
+   ```text
+   LibraryMonitor: movies (/bardioc/public/library/movies) will be refreshed.
+   ```
+
+3. **Check last completed library scan**:
+   ```bash
+   journalctl -b -u jellyfin --grep="Scan Media Library" --no-pager
+   ```
+
+### 3. Diagnosing Seerr Sync & "View in Jellyfin" Links
+
+Seerr polls Jellyfin and Servarr periodically to reconcile media requests with library availability:
+
+1. **Check Seerr's Jellyfin sync job**:
+
+   ```bash
+   journalctl -u seerr --grep="Jellyfin Sync" -n 30 --no-pager
+   ```
+
+   If a title has not been scanned by Jellyfin yet, Seerr will not see it during its sync and cannot display the "View in Jellyfin" button.
+
+2. **Check download tracking in Sonarr/Radarr**:
+   ```bash
+   journalctl -u seerr --grep="Download Tracker" -n 30 --no-pager
+   ```
+   This confirms that Seerr successfully sees the completed download in Sonarr/Radarr and is waiting for Jellyfin's index to match it.
+
+### 4. Hardlink & Storage Verification
+
+To confirm that Sonarr or Radarr properly created hardlinks under the TRaSH Guides layout without cross-filesystem copies:
+
+```bash
+# Check files in library
+ls -la /bardioc/public/library/shows/
+ls -la /bardioc/public/library/movies/
+
+# Check inode match between torrents and library (hardlink confirmation)
+ls -i "/bardioc/public/library/shows/<Show>/<Episode>.mkv"
+ls -i "/bardioc/public/torrents/<TorrentFolder>/<Episode>.mkv"
+```
