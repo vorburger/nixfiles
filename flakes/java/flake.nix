@@ -63,6 +63,7 @@
             "java.completion.filteredTypes" = [
               "java.awt.*"
               "javax.annotation.*"
+              "com.fasterxml.jackson"
               "com.sun.*"
               "com.google.api.client.util.*"
               "com.google.common.base.Optional"
@@ -76,8 +77,10 @@
               "org.graalvm.*"
               "org.junit.*"
               "org.jetbrains.annotations.*"
+              "org.testcontainers.shaded.*"
               "io.micrometer.shaded.*"
               "jakarta.annotation.*"
+              "*.shaded.*"
             ];
             "java.format.enabled" = false;
             "java.format.settings.google.extra" = "--aosp";
