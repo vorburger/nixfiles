@@ -29,6 +29,9 @@
           ++ extraPackages;
 
           vscodeSettings = {
+            "files.exclude" = {
+              "**/bin" = true;
+            };
             "gradle.autoDetect" = "on";
             "java.configuration.updateBuildConfiguration" = "automatic";
             "java.gradle.buildServer.enabled" = "off";
@@ -38,7 +41,7 @@
             "java.import.gradle.version" = "${gradle.version}";
             "java.import.gradle.wrapper.enabled" = false;
             "java.jdt.ls.java.home" = "${ideJdk}/lib/openjdk";
-            "java.import.gradle.java.home" = "${ideJdk}/lib/openjdk";
+            "java.import.gradle.java.home" = "${jdk}/lib/openjdk";
             "gradle.java.home" = "${ideJdk}/lib/openjdk";
             "java.configuration.runtimes" = [
               {
