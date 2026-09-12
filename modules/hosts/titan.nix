@@ -39,6 +39,10 @@ mkHost {
         services.hello.enable = true;
         services.caddy-extra.enable = true;
         services.hermes.enable = true;
+        services.enola = {
+          enable = true;
+          builder.enable = !vmTest;
+        };
         services.podman-extra.enable = true;
         services.nixarr.enable = !vmTest;
         services.nix-ld.enable = false;
@@ -168,6 +172,9 @@ mkHost {
               "prowlarr/prowlarr.db"
               "seerr/db/db.sqlite3"
             ];
+          };
+          jobs.enola = {
+            srcDir = "/var/lib/enola/data";
           };
         };
       }

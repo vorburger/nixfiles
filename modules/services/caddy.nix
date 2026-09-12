@@ -33,6 +33,20 @@ lib.recursiveUpdate secret {
           virtualHosts."seerr.home.vorburger.ch".extraConfig = ''
             reverse_proxy :5055
           '';
+          # Enola2 UI & API (https://vaish.home.vorburger.ch)
+          virtualHosts."vaish.home.vorburger.ch".extraConfig = ''
+            handle /v1/* {
+              reverse_proxy :2609
+            }
+            handle /widget/* {
+              reverse_proxy :2609
+            }
+            handle {
+              root * /var/lib/enola/ui
+              try_files {path} /index.html
+              file_server
+            }
+          '';
           # TODO Auth! WebAuthn, ideally... check github.com/greenpau/caddy-security, or Authelia or Authentik.
           # TODO Services overview welcome sort of page; static, or auto-generated?
           # TODO http://localhost/ should show ^^^ it

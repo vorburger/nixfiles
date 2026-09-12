@@ -45,6 +45,7 @@ nav:
       - reference/age.md
       - reference/secrets.md
       - reference/hermes.md
+      - reference/enola.md
       - reference/ollama.md
       - reference/podman.md
       - reference/nixarr.md
