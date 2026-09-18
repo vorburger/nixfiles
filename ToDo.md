@@ -75,6 +75,8 @@
 
 1. `services.prometheus.exporters.smartctl.devices` for SMART monitoring
 
+1. [`services.prometheus.exporters.wireguard.*`](https://search.nixos.org/options?channel=26.05&query=services.prometheus.exporters.wireguard&type=options) `pkgs.prometheus-wireguard-exporter` for https://github.com/MindFlavor/prometheus_wireguard_exporter
+
 1. Monitor temperature of CPU and disks, and fan speed, on all hosts; alert if above certain threshold; log to Grafana
 
 1. https://github.com/pdf/zfs_exporter
