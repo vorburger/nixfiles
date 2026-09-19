@@ -33,7 +33,7 @@
       role = "client";
       wireguardIpv4 = "10.25.75.3";
       wireguardIpv6 = "fd25:75::3";
-      publicKey = "5rpMI6GpqprNO2AgILNvtulDYZCSBPYgZXBt/WknUgk=";
+      publicKey = "3trOBG35PScN+I8MKgHliFBcgqLGHZR2yGywN74rpAc=";
       trusted = false;
     };
 
