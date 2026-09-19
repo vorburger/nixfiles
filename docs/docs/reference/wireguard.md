@@ -142,21 +142,30 @@ Private keys are managed with `ragenix` per [Secrets Management](secrets.md).
   - `secrets/encrypted/wireguard-ixo.age` is encrypted **only** to Ixo's SSH host key and admin hardware keys.
   - Neither host can decrypt the other's private key.
 - **Activation Isolation**: Each host activates only its own secret (`age.secrets.wireguard-${config.networking.hostName}`).
+- **NixOS vs. Mobile Clients**:
+  - `titan` and `ixo` are declarative NixOS hosts: their WireGuard interfaces are configured by systemd at boot, requiring their private keys to exist at `/run/secrets/wireguard-<host>`. Hence, they are encrypted into `secrets/encrypted/` via `ragenix`.
+  - WireGuard is asymmetric cryptography (Curve25519). A peer **never** shares its private key with the server—`titan` only needs each client's `publicKey` in `lib/homelab-network.nix`.
+  - Mobile clients (Android, iOS) store their private key locally in the app's secure OS keystore. Therefore, mobile private keys are **not** added to `ragenix`.
 
 ---
 
-## Adding Future Clients
+## Adding Future Clients (e.g. Android Tablet / Mobile)
 
-To onboard a new client (e.g. `tablet`):
+To onboard a new client (such as an Android tablet) using the WireGuard Android client's **Scan from QR code** feature:
 
 1. **Generate Keypair**:
+
+   On your workstation (`ixo`), generate the private and public key pair:
 
    ```bash
    TABLET_PRIV=$(nix shell nixpkgs#wireguard-tools --command wg genkey)
    TABLET_PUB=$(echo "$TABLET_PRIV" | nix shell nixpkgs#wireguard-tools --command wg pubkey)
+   echo "Public Key: $TABLET_PUB"
    ```
 
-2. **Add to `lib/homelab-network.nix`**:
+2. **Register Client in `lib/homelab-network.nix`**:
+
+   Add the client definition to the `hosts` attribute set:
 
    ```nix
    tablet = {
@@ -164,23 +173,50 @@ To onboard a new client (e.g. `tablet`):
      wireguardIpv4 = "10.25.75.3";
      wireguardIpv6 = "fd25:75::3";
      publicKey = "<TABLET_PUB>";
-     trusted = false; # Restricted: web ports (80/443) only
+     trusted = false; # Restricted: web ports (80/443) only for media streaming
    };
    ```
 
-3. **Deploy to Titan**:
+3. **Deploy Configuration to Titan**:
+
+   Commit and push the updated network configuration, then rebuild Titan:
 
    ```bash
    git commit -am "feat(wireguard): add tablet client" && git push
    # On titan: git pull && nh os switch .
    ```
 
-4. **Configure Client App** (Android / iOS / macOS):
-   - **Interface Addresses**: `10.25.75.3/24`, `fd25:75::3/64`
-   - **Peer Public Key**: Titan's public key
-   - **Endpoint**: `vinea.internet-box.ch:51820`
-   - **Allowed IPs**: `10.25.75.0/24`, `fd25:75::/64`, `192.168.1.99/32`
-   - **Persistent Keepalive**: `25`
+4. **Generate QR Code in Terminal**:
+
+   Render the WireGuard client configuration directly as a QR code in your terminal using `qrencode`:
+
+   ```bash
+   cat <<EOF | nix shell nixpkgs#qrencode --command qrencode -t ansiutf8
+   [Interface]
+   PrivateKey = $TABLET_PRIV
+   Address = 10.25.75.3/24, fd25:75::3/64
+
+   [Peer]
+   PublicKey = UVdA/6vjg/5mq+re3rnKzWUJvdqCPC/ObHQSFTUDqDg=
+   Endpoint = vinea.internet-box.ch:51820
+   AllowedIPs = 10.25.75.0/24, fd25:75::/64, 192.168.1.99/32
+   PersistentKeepalive = 25
+   EOF
+   ```
+
+   > [!TIP]
+   >
+   > - **Terminal Contrast**: If your terminal uses a light theme and the camera has difficulty scanning, pass `-t ansiutf8i` to invert module colors.
+   > - **Image Viewer Alternative**: You can also render to a temporary PNG file (`-t png -o /tmp/tablet-wg.png`), open it with an image viewer (`xdg-open /tmp/tablet-wg.png`), and scan from the screen. Delete the file (`rm /tmp/tablet-wg.png`) once scanned so the private key is not stored unencrypted on disk.
+
+5. **Scan and Connect on Android**:
+
+   1. Open the **WireGuard** app on the Android tablet.
+   2. Tap the floating **`+`** (Add tunnel) button in the bottom right corner.
+   3. Select **Scan from QR code**.
+   4. Point the tablet camera at the QR code displayed in the terminal.
+   5. Enter a tunnel name (e.g., `homelab` or `titan`) and tap **Create Tunnel**.
+   6. Toggle the tunnel switch on to connect and test browsing to `http://vorbflix.home.vorburger.ch`.
 
 ---
 

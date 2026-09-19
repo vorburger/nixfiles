@@ -29,8 +29,16 @@
       trusted = true; # Admin workstation: full access to SSH (22), Caddy, metrics, etc.
     };
 
-    # Template for future clients (e.g. tablet):
-    # tablet = {
+    dynabook = {
+      role = "client";
+      wireguardIpv4 = "10.25.75.3";
+      wireguardIpv6 = "fd25:75::3";
+      publicKey = "5rpMI6GpqprNO2AgILNvtulDYZCSBPYgZXBt/WknUgk=";
+      trusted = false;
+    };
+
+    # Template for future clients:
+    # abc = {
     #   role = "client";
     #   wireguardIpv4 = "10.25.75.3";
     #   wireguardIpv6 = "fd25:75::3";
