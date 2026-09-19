@@ -17,7 +17,6 @@ in
             Description = "SSH agent multiplexer";
             # Ensure it starts after the agents it multiplexes
             After = [
-              "gpg-agent-ssh.socket"
               "ssh-tpm-agent.service"
             ];
             # We don't want to "require" them because it should work even if some are missing (later)
@@ -26,7 +25,7 @@ in
           serviceConfig = {
             # %t is /run/user/%U
             # Add more agent sockets here as needed (e.g. TPM agent)
-            ExecStart = "${pkgs.ssh-agent-mux}/bin/ssh-agent-mux -l %t/ssh-agent-mux.sock %t/gnupg/S.gpg-agent.ssh %t/ssh-tpm-agent.sock";
+            ExecStart = "${pkgs.ssh-agent-mux}/bin/ssh-agent-mux -l %t/ssh-agent-mux.sock %t/ssh-tpm-agent.sock";
             Restart = "always";
           };
         };
