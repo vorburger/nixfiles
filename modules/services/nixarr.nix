@@ -52,13 +52,19 @@ in
         # Torrent download client
         transmission = {
           enable = lib.mkDefault true;
-          openFirewall = lib.mkDefault false;
+          openFirewall = lib.mkDefault false; # http://localhost:9091/transmission/web/
           peerPort = lib.mkDefault 51413;
         };
 
         # Declarative download client syncing
         sonarr.settings-sync.transmission.enable = lib.mkDefault true;
         radarr.settings-sync.transmission.enable = lib.mkDefault true;
+      };
+
+      # Allow incoming BitTorrent peer traffic for Transmission
+      networking.firewall = {
+        allowedTCPPorts = [ 51413 ];
+        allowedUDPPorts = [ 51413 ];
       };
 
       # Settings required by nixarr settings-sync for local REST API calls on boot
