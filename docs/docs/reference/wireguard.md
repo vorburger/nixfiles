@@ -120,15 +120,15 @@ Because a `/32` host route has the highest specificity in CIDR routing:
 
 ## Role-Based Firewall Access Control
 
-Rather than blanket-trusting all WireGuard traffic, Titan enforces **role-based packet filtering** on `wg0`:
+Rather than blanket-trusting all WireGuard traffic, Titan enforces **role-based packet filtering** on `wg0` across both local access (`INPUT`) and transit forwarding (`FORWARD`):
 
-1. **Trusted Admin Workstations (`ixo`)**:
-   - Matches `trusted = true` in `lib/homelab-network.nix`.
-   - Permitted full access to all ports: SSH (`22`), Caddy (`80`/`443`), metrics (`9100`/`9633`), Prometheus (`9090`), etc.
-2. **Restricted Media Clients (`tablet`, mobile phones)**:
-   - Matches `trusted = false` in `lib/homelab-network.nix`.
-   - Permitted **only** HTTP (`80`) and HTTPS (`443`) to reach Caddy (Vorbflix, Seerr, Enola UI) plus ICMP ping.
-   - All other ports (including SSH `22` and administrative services) are dropped.
+1. **Local Server Access (`INPUT` Chain on Titan)**:
+   - **Trusted Admin Workstations (`ixo`)**: Matches `trusted = true` in `lib/homelab-network.nix`. Permitted full access to all ports on Titan: SSH (`22`), Caddy (`80`/`443`), metrics (`9100`/`9633`), Prometheus (`9090`), etc.
+   - **Restricted Media Clients (`tablet`, mobile phones)**: Matches `trusted = false` in `lib/homelab-network.nix`. Permitted **only** HTTP (`80`) and HTTPS (`443`) on Titan to reach Caddy (Vorbflix, Seerr, Enola UI) plus ICMP ping. All other ports on Titan are dropped.
+
+2. **Inter-Host Forwarding & Transit Isolation (`FORWARD` Chain on Titan)**:
+   - **Trusted Admin Workstations (`ixo`)**: Permitted to route transit traffic through Titan to other WireGuard clients or LAN devices.
+   - **Restricted Media Clients (`tablet`)**: Transit and inter-client routing is strictly blocked (`iptables -A FORWARD -i wg0 -j DROP`). Untrusted clients can **never** route through Titan to reach other peers (like `ixo`) or local LAN devices.
 
 ---
 
@@ -188,7 +188,7 @@ To onboard a new client (such as an Android tablet) using the WireGuard Android 
 
 4. **Generate QR Code in Terminal**:
 
-   Render the WireGuard client configuration directly as a QR code in your terminal using `qrencode`:
+   Render the WireGuard client configuration directly as a QR code in your terminal using `qrencode`. For untrusted media clients, `AllowedIPs` includes only Titan's addresses (`10.25.75.1/32`, `fd25:75::1/128`, `192.168.1.99/32`) rather than the entire subnet, ensuring client-level routing isolation:
 
    ```bash
    cat <<EOF | nix shell nixpkgs#qrencode --command qrencode -t ansiutf8
@@ -199,7 +199,7 @@ To onboard a new client (such as an Android tablet) using the WireGuard Android 
    [Peer]
    PublicKey = UVdA/6vjg/5mq+re3rnKzWUJvdqCPC/ObHQSFTUDqDg=
    Endpoint = vinea.internet-box.ch:51820
-   AllowedIPs = 10.25.75.0/24, fd25:75::/64, 192.168.1.99/32
+   AllowedIPs = 10.25.75.1/32, fd25:75::1/128, 192.168.1.99/32
    PersistentKeepalive = 25
    EOF
    ```

@@ -140,9 +140,31 @@ _: {
             iptables -A INPUT -i ${cfg.interface} -p tcp -m multiport --dports 80,443 -j ACCEPT
             ip6tables -A INPUT -i ${cfg.interface} -p tcp -m multiport --dports 80,443 -j ACCEPT
 
-            # 3. Drop all other traffic on WireGuard interface
+            # 3. Drop all other incoming traffic destined to server on WireGuard interface
             iptables -A INPUT -i ${cfg.interface} -j DROP
             ip6tables -A INPUT -i ${cfg.interface} -j DROP
+
+            # --- Forwarding Access Control (transit & inter-client isolation) ---
+            # Allow established and related forwarded traffic across WireGuard interface
+            iptables -A FORWARD -i ${cfg.interface} -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+            ip6tables -A FORWARD -i ${cfg.interface} -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+            # Allow transit / inter-client forwarding only for trusted admin clients (e.g. ixo)
+            ${lib.concatStringsSep "\n" (
+              lib.mapAttrsToList (
+                _name: h: "iptables -A FORWARD -i ${cfg.interface} -s ${h.wireguardIpv4} -j ACCEPT"
+              ) trustedClients
+            )}
+            ${lib.concatStringsSep "\n" (
+              lib.mapAttrsToList (
+                _name: h: "ip6tables -A FORWARD -i ${cfg.interface} -s ${h.wireguardIpv6} -j ACCEPT"
+              ) trustedClients
+            )}
+
+            # Drop all other forwarded traffic originating from WireGuard interface
+            # (strictly isolates untrusted clients from other WireGuard peers and LAN devices)
+            iptables -A FORWARD -i ${cfg.interface} -j DROP
+            ip6tables -A FORWARD -i ${cfg.interface} -j DROP
           '';
         };
 
