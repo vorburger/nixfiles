@@ -39,7 +39,7 @@
 
 1. NUC should not have the workstation profile, but a (new) "headless" one, e.g. without Sound and most (or any at all?) things from workstation.nix; see also https://nixos.org/manual/nixos/stable/#sec-profile-headless
 
-1. Wireguard into NUC
+1. ~~Wireguard into NUC~~
 
 1. Backup Antigravity Config and Conversations; share between Workstation & Latpop
 

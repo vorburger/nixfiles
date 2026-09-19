@@ -163,6 +163,17 @@ ragenix -e secrets/encrypted/hello-secret.age
 
 This opens your `$EDITOR` securely, allowing you to edit the secret in cleartext. Upon saving, it re-encrypts the file automatically using the keys in `secrets/rules.nix`.
 
+#### Writing Secrets Non-Interactively from `stdin`
+
+To pipe secret content programmatically or non-interactively without opening a text editor, pass `--editor -`:
+
+```bash
+echo "$SECRET" | ragenix --editor - -e secrets/encrypted/hello-secret.age
+```
+
+> **Why `--editor -` is necessary**:
+> By default, `ragenix -e` launches the configured text editor (which the Fish shell wrapper sets to `nano`). If `stdin` is redirected or piped into `ragenix` without `--editor -`, `nano` inherits the pipe, detects that standard input is not an interactive terminal (`Standard input is not a terminal`), and exits with an error. Specifying `--editor -` instructs `ragenix` to read content directly from standard input instead of launching an editor process.
+
 > **Note on User Identities and `ragenix` wrapper**:
 > The `ragenix` Fish shell alias automatically passes `--rules secrets/rules.nix` and `-i $HOME/.config/age/identities` if available.
 >

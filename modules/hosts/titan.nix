@@ -44,6 +44,10 @@ mkHost {
           builder.enable = !vmTest;
         };
         services.podman-extra.enable = true;
+        services.wireguard = {
+          enable = true;
+          role = "server";
+        };
         services.nixarr.enable = !vmTest;
         services.nix-ld.enable = false;
         hardware.amdgpu.initrd.enable = true; # sets boot.initrd.kernelModules = ["amdgpu"];

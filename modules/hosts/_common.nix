@@ -41,6 +41,7 @@
     self.nixosModules.nixarr
     self.nixosModules.nix-ld
     self.nixosModules.enola
+    self.nixosModules.wireguard
   ];
 
   services.locale-ch.enable = lib.mkDefault true;
@@ -53,6 +54,7 @@
   services.zram.enable = lib.mkDefault false;
   services.hello.enable = lib.mkDefault false;
   services.enola.enable = lib.mkDefault false;
+  services.wireguard.enable = lib.mkDefault false;
   services.metrics-exporter.enable = lib.mkDefault true;
   services.nixarr.enable = lib.mkDefault false;
   services.nix-ld.enable = lib.mkDefault false;
