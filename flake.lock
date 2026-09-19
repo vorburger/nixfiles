@@ -659,11 +659,11 @@
       },
       "locked": {
         "dir": "dotfiles/home-manager",
-        "lastModified": 1788470330,
-        "narHash": "sha256-m+JeANLjyhX85m8zDSArnaDrNbZW47Dl4GWW8IrfDR4=",
+        "lastModified": 1789849264,
+        "narHash": "sha256-kQsb6X3JSAoFv5b44l5uzpIUPzvjDYqb2WE71LQr5oo=",
         "owner": "vorburger",
         "repo": "dotfiles",
-        "rev": "b24b9367a466c79d3dfeee9d2b7e09811671c53b",
+        "rev": "58efbf7589a0abc6b404e5c2eecc592acd2d6439",
         "type": "github"
       },
       "original": {
