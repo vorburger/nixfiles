@@ -1,6 +1,47 @@
 # WireGuard VPN
 
-This document describes the WireGuard VPN mesh architecture in `nixfiles` implemented by `modules/services/wireguard.nix`.
+This document describes the WireGuard VPN mesh architecture in `nixfiles` implemented by `modules/services/wireguard.nix` and configured centrally via `lib/homelab-network.nix`.
+
+---
+
+## Central Network Configuration (`lib/homelab-network.nix`)
+
+To prevent hardcoding IP addresses, public keys, and host roles across multiple Nix files, all network topology parameters are centralized in `lib/homelab-network.nix`.
+
+Both `modules/services/wireguard.nix` and individual host configurations import this single source of truth:
+
+```nix
+# lib/homelab-network.nix
+{
+  domain = "home.vorburger.ch";
+  serverEndpoint = "vinea.internet-box.ch:51820";
+  port = 51820;
+
+  subnets = {
+    ipv4 = "10.25.75.0/24";
+    ipv6 = "fd25:75::/64";
+  };
+
+  hosts = {
+    titan = {
+      role = "server";
+      lanIpv4 = "192.168.1.99";
+      wireguardIpv4 = "10.25.75.1";
+      wireguardIpv6 = "fd25:75::1";
+      publicKey = "UVdA/6vjg/5mq+re3rnKzWUJvdqCPC/ObHQSFTUDqDg=";
+      trusted = true;
+    };
+
+    ixo = {
+      role = "client";
+      wireguardIpv4 = "10.25.75.2";
+      wireguardIpv6 = "fd25:75::2";
+      publicKey = "vkzl9tUdw+9EZdClKirFaygTVo5C2PqjPs9DJ8MuqhI=";
+      trusted = true; # Admin workstation: full access to SSH, Caddy, metrics, etc.
+    };
+  };
+}
+```
 
 ---
 
@@ -19,6 +60,7 @@ The WireGuard network forms a hub-and-spoke mesh topology where `titan` acts as 
                        ┌─────────────────┐
                        │  titan (Server) │
                        │   10.25.75.1    │
+                       │   fd25:75::1    │
                        └────────┬────────┘
                                 │
                ┌────────────────┴────────────────┐
@@ -26,130 +68,125 @@ The WireGuard network forms a hub-and-spoke mesh topology where `titan` acts as 
       ┌─────────────────┐               ┌─────────────────┐
       │   ixo (Client)  │               │ Future Clients  │
       │   10.25.75.2    │               │  10.25.75.3+    │
+      │   fd25:75::2    │               │  fd25:75::3+    │
       └─────────────────┘               └─────────────────┘
 ```
 
-### Addressing & Endpoints
+### Addressing & Dual-Stack IPv4 / IPv6
 
-| Host            | Role   | WireGuard IP    | Endpoint                                  | Listen Port   |
-| :-------------- | :----- | :-------------- | :---------------------------------------- | :------------ |
-| **`titan`**     | Server | `10.25.75.1/24` | `192.168.1.99` (LAN) / router port 51820  | `51820` (UDP) |
-| **`ixo`**       | Client | `10.25.75.2/24` | Connects to `vinea.internet-box.ch:51820` | Dynamic       |
-| _Future Client_ | Client | `10.25.75.3/24` | Connects to `vinea.internet-box.ch:51820` | Dynamic       |
+The network operates as a native **dual-stack** mesh:
 
-- **Subnet**: `10.25.75.0/24`
-- **Dynamic DNS Endpoint**: `vinea.internet-box.ch:51820`
+| Host            | Role   | WireGuard IPv4  | WireGuard IPv6 (ULA) | Trust Level | Endpoint                           |
+| :-------------- | :----- | :-------------- | :------------------- | :---------- | :--------------------------------- |
+| **`titan`**     | Server | `10.25.75.1/24` | `fd25:75::1/64`      | `trusted`   | `192.168.1.99` (LAN) / UDP `51820` |
+| **`ixo`**       | Client | `10.25.75.2/24` | `fd25:75::2/64`      | `trusted`   | `vinea.internet-box.ch:51820`      |
+| _Future Tablet_ | Client | `10.25.75.3/24` | `fd25:75::3/64`      | Restricted  | `vinea.internet-box.ch:51820`      |
+
+- **IPv4 Subnet**: `10.25.75.0/24` (avoids common `192.168.0.0/24` and `192.168.1.0/24` ranges).
+- **IPv6 ULA Subnet**: `fd25:75::/64` (RFC 4193 Unique Local Addresses; globally collision-free and routable over cellular 5G networks).
+- **Dynamic DNS Endpoint**: `vinea.internet-box.ch:51820`.
 - **Dynamic Endpoint Refresh**: Client peers are configured with `dynamicEndpointRefreshSeconds = 300` to automatically re-resolve DynDNS if the home IP address changes.
 - **Persistent Keepalive**: Clients send keepalives every 25 seconds (`persistentKeepalive = 25`) to keep stateful NAT firewalls open.
 
 ---
 
-## Secrets Management & Isolation
+## Remote Routing & Subnet Collision Avoidance
 
-Private keys are managed with `ragenix` per [Secrets Management](secrets.md).
+Public DNS resolves `*.home.vorburger.ch` (such as `vorbflix.home.vorburger.ch`) to Titan's LAN IP `192.168.1.99`.
 
-### Access Controls & Permissions
+### The Subnet Collision Problem
 
-1. **Runtime Permissions**: Decrypted into RAM at `/run/secrets/wireguard-<host>` with `0400` ownership (`root:root`). Unprivileged users cannot read private keys.
-2. **Cryptographic Host Isolation**:
-   - `secrets/encrypted/wireguard-titan.age` is encrypted **only** to Titan's SSH host key and admin hardware keys (YubiKey / TPM). The `ixo` machine's SSH key cannot decrypt it.
-   - `secrets/encrypted/wireguard-ixo.age` is encrypted **only** to Ixo's SSH host key and admin hardware keys (YubiKey / TPM). The `titan` machine's SSH key cannot decrypt it.
-3. **Activation Isolation**: Each host activates only its own secret (`age.secrets.wireguard-${config.networking.hostName}`).
+If the client routed the entire `192.168.1.0/24` subnet over WireGuard, connecting to a hotel, cafe, or friend's WiFi that also uses `192.168.1.0/24` would break: local gateway packets would be intercepted by the tunnel, severing local network and internet connectivity.
+
+### The Solution: `/32` Host Routing
+
+Clients include `192.168.1.99/32` in `allowedIPs`:
+
+```nix
+allowedIPs = [
+  network.subnets.ipv4
+  network.subnets.ipv6
+  "${serverHost.lanIpv4}/32" # 192.168.1.99/32
+];
+```
+
+Because a `/32` host route has the highest specificity in CIDR routing:
+
+1. Packets for `192.168.1.99` (`vorbflix.home.vorburger.ch`, `titan.home.vorburger.ch`) are cleanly tunneled over WireGuard to Titan from anywhere (5G tethering, foreign WiFis).
+2. The rest of the local `192.168.1.x` subnet on the remote WiFi remains completely untouched, eliminating routing collisions.
+3. Direct WireGuard IPs (`10.25.75.1` and `fd25:75::1`) are always available as collision-free alternatives.
 
 ---
 
-## Step-by-Step: Initial Key Generation
+## Role-Based Firewall Access Control
 
-To prevent private keys from entering LLM context or remote logs, generate the keys locally in your terminal:
+Rather than blanket-trusting all WireGuard traffic, Titan enforces **role-based packet filtering** on `wg0`:
 
-### 1. Generate Real Keys and Encrypt into Secrets
+1. **Trusted Admin Workstations (`ixo`)**:
+   - Matches `trusted = true` in `lib/homelab-network.nix`.
+   - Permitted full access to all ports: SSH (`22`), Caddy (`80`/`443`), metrics (`9100`/`9633`), Prometheus (`9090`), etc.
+2. **Restricted Media Clients (`tablet`, mobile phones)**:
+   - Matches `trusted = false` in `lib/homelab-network.nix`.
+   - Permitted **only** HTTP (`80`) and HTTPS (`443`) to reach Caddy (Vorbflix, Seerr, Enola UI) plus ICMP ping.
+   - All other ports (including SSH `22` and administrative services) are dropped.
 
-Run the following commands directly in your local terminal from the root of `nixfiles` in `bash`:
+---
 
-```bash
-# Generate keys directly in temporary shell variables
-TITAN_PRIV=$(nix shell nixpkgs#wireguard-tools --command wg genkey)
-TITAN_PUB=$(echo "$TITAN_PRIV" | nix shell nixpkgs#wireguard-tools --command wg pubkey)
+## Secrets Management & Host Isolation
 
-IXO_PRIV=$(nix shell nixpkgs#wireguard-tools --command wg genkey)
-IXO_PUB=$(echo "$IXO_PRIV" | nix shell nixpkgs#wireguard-tools --command wg pubkey)
+Private keys are managed with `ragenix` per [Secrets Management](secrets.md).
 
-# Encrypt private keys into .age files
-echo "$TITAN_PRIV" | ragenix --editor - --rules secrets/rules.nix -i $HOME/.config/age/identities -e secrets/encrypted/wireguard-titan.age
-echo "$IXO_PRIV" | ragenix --editor - --rules secrets/rules.nix -i $HOME/.config/age/identities -e secrets/encrypted/wireguard-ixo.age
-
-# Display public keys
-echo "Titan Public Key: $TITAN_PUB"
-echo "Ixo Public Key:   $IXO_PUB"
-```
-
-Because we're running this in Bash instead of Fish, this doesn't use [our `ragenix` Fish shell alias](secrets.md#create-or-edit-a-secret-file), and we thus explicitly pass `--rules` and `-i`. Passing `--editor -` allows `ragenix` to read the private key directly from standard input without attempting to launch an interactive editor (see [Writing Secrets Non-Interactively](secrets.md#writing-secrets-non-interactively-from-stdin)).
-
-### 2. Update Public Keys in Module
-
-Update `publicKeys` in `modules/services/wireguard.nix`:
-
-```nix
-publicKeys = {
-  titan = "<TITAN_PUB>";
-  ixo = "<IXO_PUB>";
-};
-```
-
-### 3. Deploy and Switch
-
-On `ixo`:
-
-```bash
-git commit -am "security(wireguard): update with real keys"
-nh os switch .
-```
-
-On `titan`:
-
-```bash
-git pull
-nh os switch .
-```
+- **Runtime Permissions**: Decrypted into RAM at `/run/secrets/wireguard-<host>` with `0400` ownership (`root:root`).
+- **Cryptographic Host Isolation**:
+  - `secrets/encrypted/wireguard-titan.age` is encrypted **only** to Titan's SSH host key and admin hardware keys.
+  - `secrets/encrypted/wireguard-ixo.age` is encrypted **only** to Ixo's SSH host key and admin hardware keys.
+  - Neither host can decrypt the other's private key.
+- **Activation Isolation**: Each host activates only its own secret (`age.secrets.wireguard-${config.networking.hostName}`).
 
 ---
 
 ## Adding Future Clients
 
-To add a new client (e.g. `nixos-laptop` or a mobile phone):
+To onboard a new client (e.g. `tablet`):
 
-1. **Assign an IP**: e.g., `10.25.75.3/24`.
-2. **Generate Keypair**:
+1. **Generate Keypair**:
 
    ```bash
-   CLIENT_PRIV=$(wg genkey)
-   CLIENT_PUB=$(echo "$CLIENT_PRIV" | wg pubkey)
+   TABLET_PRIV=$(nix shell nixpkgs#wireguard-tools --command wg genkey)
+   TABLET_PUB=$(echo "$TABLET_PRIV" | nix shell nixpkgs#wireguard-tools --command wg pubkey)
    ```
 
-3. **Register Public Key on Server**:
-   In `modules/services/wireguard.nix`, add the new peer to `publicKeys` and `peers` on the server:
+2. **Add to `lib/homelab-network.nix`**:
 
    ```nix
-   {
-     publicKey = publicKeys.laptop;
-     allowedIPs = [ "10.25.75.3/32" ];
-   }
+   tablet = {
+     role = "client";
+     wireguardIpv4 = "10.25.75.3";
+     wireguardIpv6 = "fd25:75::3";
+     publicKey = "<TABLET_PUB>";
+     trusted = false; # Restricted: web ports (80/443) only
+   };
    ```
 
-4. **Configure Client**:
-   For NixOS clients, configure `services.wireguard.enable = true;`.
-   For mobile devices (Android/iOS), configure the WireGuard app with:
-   - **Interface Address**: `10.25.75.3/24`
-   - **Peer Public Key**: `<TITAN_PUB>`
+3. **Deploy to Titan**:
+
+   ```bash
+   git commit -am "feat(wireguard): add tablet client" && git push
+   # On titan: git pull && nh os switch .
+   ```
+
+4. **Configure Client App** (Android / iOS / macOS):
+   - **Interface Addresses**: `10.25.75.3/24`, `fd25:75::3/64`
+   - **Peer Public Key**: Titan's public key
    - **Endpoint**: `vinea.internet-box.ch:51820`
-   - **Allowed IPs**: `10.25.75.0/24`
+   - **Allowed IPs**: `10.25.75.0/24`, `fd25:75::/64`, `192.168.1.99/32`
    - **Persistent Keepalive**: `25`
 
 ---
 
 ## Diagnostics & Verification
 
-Check interface status and handshakes:
+Check interface status, IPs, and handshakes:
 
 ```bash
 sudo wg show
@@ -161,12 +198,15 @@ Check systemd service logs:
 journalctl -u wireguard-wg0 -n 50 --no-pager
 ```
 
-Test connectivity across the tunnel:
+Test IPv4 and IPv6 connectivity across the tunnel:
 
 ```bash
-# From ixo:
+# IPv4
 ping -c 3 10.25.75.1
 
-# From titan:
-ping -c 3 10.25.75.2
+# IPv6 ULA
+ping -c 3 fd25:75::1
+
+# Titan LAN host route over VPN
+ping -c 3 192.168.1.99
 ```
