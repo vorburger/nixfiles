@@ -37,7 +37,7 @@ mkHost {
         services.zram.enable = true;
         services.hello.enable = true;
         services.caddy-extra.enable = true;
-        services.hermes.enable = true;
+        services.hermes.enable = false;
         services.enola = {
           enable = true;
           builder.enable = !vmTest;
