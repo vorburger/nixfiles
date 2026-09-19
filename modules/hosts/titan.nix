@@ -12,6 +12,7 @@ mkHost {
   nixpkgs = inputs.nixpkgs-stable;
   diskoDevice = "/dev/disk/by-id/nvme-SAMSUNG_MZVKW512HMJP-000L7_S35BNX0K809192";
   modules = [
+    self.nixosModules.personality-server
     self.nixosModules.personality-workstation
     self.nixosModules.personality-gnome
     (

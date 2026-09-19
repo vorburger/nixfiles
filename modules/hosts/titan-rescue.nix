@@ -15,6 +15,7 @@ mkHost {
   modules = [
     # Reuse all titan's OS configuration exactly as-is.
     # Only the disk layout and bootloader differ (via diskoModule above).
+    self.nixosModules.personality-server
     self.nixosModules.personality-workstation
     self.nixosModules.personality-gnome
     (_: {
