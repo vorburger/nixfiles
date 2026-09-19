@@ -24,6 +24,16 @@
       SSH_AUTH_SOCK = lib.mkOverride 10 "$(if [ -n \"$SSH_CLIENT\" ]; then echo \"$SSH_AUTH_SOCK\"; else echo \"$XDG_RUNTIME_DIR/ssh-agent-mux.sock\"; fi)";
     };
 
+    programs.ssh = {
+      enable = true;
+      enableDefaultConfig = false;
+      settings = {
+        "github.com" = {
+          identityFile = "~/.ssh/id_ecdsa_sk";
+        };
+      };
+    };
+
     # Force, because dotfiles also sets this
     home.file."${config.users.users.vorburger.home}/.gnupg/gpg.conf".force = true;
     programs.gpg = {
