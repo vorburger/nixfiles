@@ -37,6 +37,14 @@
       trusted = false;
     };
 
+    notateen = {
+      role = "client";
+      wireguardIpv4 = "10.25.75.4";
+      wireguardIpv6 = "fd25:75::4";
+      publicKey = "pLqpTOPDOWsoYql4anCe+NipHxTVXSUx8TZ+8OMiayg=";
+      trusted = false;
+    };
+
     # Template for future clients:
     # abc = {
     #   role = "client";
