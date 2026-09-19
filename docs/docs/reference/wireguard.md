@@ -39,6 +39,14 @@ Both `modules/services/wireguard.nix` and individual host configurations import 
       publicKey = "vkzl9tUdw+9EZdClKirFaygTVo5C2PqjPs9DJ8MuqhI=";
       trusted = true; # Admin workstation: full access to SSH, Caddy, metrics, etc.
     };
+
+    dynabook = {
+      role = "client";
+      wireguardIpv4 = "10.25.75.3";
+      wireguardIpv6 = "fd25:75::3";
+      publicKey = "3trOBG35PScN+I8MKgHliFBcgqLGHZR2yGywN74rpAc=";
+      trusted = false; # Non-trusted client: web ports (80/443) only for Vorbflix/Caddy
+    };
   };
 }
 ```
@@ -80,7 +88,8 @@ The network operates as a native **dual-stack** mesh:
 | :-------------- | :----- | :-------------- | :------------------- | :---------- | :--------------------------------- |
 | **`titan`**     | Server | `10.25.75.1/24` | `fd25:75::1/64`      | `trusted`   | `192.168.1.99` (LAN) / UDP `51820` |
 | **`ixo`**       | Client | `10.25.75.2/24` | `fd25:75::2/64`      | `trusted`   | `vinea.internet-box.ch:51820`      |
-| _Future Tablet_ | Client | `10.25.75.3/24` | `fd25:75::3/64`      | Restricted  | `vinea.internet-box.ch:51820`      |
+| **`dynabook`**  | Client | `10.25.75.3/24` | `fd25:75::3/64`      | Restricted  | `vinea.internet-box.ch:51820`      |
+| _Future Tablet_ | Client | `10.25.75.4/24` | `fd25:75::4/64`      | Restricted  | `vinea.internet-box.ch:51820`      |
 
 - **IPv4 Subnet**: `10.25.75.0/24` (avoids common `192.168.0.0/24` and `192.168.1.0/24` ranges).
 - **IPv6 ULA Subnet**: `fd25:75::/64` (RFC 4193 Unique Local Addresses; globally collision-free and routable over cellular 5G networks).
@@ -142,16 +151,159 @@ Private keys are managed with `ragenix` per [Secrets Management](secrets.md).
   - `secrets/encrypted/wireguard-ixo.age` is encrypted **only** to Ixo's SSH host key and admin hardware keys.
   - Neither host can decrypt the other's private key.
 - **Activation Isolation**: Each host activates only its own secret (`age.secrets.wireguard-${config.networking.hostName}`).
-- **NixOS vs. Mobile Clients**:
+- **NixOS vs. Non-NixOS (Fedora) & Mobile Clients**:
   - `titan` and `ixo` are declarative NixOS hosts: their WireGuard interfaces are configured by systemd at boot, requiring their private keys to exist at `/run/secrets/wireguard-<host>`. Hence, they are encrypted into `secrets/encrypted/` via `ragenix`.
   - WireGuard is asymmetric cryptography (Curve25519). A peer **never** shares its private key with the server—`titan` only needs each client's `publicKey` in `lib/homelab-network.nix`.
-  - Mobile clients (Android, iOS) store their private key locally in the app's secure OS keystore. Therefore, mobile private keys are **not** added to `ragenix`.
+  - Non-NixOS Linux clients (Fedora) and mobile clients (Android, iOS) store their private key locally (in NetworkManager, `/etc/wireguard/wg0.conf`, or the mobile OS keystore). Therefore, external client private keys are **never** added to `ragenix` or shared with Titan.
 
 ---
 
-## Adding Future Clients (e.g. Android Tablet / Mobile)
+## Adding a Non-NixOS (Fedora) Linux Client
 
-To onboard a new client (such as an Android tablet) using the WireGuard Android client's **Scan from QR code** feature:
+To onboard a non-NixOS Linux laptop or workstation (such as Fedora running NetworkManager):
+
+### 1. Generate Keypair on the Fedora Client
+
+Always generate the private key directly on the client machine so the private key never leaves the host:
+
+```bash
+# Install wireguard-tools if not already present
+sudo dnf install -y wireguard-tools
+
+# Generate private and public keys with restrictive permissions
+umask 077
+wg genkey | tee wg-private.key | wg pubkey > wg-public.key
+
+echo "Public Key (register this on Titan): $(cat wg-public.key)"
+```
+
+### 2. Register Client in `lib/homelab-network.nix`
+
+In the `nixfiles` repository, add the client definition under `hosts` in `lib/homelab-network.nix`:
+
+```nix
+    dynabook = {
+      role = "client";
+      wireguardIpv4 = "10.25.75.3"; # Next available IP in 10.25.75.0/24
+      wireguardIpv6 = "fd25:75::3"; # Next available ULA in fd25:75::/64
+      publicKey = "3trOBG35PScN+I8MKgHliFBcgqLGHZR2yGywN74rpAc=";
+      trusted = false; # Restricted: web ports (80/443) only for Vorbflix/Caddy
+    };
+```
+
+> [!IMPORTANT]
+> Setting `trusted = false` instructs Titan's firewall to:
+>
+> - Restrict inbound access on Titan exclusively to HTTP (`80`), HTTPS (`443`), and ICMP ping.
+> - Drop SSH (`22`), metrics, and admin ports.
+> - Strictly drop all forwarded/transit traffic (`iptables -A FORWARD -i wg0 -j DROP`), preventing this client from reaching other WireGuard peers (such as `ixo`) or local LAN devices.
+
+### 3. Deploy Configuration to Titan
+
+Commit and push the configuration changes, then rebuild Titan:
+
+```bash
+git commit -am "feat: Add another WireGuard client" && git push
+# On titan:
+git pull && nh os switch .
+```
+
+Verify Titan recognized the new peer:
+
+```bash
+sudo wg show wg0 peers
+```
+
+### 4. Configure Client Connection on Fedora
+
+Create a client configuration file named `wg0.conf` (or `wg-homelab.conf`):
+
+```ini
+[Interface]
+PrivateKey = <PASTE_CONTENTS_OF_wg-private.key>
+Address = 10.25.75.3/24, fd25:75::3/64
+
+[Peer]
+PublicKey = UVdA/6vjg/5mq+re3rnKzWUJvdqCPC/ObHQSFTUDqDg=
+Endpoint = vinea.internet-box.ch:51820
+AllowedIPs = 10.25.75.1/32, fd25:75::1/128, 192.168.1.99/32
+PersistentKeepalive = 25
+```
+
+> [!TIP]
+> **Selective AllowedIPs for Untrusted Clients**:
+>
+> Do not use `10.25.75.0/24` or `0.0.0.0/0` in `AllowedIPs`. Limiting `AllowedIPs` to Titan's exact IPs (`10.25.75.1/32`, `fd25:75::1/128`, and Titan's LAN IP `192.168.1.99/32`) ensures:
+>
+> 1. Only traffic destined for Titan's services (such as `vorbflix.home.vorburger.ch`) routes across the VPN tunnel.
+> 2. Normal internet traffic, DNS resolution, and local WiFi LAN on the Fedora laptop remain completely unaffected.
+
+Now choose either NetworkManager (standard on Fedora desktop) or `wg-quick`:
+
+#### Option A: NetworkManager (Recommended on Fedora Desktop)
+
+Fedora Workstation natively manages WireGuard connections through NetworkManager:
+
+```bash
+# 1. Import connection profile into NetworkManager
+sudo nmcli connection import type wireguard file wg0.conf
+
+# 2. Securely remove the temporary unencrypted config and key files
+rm -f wg0.conf wg-private.key wg-public.key
+
+# 3. Bring up the VPN connection
+nmcli connection up wg0
+
+# 4. Disconnect when finished
+nmcli connection down wg0
+```
+
+Once imported, the VPN toggle is also accessible directly from GNOME Quick Settings (top-right system menu) or **GNOME Settings → Network → VPN**.
+
+#### Option B: `wg-quick` via systemd
+
+If you prefer standard command-line tooling or running headless without NetworkManager:
+
+```bash
+# Move and secure configuration file
+sudo mv wg0.conf /etc/wireguard/wg0.conf
+sudo chmod 600 /etc/wireguard/wg0.conf
+rm -f wg-private.key wg-public.key
+
+# Start and enable on boot
+sudo systemctl enable --now wg-quick@wg0
+
+# To control manually:
+sudo wg-quick down wg0
+sudo wg-quick up wg0
+```
+
+### 5. Verify Connectivity & Firewall Isolation
+
+From the Fedora laptop, verify both connectivity and untrusted client isolation:
+
+```bash
+# 1. Ping Titan over WireGuard IPv4, IPv6 ULA, and LAN IP (should all succeed)
+ping -c 3 10.25.75.1
+ping -c 3 fd25:75::1
+ping -c 3 192.168.1.99
+
+# 2. Access HTTP / HTTPS services on Titan (should succeed)
+curl -I http://10.25.75.1
+curl -I https://vorbflix.home.vorburger.ch
+
+# 3. Test SSH to Titan (should FAIL and timeout; dropped by Titan firewall)
+ssh -o ConnectTimeout=3 root@10.25.75.1
+
+# 4. Test transit routing to other peers (e.g. ixo at 10.25.75.2; should FAIL)
+ping -c 2 -W 2 10.25.75.2
+```
+
+---
+
+## Adding Mobile Clients (e.g. Android Tablet)
+
+To onboard a mobile client (such as an Android tablet) using the WireGuard Android client's **Scan from QR code** feature:
 
 1. **Generate Keypair**:
 
@@ -170,8 +322,8 @@ To onboard a new client (such as an Android tablet) using the WireGuard Android 
    ```nix
    tablet = {
      role = "client";
-     wireguardIpv4 = "10.25.75.3";
-     wireguardIpv6 = "fd25:75::3";
+     wireguardIpv4 = "10.25.75.4";
+     wireguardIpv6 = "fd25:75::4";
      publicKey = "<TABLET_PUB>";
      trusted = false; # Restricted: web ports (80/443) only for media streaming
    };
@@ -194,7 +346,7 @@ To onboard a new client (such as an Android tablet) using the WireGuard Android 
    cat <<EOF | nix shell nixpkgs#qrencode --command qrencode -t ansiutf8
    [Interface]
    PrivateKey = $TABLET_PRIV
-   Address = 10.25.75.3/24, fd25:75::3/64
+   Address = 10.25.75.4/24, fd25:75::4/64
 
    [Peer]
    PublicKey = UVdA/6vjg/5mq+re3rnKzWUJvdqCPC/ObHQSFTUDqDg=
