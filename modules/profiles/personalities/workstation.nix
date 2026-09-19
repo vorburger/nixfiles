@@ -29,8 +29,6 @@
       ];
 
       services.gpg-with-yubikey.enable = true;
-      services.ssh-tpm-agent.enable = true;
-      services.ssh-agent-mux.enable = true;
       services.pipewire-extra.enable = true;
       services.fprintd-extra.enable = true;
       services.kmscon-extra.enable = true;

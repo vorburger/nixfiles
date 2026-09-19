@@ -37,6 +37,7 @@ mkHost {
         services.power.enable = true;
         services.podman-extra.enable = true;
         services.wireguard.enable = true;
+        services.ssh-tpm-agent.enable = true;
       }
     )
     self.nixosModules.target-x1_12

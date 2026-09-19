@@ -12,7 +12,6 @@
     self.nixosModules.virt-guest
     self.nixosModules.gpg-with-yubikey
     self.nixosModules.ssh-tpm-agent
-    self.nixosModules.ssh-agent-mux
     self.nixosModules.pipewire-extra
     self.nixosModules.gnome-extra
     self.nixosModules.hyprland-extra
