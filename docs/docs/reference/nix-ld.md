@@ -19,7 +19,7 @@ https://nix.dev/permalink/stub-ld
 
 ## Configuration
 
-To enable `nix-ld` on a host (e.g. `titan.nix`):
+`nix-ld` is enabled for all workstations in `modules/profiles/personalities/workstation.nix`:
 
 ```nix
 services.nix-ld.enable = true;

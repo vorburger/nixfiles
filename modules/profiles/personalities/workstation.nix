@@ -32,5 +32,6 @@
       services.pipewire-extra.enable = true;
       services.fprintd-extra.enable = true;
       services.kmscon-extra.enable = true;
+      services.nix-ld.enable = true;
     };
 }
