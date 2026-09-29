@@ -84,11 +84,10 @@
             ];
             "java.format.enabled" = false;
             "java.format.settings.google.extra" = "--aosp";
-            "java.format.settings.google.version" = "1.34.1";
-            "java.saveActions.organizeImports" = false;
+            "java.format.settings.google.version" = "1.36.1";
             "[java]" = {
               "editor.defaultFormatter" = "josevseb.google-java-format-for-vs-code";
-              "editor.formatOnSave" = false;
+              "editor.formatOnSave" = true;
               "editor.codeActionsOnSave" = {
                 "source.organizeImports" = "never";
               };
