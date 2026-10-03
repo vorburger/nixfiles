@@ -91,10 +91,16 @@ in
             "/home/${cfg.user}";
 
         userShell =
-          if config.users.users ? ${cfg.user} && config.users.users.${cfg.user}.shell != null then
-            "${config.users.users.${cfg.user}.shell}"
+          let
+            userCfg = config.users.users.${cfg.user} or { };
+            sh = userCfg.shell or null;
+          in
+          if sh == null then
+            "/run/current-system/sw/bin/bash"
+          else if lib.isDerivation sh || lib.isPackage sh then
+            lib.getExe sh
           else
-            "/bin/sh";
+            toString sh;
 
         execArgs = [
           "${cfg.package}/bin/code"
@@ -146,6 +152,9 @@ in
             "/run/current-system/sw"
             "/etc/profiles/per-user/${cfg.user}"
           ]
+          ++ lib.optional (lib.isDerivation (
+            config.users.users.${cfg.user}.shell or null
+          )) config.users.users.${cfg.user}.shell
           ++ cfg.extraPackages;
           environment = {
             HOME = userHome;

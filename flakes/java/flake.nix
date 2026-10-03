@@ -85,6 +85,22 @@
             "java.format.enabled" = false;
             "java.format.settings.google.extra" = "--aosp";
             "java.format.settings.google.version" = "1.36.1";
+            "java.project.resourceFilters" = [
+              "node_modules"
+              "\\.git"
+              "\\.direnv"
+              "\\.gradle"
+              "build"
+              "\\.cache"
+              "bin"
+            ];
+            "files.watcherExclude" = {
+              "**/.git/**" = true;
+              "**/.direnv/**" = true;
+              "**/.gradle/**" = true;
+              "**/build/**" = true;
+              "**/node_modules/**" = true;
+            };
             "[java]" = {
               "editor.defaultFormatter" = "josevseb.google-java-format-for-vs-code";
               "editor.formatOnSave" = true;
@@ -115,6 +131,7 @@
             # Clean up unpatched embedded JRE in VS Code extensions on NixOS to ensure
             # VS Code Gradle and Java extensions use the Nix-provided Java runtime.
             rm -rf "$HOME/.vscode/extensions"/redhat.java-*/jre 2>/dev/null || true
+            rm -rf "$HOME/.vscode-server/extensions"/redhat.java-*/jre 2>/dev/null || true
 
             # Auto-install git hooks if script exists
             if [ -f "${gitHooksScript}" ] && [ -d .git ]; then
