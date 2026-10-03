@@ -10,12 +10,29 @@ in
           name = "zfs-extra";
           description = "extra ZFS configuration";
           content =
-            { config, lib, ... }:
+            {
+              config,
+              lib,
+              pkgs,
+              ...
+            }:
             {
               boot.supportedFilesystems = [ "zfs" ];
               boot.initrd.supportedFilesystems = [ "zfs" ];
               boot.zfs.requestEncryptionCredentials = true;
               systemd.services = {
+                # Problem: Sanoid running can deadlock a suspend! ;(
+                #   see https://docs.google.com/document/d/1IkcS15GkgPGHAYQDH7Q3ay5_rBrGw2BOqETMkl2tM-w/edit?tab=t.0
+                # Solution: Wrap Sanoid invocation with systemd-inhibit
+                sanoid = {
+                  serviceConfig = {
+                    # Clear upstream ExecStart definition (required by systemd when overriding)
+                    ExecStart = lib.mkForce [
+                      ""
+                      "${pkgs.systemd}/bin/systemd-inhibit --what=sleep --why=\"Sanoid ZFS snapshot in progress\" --mode=block ${pkgs.sanoid}/bin/sanoid --cron"
+                    ];
+                  };
+                };
                 zfs-import-cache.serviceConfig.TimeoutStartSec = "90s";
                 zfs-import-scan.serviceConfig.TimeoutStartSec = "90s";
               }
