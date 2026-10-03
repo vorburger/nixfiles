@@ -2,6 +2,11 @@
 
 1. https://2026.nixcon.org ?
 
+1. Create a `vscode-serve-web`
+   see https://gemini.google.com/app/4bd14d6cac683d93;
+   as an alternative to https://vscode.dev with `vscode-tunnel` introduced in commit 77d02de
+   (see https://nixfiles.vorburger.ch/reference/vsc-tunnel.md)
+
 1. [Impermanence](https://www.youtube.com/watch?v=ZKBSWS7OOb4&t=6s) with [`preservation`](https://github.com/nix-community/preservation), see [vimjoyer](https://www.vimjoyer.com/vid89-impermanent)
 
 1. disko for NUC & Ixo, inspired by [how `_learn-zfs.nix` was](https://github.com/vorburger/nixfiles/commit/c10355184ebc1d9cc4b1c3b8664b0a981a39e78d), but with `/home` on an encrypted ZFS partition - figure out how to pass? But consider putting `/home/vorburger/git` on ext4 - for speed. Or maybe do this only after Impermanence?
