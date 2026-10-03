@@ -70,6 +70,17 @@ programs.ssh = {
     "github.com" = {
       identityFile = "~/.ssh/id_ecdsa_sk";
     };
+    titan = {
+      hostName = "titan.home.vorburger.ch";
+      forwardAgent = "yes";
+      localForward = [
+        "3000 localhost:3000" # enola2ui
+        "8787 localhost:8787" # Cloudflare Worker (Widget Proxy)
+        "7070 localhost:7070" # enola2 back-end REST API
+        "9090 localhost:9090" # Firestore Emulator UI
+        "9323 localhost:9323" # enola2ui E2E Test reports
+      ];
+    };
   };
 };
 ```
