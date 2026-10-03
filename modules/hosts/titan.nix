@@ -44,6 +44,7 @@ mkHost {
           builder.enable = !vmTest;
         };
         services.podman-extra.enable = true;
+        services.vsc-tunnel.enable = true;
         services.wireguard = {
           enable = true;
           role = "server";

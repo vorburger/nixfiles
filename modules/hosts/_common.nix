@@ -41,6 +41,7 @@
     self.nixosModules.nix-ld
     self.nixosModules.enola
     self.nixosModules.wireguard
+    self.nixosModules.vsc-tunnel
   ];
 
   services.locale-ch.enable = lib.mkDefault true;
@@ -57,6 +58,7 @@
   services.metrics-exporter.enable = lib.mkDefault true;
   services.nixarr.enable = lib.mkDefault false;
   services.nix-ld.enable = lib.mkDefault false;
+  services.vsc-tunnel.enable = lib.mkDefault false;
 
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

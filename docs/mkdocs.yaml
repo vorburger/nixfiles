@@ -51,6 +51,7 @@ nav:
       - reference/podman.md
       - reference/nixarr.md
       - reference/nix-ld.md
+      - reference/vsc-tunnel.md
       - reference/wiki.md
       - reference/we.md
       - ToDo.md
