@@ -63,6 +63,12 @@ in
           description = "Optional path to an environment file providing authentication tokens (such as VSCODE_CLI_ACCESS_TOKEN or VSCODE_CLI_REFRESH_TOKEN).";
         };
 
+        extraPackages = lib.mkOption {
+          type = lib.types.listOf lib.types.package;
+          default = [ ];
+          description = "Extra packages to add to the service PATH.";
+        };
+
         extraArgs = lib.mkOption {
           type = lib.types.listOf lib.types.str;
           default = [ ];
@@ -83,6 +89,12 @@ in
             config.users.users.${cfg.user}.home
           else
             "/home/${cfg.user}";
+
+        userShell =
+          if config.users.users ? ${cfg.user} && config.users.users.${cfg.user}.shell != null then
+            "${config.users.users.${cfg.user}.shell}"
+          else
+            "/bin/sh";
 
         execArgs = [
           "${cfg.package}/bin/code"
@@ -108,6 +120,9 @@ in
         ++ cfg.extraArgs;
       in
       {
+        # VS Code server and extensions download pre-compiled dynamic ELF binaries that require nix-ld.
+        services.nix-ld.enable = lib.mkDefault true;
+
         environment.systemPackages = [ cfg.package ];
 
         systemd.services.vsc-tunnel = {
@@ -117,11 +132,24 @@ in
           wants = [ "network-online.target" ];
           path = [
             cfg.package
+            pkgs.bash
             pkgs.coreutils
+            pkgs.findutils
+            pkgs.gnugrep
+            pkgs.gnused
             pkgs.git
-          ];
+            pkgs.gnutar
+            pkgs.gzip
+            pkgs.curl
+            pkgs.wget
+            "/run/wrappers"
+            "/run/current-system/sw"
+            "/etc/profiles/per-user/${cfg.user}"
+          ]
+          ++ cfg.extraPackages;
           environment = {
             HOME = userHome;
+            SHELL = userShell;
           };
           serviceConfig = {
             Type = "simple";

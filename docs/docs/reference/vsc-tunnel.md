@@ -30,7 +30,11 @@ services.vsc-tunnel = {
 - `services.vsc-tunnel.serverDataDir`: (default: `null`) Directory where server data is stored.
 - `services.vsc-tunnel.extensionsDir`: (default: `null`) Directory where extensions are installed.
 - `services.vsc-tunnel.environmentFile`: (default: `null`) Path to an environment file (e.g. a decrypted secret) containing environment variables such as `VSCODE_CLI_ACCESS_TOKEN` or `VSCODE_CLI_REFRESH_TOKEN` for non-interactive authentication.
+- `services.vsc-tunnel.extraPackages`: (default: `[ ]`) Additional packages to include in the service's `PATH`.
 - `services.vsc-tunnel.extraArgs`: (default: `[ ]`) Extra CLI arguments passed to `code tunnel`.
+
+> [!NOTE]
+> Enabling `services.vsc-tunnel` automatically sets `services.nix-ld.enable = true` by default. This is required because VS Code Server and its Marketplace extensions download pre-compiled dynamic Linux ELF binaries that depend on standard glibc paths. The service environment also provides `bash` (`sh`), core tools, `/run/current-system/sw/bin`, and per-user profile paths so integrated terminals and server lifecycle scripts execute cleanly.
 
 ## Authentication
 
