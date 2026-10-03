@@ -41,6 +41,7 @@ The U2F configuration is handled by `modules/services/pam-u2f.nix`, which enable
 
 - `security.pam.u2f.control = "sufficient"`: Setting the control rule to `sufficient` ensures that a successful YubiKey touch is enough on its own to authenticate privilege requests, bypassing the password prompt.
 - `security.pam.u2f.settings.cue = true`: This displays a cue message (`Please touch the device.`) during CLI authentication so you know when to press the key.
+- `services.pam-u2f.requireSeat = true`: By default, U2F authentication is conditionally restricted to local sessions that possess a physical seat (local console or graphical desktop, verified via `loginctl show-session self -p Seat`). When connected remotely (e.g. over SSH), the U2F prompt is skipped so commands like `sudo` fall back directly to password authentication rather than hanging waiting for a physical key touch on the remote machine.
 
 ---
 
