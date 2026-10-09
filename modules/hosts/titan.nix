@@ -50,6 +50,7 @@ mkHost {
           role = "server";
         };
         services.nixarr.enable = !vmTest;
+        programs.openscreen.enable = true;
         hardware.amdgpu.initrd.enable = true; # sets boot.initrd.kernelModules = ["amdgpu"];
 
         boot.initrd.availableKernelModules = [

@@ -464,6 +464,26 @@
         "type": "github"
       }
     },
+    "openscreen": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791477553,
+        "narHash": "sha256-1FGJ8DQ4VqdvK0/X9rCRsGbxakWSpM1gWG2j0roxP1k=",
+        "owner": "getopenscreen",
+        "repo": "openscreen",
+        "rev": "870196cf413d28882f5ccc310fb360463089acb6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "getopenscreen",
+        "repo": "openscreen",
+        "type": "github"
+      }
+    },
     "pyproject-build-systems": {
       "inputs": {
         "nixpkgs": [
@@ -559,6 +579,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
+        "openscreen": "openscreen",
         "ragenix": "ragenix",
         "rust-overlay": "rust-overlay",
         "treefmt-nix": "treefmt-nix",

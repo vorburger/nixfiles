@@ -52,6 +52,7 @@ nav:
       - reference/nixarr.md
       - reference/nix-ld.md
       - reference/vsc-tunnel.md
+      - reference/openscreen.md
       - reference/wiki.md
       - reference/we.md
       - ToDo.md

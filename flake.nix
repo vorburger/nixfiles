@@ -78,6 +78,10 @@
     };
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
+    openscreen = {
+      url = "github:getopenscreen/openscreen";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     ragenix = {
       url = "github:yaxitech/ragenix";
       inputs = {

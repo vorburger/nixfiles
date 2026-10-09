@@ -42,6 +42,7 @@
     self.nixosModules.enola
     self.nixosModules.wireguard
     self.nixosModules.vsc-tunnel
+    self.nixosModules.openscreen
   ];
 
   services.locale-ch.enable = lib.mkDefault true;
@@ -59,6 +60,7 @@
   services.nixarr.enable = lib.mkDefault false;
   services.nix-ld.enable = lib.mkDefault false;
   services.vsc-tunnel.enable = lib.mkDefault false;
+  programs.openscreen.enable = lib.mkDefault false;
 
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
