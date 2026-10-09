@@ -42,7 +42,7 @@ OpenScreen's Linux pipeline uses an automatic capability ladder for recording an
 
 Wayland intentionally isolates input events between windows for security. The Wayland ScreenCast portal provides cursor _position_, but does not stream button presses. To draw click animations and ripple effects, OpenScreen reads left mouse button presses (`BTN_LEFT`) from the Linux kernel evdev interface (`/dev/input/event*`).
 
-### The Security Concern with `sudo usermod -aG input $USER`
+### The Security Hazard of the `input` Group
 
 Upstream documentation suggests adding the user to the `input` group:
 
@@ -50,25 +50,52 @@ Upstream documentation suggests adding the user to the `input` group:
 sudo usermod -aG input $USER
 ```
 
-Adding your user to the `input` group grants **every** process running under your user account (browsers, shell scripts, third-party libraries, IDE extensions) permission to read every device node in `/dev/input/`, including all keyboards. This creates a potential keylogger vulnerability.
+Adding your user to the `input` group grants **every** process running under your user account (browsers, shell scripts, third-party dependencies, IDE extensions) permission to read every device node in `/dev/input/`, including all keyboards. This introduces a persistent keylogger vulnerability.
 
-### Secure Alternatives
+### Threat Profile Comparison
 
-1. **Standard Recording without Click Capture (Default)**:
-   OpenScreen works completely out of the box without the `input` group. Video, system audio, microphone, webcam, and cursor movements are captured normally. Every cursor sample is simply recorded as movement rather than distinguishing clicks.
-2. **Mouse-Only udev Rule (`captureMouseClicks`)**:
-   `modules/tools/openscreen.nix` provides an option:
-   ```nix
-   programs.openscreen.captureMouseClicks = true;
-   ```
-   This deploys a udev rule:
-   ```udev
-   KERNEL=="event*", SUBSYSTEM=="input", ENV{ID_INPUT_MOUSE}=="1", ENV{ID_INPUT_KEYBOARD}!="1", TAG+="uaccess"
-   ```
-   Systemd's logind automatically applies POSIX ACLs (`setfacl`) on mouse devices for the active desktop seat user. Keyboards are explicitly excluded (`ENV{ID_INPUT_KEYBOARD}!="1"`), so no keyboard access is ever granted to unprivileged user processes, and the user does not need to join the `input` group.
+| Capability                    | Default Wayland | With Mouse udev `uaccess` |              With Scoped setgid Binary               |  With `sudo usermod -aG input`  |
+| :---------------------------- | :-------------: | :-----------------------: | :--------------------------------------------------: | :-----------------------------: |
+| **Keystrokes / Passwords**    |   🔒 Blocked    |      🔒 **Blocked**       | ⚠️ Exposes attack surface (helper has group `input`) | 🚨 **Exposed to all user apps** |
+| **Global Mouse Clicks**       |   🔒 Blocked    | ⚠️ Readable by user apps  |          🔒 Blocked (only helper reads it)           |    ⚠️ Readable by user apps     |
+| **Relative Mouse Motion**     |   🔒 Blocked    | ⚠️ Readable by user apps  |          🔒 Blocked (only helper reads it)           |    ⚠️ Readable by user apps     |
+| **Synthetic Click Injection** |   🔒 Blocked    |      🔒 **Blocked**       |                      🔒 Blocked                      |           🔒 Blocked            |
+| **Device Grab / Freeze**      |   🔒 Blocked    |  ⚠️ Possible via `ioctl`  |                      🔒 Blocked                      |     ⚠️ Possible via `ioctl`     |
+
+### Architectural Decision: udev vs. setgid Wrapper
+
+When securing click capture, two technical routes exist:
+
+1. **Targeted udev `uaccess` (Recommended)**: Dynamically grant the active desktop seat user access strictly to mouse character devices (`ENV{ID_INPUT_KEYBOARD}!="1"`).
+2. **Scoped setgid Wrapper**: Create a setgid wrapper binary (`owner = "root"`, `group = "input"`, mode `2750`) so only the helper binary acquires group `input`.
+
+#### Why the udev Route is Recommended
+
+We recommend and implement the **targeted udev approach** as a closed architectural choice:
+
+- **Zero Privileged Binaries**: The setgid approach introduces a setgid binary on disk. Even though setgid does not elevate UID to root, it grants the helper executable permission to read **all** `input` devices—including physical keyboards. If that helper binary ever has a memory safety bug or vulnerability, it could be leveraged to snoop on keyboards.
+- **Kernel-Level Keyboard Exclusion**: The udev approach enforces hardware device isolation at the kernel level (`ENV{ID_INPUT_KEYBOARD}!="1"`). Even if userspace is compromised, the kernel refuses to open keyboard event character devices.
+- **Native Desktop Integration**: It leverages standard `systemd-logind` seat management, matching how cameras, audio devices, and GPUs are exposed to desktop sessions.
+
+### Enabling Click Capture Safely
+
+OpenScreen works completely out of the box without click capture (default). If click animations are desired, enable the safe udev rule via:
+
+```nix
+programs.openscreen.captureMouseClicks = true;
+```
+
+This deploys:
+
+```udev
+KERNEL=="event*", SUBSYSTEM=="input", ENV{ID_INPUT_MOUSE}=="1", ENV{ID_INPUT_KEYBOARD}!="1", TAG+="uaccess"
+```
+
+Systemd's `logind` assigns dynamic POSIX ACLs (`setfacl`) on mouse devices for the active desktop seat session while leaving keyboards strictly protected.
 
 ## Links
 
+- Conceptual Security Analysis: [Evdev Mouse Click Telemetry Security on Wayland](https://wiki.enola.dev/computer/linux/security/evdev-click-telemetry-security)
 - [OpenScreen Official Website](https://getopenscreen.com/)
 - [OpenScreen Linux Installation & Platform Guide](https://getopenscreen.com/docs/installation/#linux)
 - [OpenScreen GitHub Repository](https://github.com/getopenscreen/openscreen)
