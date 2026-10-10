@@ -51,6 +51,15 @@ mkHost {
         };
         services.nixarr.enable = !vmTest;
 
+        # https://gemini.google.com/app/f5b916a13356f424
+        # https://github.com/vorburger/Notes/blob/master/Reference/sound.md
+        # Maybe NOT strictly required, because "wpctl set-default ..." is persistent in ~/.local/state/wireplumber/
+        services.pipewire.wireplumber.extraConfig."50-default-mic" = {
+          "wireplumber.settings" = {
+            "device.routes.default-source" = "alsa_input.pci-0000_00_1f.3.HiFi__Mic2__source";
+          };
+        };
+
         programs.openscreen.enable = true;
         programs.openscreen.captureMouseClicks = true;
 

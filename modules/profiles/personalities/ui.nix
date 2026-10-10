@@ -19,5 +19,23 @@
         pkgs.vscode
         self.packages.${pkgs.stdenv.hostPlatform.system}.antigravity
       ];
+
+      services.pipewire.extraConfig.pipewire."99-echo-cancel" = {
+        "context.modules" = [
+          {
+            name = "libpipewire-module-echo-cancel";
+            args = {
+              "source.props" = {
+                "node.name" = "echo-cancel-source";
+                "node.description" = "Filtered Microphone";
+              };
+              "aec.args" = {
+                "webrtc.noise_suppression" = true;
+                "webrtc.extended_filter" = true;
+              };
+            };
+          }
+        ];
+      };
     };
 }
