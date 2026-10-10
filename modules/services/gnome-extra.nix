@@ -118,9 +118,10 @@ in
         ];
 
         environment.systemPackages = with pkgs; [
-          zenity-ssh-askpass
           file-roller
           gnome-boxes
+          gnome-sound-recorder
+          zenity-ssh-askpass
         ];
 
         virtualisation.libvirtd.enable = true;
