@@ -18,6 +18,7 @@
     {
       config,
       lib,
+      pkgs,
       ...
     }:
     let
@@ -43,9 +44,20 @@
       config = lib.mkIf cfg.enable {
         # Grant desktop user access to mouse evdev devices so OpenScreen can capture click telemetry
         # without exposing keyboards or adding the user to the `input` group.
-        services.udev.extraRules = lib.mkIf cfg.captureMouseClicks ''
-          KERNEL=="event*", SUBSYSTEM=="input", ENV{ID_INPUT_MOUSE}=="1", ENV{ID_INPUT_KEYBOARD}!="1", TAG+="uaccess"
-        '';
+        #
+        # Note: Must be placed at priority 70 via services.udev.packages rather than
+        # services.udev.extraRules (which writes 99-local.rules), because systemd-logind's
+        # seat assignment (71-seat.rules) and ACL assignment (73-seat-late.rules) execute at 71 and 73.
+        services.udev.packages = lib.mkIf cfg.captureMouseClicks [
+          (pkgs.writeTextFile {
+            name = "openscreen-mouse-uaccess";
+            destination = "/etc/udev/rules.d/70-openscreen-mouse.rules";
+            text = ''
+              KERNEL=="event*", SUBSYSTEM=="input", ENV{ID_INPUT_MOUSE}=="1", ENV{ID_INPUT_KEYBOARD}!="1", TAG+="uaccess"
+              KERNEL=="event*", SUBSYSTEM=="input", ENV{ID_INPUT_TOUCHPAD}=="1", ENV{ID_INPUT_KEYBOARD}!="1", TAG+="uaccess"
+            '';
+          })
+        ];
       };
     };
 }

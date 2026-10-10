@@ -85,13 +85,31 @@ OpenScreen works completely out of the box without click capture (default). If c
 programs.openscreen.captureMouseClicks = true;
 ```
 
-This deploys:
+This deploys `/etc/udev/rules.d/70-openscreen-mouse.rules`:
 
 ```udev
 KERNEL=="event*", SUBSYSTEM=="input", ENV{ID_INPUT_MOUSE}=="1", ENV{ID_INPUT_KEYBOARD}!="1", TAG+="uaccess"
+KERNEL=="event*", SUBSYSTEM=="input", ENV{ID_INPUT_TOUCHPAD}=="1", ENV{ID_INPUT_KEYBOARD}!="1", TAG+="uaccess"
 ```
 
-Systemd's `logind` assigns dynamic POSIX ACLs (`setfacl`) on mouse devices for the active desktop seat session while leaving keyboards strictly protected.
+Systemd's `logind` assigns dynamic POSIX ACLs (`setfacl`) on mouse and touchpad devices for the active desktop seat session while leaving keyboards strictly protected.
+
+> [!NOTE]
+> The rule is placed at priority 70 via `services.udev.packages` rather than `services.udev.extraRules` (which generates `99-local.rules`), because systemd's seat assignment (`71-seat.rules`) and ACL evaluation (`73-seat-late.rules`) run at 71 and 73.
+>
+> When enabling the option on an already-running system, `nixos-rebuild switch` reloads rule definitions but does not re-evaluate already-connected devices. To apply ACLs immediately without logging out or rebooting, unplug and replug your mouse or run:
+>
+> ```bash
+> sudo udevadm trigger --subsystem-match=input
+> ```
+
+To verify that it worked, check the ACL on your mouse devices:
+
+    getfacl /dev/input/by-id/*mouse*
+
+You should see an ACL entry for your user, such as:
+
+    user:vorburger:rw-
 
 ## Links
 
