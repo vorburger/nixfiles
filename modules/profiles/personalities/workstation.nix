@@ -16,6 +16,7 @@
         pkgs.dmidecode
         pkgs.efivar
         pkgs.efibootmgr
+        pkgs.ffmpeg
         pkgs.hdparm
         pkgs.lsof
         pkgs.nvme-cli # https://man.archlinux.org/man/nvme.1
