@@ -105,11 +105,16 @@ Systemd's `logind` assigns dynamic POSIX ACLs (`setfacl`) on mouse and touchpad 
 
 To verify that it worked, check the ACL on your mouse devices:
 
-    getfacl /dev/input/by-id/*mouse*
+```bash
+getfacl /dev/input/by-id/*mouse*
+```
 
-You should see an ACL entry for your user, such as:
+You should see an ACL entry `user:<username>:rw-` on the `-event-mouse` devices (such as `/dev/input/event1`).
 
-    user:vorburger:rw-
+> [!NOTE]
+> It is expected that only `-event-mouse` device nodes receive the ACL, while legacy `-mouse` nodes do not.
+>
+> Modern Linux input stacks (`libinput`, Wayland compositors, and OpenScreen) communicate exclusively through the modern Linux kernel **`evdev`** interface (`/dev/input/event*`), which delivers structured events, high-resolution timestamps, and button codes (`BTN_LEFT`). The `-mouse` nodes (`/dev/input/mouse*`) are legacy PS/2 emulation interfaces preserved only for historical compatibility; OpenScreen does not use them, so leaving them unexposed follows the principle of least privilege.
 
 ## Links
 
