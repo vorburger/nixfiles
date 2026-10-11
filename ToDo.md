@@ -1,5 +1,9 @@
 # ToDo
 
+1. https://wiki.nixos.org/wiki/Stalwart for https://stalw.art (https://github.com/stalwartlabs/stalwart) as per https://jmap.io/software (or https://james.apache.org) [NOT https://nixos-mailserver.readthedocs.io, as no JMAP]
+
+1. Enabled Email Sending, for zfs-extra.nix
+
 1. https://2026.nixcon.org ?
 
 1. Create a `vscode-serve-web`
@@ -36,8 +40,6 @@
 
 1. Enable `smartd` in `services/smart.nix` with https://github.com/AnalogJ/scrutiny see https://search.nixos.org/options?channel=unstable&query=services.scrutiny.#show=option%253Aservices.scrutiny.collector.enable
 
-1. Enabled Email Sending, for zfs-extra.nix
-
 1. ToDo alert-me either wall or notify-send.. test over SSH with tmux.
 
 1. Backup `/nas` ZFS to Google Drive
@@ -46,7 +48,7 @@
 
 1. ~~Wireguard into NUC~~
 
-1. Backup Antigravity Config and Conversations; share between Workstation & Latpop
+1. Backup Antigravity Config and Conversations; share between Workstation & Latpop? May not be easily possible, or not without "merging" its sqlite..
 
 1. replace Antigravity with https://github.com/BohdanTkachenko/nix-home/blob/main/flake.nix#L26-L40
 
