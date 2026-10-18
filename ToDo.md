@@ -1,7 +1,5 @@
 # ToDo
 
-1. `flake-schemathesis` is SO-SLOW to build... perhaps best to move it into a separate new `schemathesis.nix` repo?
-
 1. https://wiki.nixos.org/wiki/Stalwart for https://stalw.art (https://github.com/stalwartlabs/stalwart) as per https://jmap.io/software (or https://james.apache.org) [NOT https://nixos-mailserver.readthedocs.io, as no JMAP]
 
 1. Enabled Email Sending, for zfs-extra.nix

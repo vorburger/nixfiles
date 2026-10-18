@@ -63,7 +63,6 @@
       rootLockFile = ../../flake.lock;
       javaLockFile = ../../flakes/java/flake.lock;
       bunLockFile = ../../flakes/bun/flake.lock;
-      schemathesisLockFile = ../../flakes/schemathesis/flake.lock;
 
       rootNixpkgsRev =
         if builtins.pathExists rootLockFile then
@@ -84,10 +83,7 @@
         else
           true;
 
-      locksAreSynced =
-        checkLockSyncFor "java" javaLockFile
-        && checkLockSyncFor "bun" bunLockFile
-        && checkLockSyncFor "schemathesis" schemathesisLockFile;
+      locksAreSynced = checkLockSyncFor "java" javaLockFile && checkLockSyncFor "bun" bunLockFile;
     in
     {
       checks = {
@@ -110,23 +106,6 @@
             ''
               bun --version
               node --version
-              touch $out
-            '';
-
-        flake-schemathesis =
-          let
-            schemathesisFlake = import ../../flakes/schemathesis/flake.nix;
-            schemathesisOutputs = schemathesisFlake.outputs {
-              self = schemathesisFlake;
-              inherit (self.inputs) nixpkgs;
-            };
-          in
-          pkgs.runCommand "check-flake-schemathesis"
-            {
-              buildInputs = [ schemathesisOutputs.packages.${system}.default ];
-            }
-            ''
-              schemathesis --version
               touch $out
             '';
 
