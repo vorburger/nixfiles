@@ -59,7 +59,26 @@ To make the new configuration active on next boot without failing on live unit r
 
     nh os boot .
 
-(or `sudo nixos-rebuild boot --flake .`), then reboot the system.
+### Hash mismatch in fixed-output derivation
+
+```
+error: hash mismatch in fixed-output derivation '...':
+           specified: sha256-lYsHQut0bb3laihMRIFi+gDiN2dAJCAa+sGDi4oTmjA=
+                 got: sha256-okBp6jj+lEZNqrsEEoaMBA7ei4C9OTFNntiXAcb+4Z8=
+```
+
+Fixed-output derivations (such as `pkgs.caddy.withPlugins`, `buildGoModule.vendorHash`, or `fetchFromGitHub`) require Nix to know the content hash in advance to guarantee reproducibility and allow network access during the build.
+
+This mismatch occurs when:
+
+- An upstream dependency, plugin version, or downloaded archive content changed.
+- Nixpkgs or Go toolchain updates change the generated `go.sum` or vendored source structure.
+
+**How to fix:**
+
+1. Locate where the fixed-output derivation is defined (e.g. `package = pkgs.caddy.withPlugins { ... hash = "..."; };` in `modules/services/caddy.nix`).
+2. Update the `hash` (or `vendorHash`) attribute to the `got:` hash reported by Nix.
+3. Re-run `nix build` or `nh os switch` (or verify with `nix develop --command nix-fast-build --fail-fast --flake .#checks.x86_64-linux`).
 
 ## Alternatives
 
