@@ -59,6 +59,8 @@ mkSecret {
 
 When evaluated by `ragenix`, `secrets/rules.nix` imports `recipients.nix` and merges all secret recipient rules (defaulting to encrypting to all `recipients`).
 
+In addition, `modules/tools/secrets.nix` declares `options.flake.secretRules` in flake-parts so that all secret rules across modules are automatically merged into the unified `secretRules` flake output during flake evaluation and checks.
+
 ---
 
 ## 2. Adding a New Key
