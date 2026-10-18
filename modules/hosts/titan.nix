@@ -40,7 +40,7 @@ mkHost {
         services.caddy-extra.enable = true;
         services.hermes.enable = false;
         services.enola = {
-          enable = true;
+          enable = false;
           builder.enable = !vmTest;
         };
         services.podman-extra.enable = true;
