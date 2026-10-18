@@ -55,7 +55,7 @@ lib.recursiveUpdate secret {
 
           # TLS DNS challenge for Caddy's magic ACME (Let's Encrypt) certificates
           package = pkgs.caddy.withPlugins {
-            plugins = [ "github.com/caddy-dns/googleclouddns@v1.1.0" ];
+            plugins = [ "github.com/caddy-dns/googleclouddns@6fcdbd98a8565df50ff40ff53411dc6c8d97dcd9" ];
             hash = "sha256-okBp6jj+lEZNqrsEEoaMBA7ei4C9OTFNntiXAcb+4Z8=";
           };
           globalConfig = ''
