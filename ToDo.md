@@ -1,5 +1,9 @@
 # ToDo
 
+1. Remove `security.wrappers.nix-ccache.enable = false;` from `modules/services/nix-extra.nix`
+   when https://github.com/NixOS/nixpkgs/pull/569444 for https://github.com/NixOS/nixpkgs/issues/575747
+   is merged.
+
 1. https://wiki.nixos.org/wiki/Stalwart for https://stalw.art (https://github.com/stalwartlabs/stalwart) as per https://jmap.io/software (or https://james.apache.org) [NOT https://nixos-mailserver.readthedocs.io, as no JMAP]
 
 1. Enabled Email Sending, for zfs-extra.nix

@@ -46,8 +46,10 @@ in
           extra-sandbox-paths = [ "/var/cache/ccache" ];
         };
 
-        # Manage /var/cache/ccache with nixbld group permissions and provide nix-ccache utility
+        # Manage /var/cache/ccache with nixbld group permissions
         programs.ccache.enable = true;
+        # Work around https://github.com/NixOS/nixpkgs/issues/575747
+        security.wrappers.nix-ccache.enable = false;
 
         # Save space in /nix via hard-links using scheduled background optimization
         # (avoiding auto-optimise-store = true which slows down builds and switches synchronously)
