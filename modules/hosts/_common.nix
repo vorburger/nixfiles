@@ -34,7 +34,6 @@
     self.nixosModules.metrics-exporter
     self.nixosModules.monitoring
     self.nixosModules.caddy-extra
-    self.nixosModules.hermes
     self.nixosModules.ollama-extra
     self.nixosModules.podman-extra
     self.nixosModules.nixarr
