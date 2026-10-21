@@ -14,7 +14,7 @@
       import-tree.url = "github:vic/import-tree";
     };
     nixConfig = {
-      # abort-on-warn = true; # TODO Re-enable after https://github.com/NousResearch/hermes-agent/pull/101169
+      abort-on-warn = true;
       warn-dirty = false;
       eval-cache = true;
     };

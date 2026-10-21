@@ -6,6 +6,7 @@
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
   nixConfig = {
+    abort-on-warn = true;
     eval-cache = true;
     warn-dirty = false;
   };
@@ -35,14 +36,6 @@
     git-hooks = {
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    hermes-agent = {
-      url = "github:NousResearch/hermes-agent";
-      inputs = {
-        flake-parts.follows = "flake-parts";
-        home-manager.follows = "home-manager";
-        nixpkgs.follows = "nixpkgs";
-      };
     };
     home-manager = {
       url = "github:nix-community/home-manager";
