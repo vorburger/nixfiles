@@ -54,7 +54,8 @@
                 "path" = "${ideJdk}/lib/openjdk";
               }
             ];
-            "java.compile.nullAnalysis.mode" = "automatic";
+            # Disable JDT null in VSC, because I now use NullAway/ErrorProne/JSpecify
+            "java.compile.nullAnalysis.mode" = "disabled";
             "java.completion.importOrder" = [
               "#"
               ""
