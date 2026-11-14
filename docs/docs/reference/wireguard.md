@@ -137,7 +137,7 @@ Rather than blanket-trusting all WireGuard traffic, Titan enforces **role-based 
 
 2. **Inter-Host Forwarding & Transit Isolation (`FORWARD` Chain on Titan)**:
    - **Trusted Admin Workstations (`ixo`)**: Permitted to route transit traffic through Titan to other WireGuard clients or LAN devices.
-   - **Restricted Media Clients (`tablet`)**: Transit and inter-client routing is strictly blocked (`iptables -A FORWARD -i wg0 -j DROP`). Untrusted clients can **never** route through Titan to reach other peers (like `ixo`) or local LAN devices.
+   - **Restricted Media Clients (`tablet`)**: Transit and inter-client routing is strictly blocked (`ip46tables -A nixos-wg-fwd -j DROP`, jumped to from `FORWARD -i wg0`). Untrusted clients can **never** route through Titan to reach other peers (like `ixo`) or local LAN devices.
 
 ---
 
@@ -184,9 +184,9 @@ In the `nixfiles` repository, add the client definition under `hosts` in `lib/ho
 ```nix
     dynabook = {
       role = "client";
-      wireguardIpv4 = "10.25.75.3"; # Next available IP in 10.25.75.0/24
-      wireguardIpv6 = "fd25:75::3"; # Next available ULA in fd25:75::/64
-      publicKey = "3trOBG35PScN+I8MKgHliFBcgqLGHZR2yGywN74rpAc=";
+      wireguardIpv4 = "10.25.75.XX"; # Next available IP in 10.25.75.0/24
+      wireguardIpv6 = "fd25:75::XX"; # Next available ULA in fd25:75::/64
+      publicKey = "...";
       trusted = false; # Restricted: web ports (80/443) only for Vorbflix/Caddy
     };
 ```
@@ -196,7 +196,7 @@ In the `nixfiles` repository, add the client definition under `hosts` in `lib/ho
 >
 > - Restrict inbound access on Titan exclusively to HTTP (`80`), HTTPS (`443`), and ICMP ping.
 > - Drop SSH (`22`), metrics, and admin ports.
-> - Strictly drop all forwarded/transit traffic (`iptables -A FORWARD -i wg0 -j DROP`), preventing this client from reaching other WireGuard peers (such as `ixo`) or local LAN devices.
+> - Strictly drop all forwarded/transit traffic (`ip46tables -A nixos-wg-fwd -j DROP`, jumped to from `FORWARD -i wg0`), preventing this client from reaching other WireGuard peers (such as `ixo`) or local LAN devices.
 
 ### 3. Deploy Configuration to Titan
 
@@ -221,7 +221,7 @@ Create a client configuration file named `wg0.conf` (or `wg-homelab.conf`):
 ```ini
 [Interface]
 PrivateKey = <PASTE_CONTENTS_OF_wg-private.key>
-Address = 10.25.75.3/24, fd25:75::3/64
+Address = 10.25.75.XX/24, fd25:75::XX/64
 
 [Peer]
 PublicKey = UVdA/6vjg/5mq+re3rnKzWUJvdqCPC/ObHQSFTUDqDg=
@@ -397,4 +397,15 @@ ping -c 3 fd25:75::1
 
 # Titan LAN host route over VPN
 ping -c 3 192.168.1.99
+```
+
+Inspect WireGuard firewall jump rules and per-peer ACL chains on Titan:
+
+```bash
+sudo iptables -S INPUT
+sudo iptables -S nixos-wg-in
+sudo iptables -S nixos-wg-fwd
+
+# Watch live decrypted packets arriving/leaving on wg0 (e.g. to verify SSH/ICMP)
+sudo tcpdump -ni wg0 'tcp port 22 or icmp'
 ```

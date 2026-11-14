@@ -42,16 +42,23 @@
       wireguardIpv4 = "10.25.75.4";
       wireguardIpv6 = "fd25:75::4";
       publicKey = "pLqpTOPDOWsoYql4anCe+NipHxTVXSUx8TZ+8OMiayg=";
-      trusted = false;
+      trusted = false; # Media client: restricted to HTTP (80) & HTTPS (443) for Vorbflix/Caddy
     };
 
-    # Template for future clients:
-    # abc = {
-    #   role = "client";
-    #   wireguardIpv4 = "10.25.75.3";
-    #   wireguardIpv6 = "fd25:75::3";
-    #   publicKey = "...";
-    #   trusted = false; # Media client: restricted to HTTP (80) & HTTPS (443) for Vorbflix/Caddy
-    # };
+    roam = {
+      role = "client";
+      wireguardIpv4 = "10.25.75.5";
+      wireguardIpv6 = "fd25:75::5";
+      publicKey = "TVhgxXSeLTOThCQTfqYvB7EvRNBDMD7SvxNngcFhiE8=";
+      trusted = true;
+    };
+
+    chromebox = {
+      role = "client";
+      wireguardIpv4 = "10.25.75.6";
+      wireguardIpv6 = "fd25:75::6";
+      publicKey = "2btOOzL+xitatzcGzwUpDog5S+PY+82miOnoWrTPGxA=";
+      trusted = true;
+    };
   };
 }
