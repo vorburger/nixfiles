@@ -6,7 +6,7 @@
 
 set -euo pipefail
 
-nix flake update
+nix flake update ${1:-}
 nix run .#write-flake
 
 # Synchronize all sub-flakes to root nixfiles/flake.lock nixpkgs revision
