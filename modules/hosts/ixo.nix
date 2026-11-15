@@ -43,6 +43,5 @@ mkHost {
     self.nixosModules.target-x1_12
     self.nixosModules.personality-workstation
     self.nixosModules.personality-gnome
-    self.nixosModules.cloud-seo
   ];
 }
