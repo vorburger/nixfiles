@@ -46,6 +46,20 @@ lib.recursiveUpdate secret {
                       env: {
                         GITHUB_PERSONAL_ACCESS_TOKEN: $pat
                       }
+                    },
+                    "google-analytics": {
+                      command: "${pkgs.uv}/bin/uvx",
+                      args: ["analytics-mcp"],
+                      env: {
+                        GOOGLE_APPLICATION_CREDENTIALS: "/run/secrets/cloud-seo"
+                      }
+                    },
+                    "google-search-console": {
+                      command: "${pkgs.uv}/bin/uvx",
+                      args: ["mcp-search-console"],
+                      env: {
+                        GOOGLE_APPLICATION_CREDENTIALS: "/run/secrets/cloud-seo"
+                      }
                     }
                   }
                 }' > "$HOME/.gemini/config/mcp_config.json.tmp"
