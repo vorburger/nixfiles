@@ -71,7 +71,8 @@ in
                         command: "${pkgs.uv}/bin/uvx",
                         args: ["mcp-search-console"],
                         env: {
-                          GSC_CREDENTIALS_PATH: "/run/secrets/cloud-seo"
+                          GSC_CREDENTIALS_PATH: "/run/secrets/cloud-seo",
+                          GSC_ALLOW_DESTRUCTIVE: "true"
                         }
                       }
                     }
